@@ -1,0 +1,20 @@
+# Comments to address in v4 of the paper, `main_v4.tex`.
+- COMMENT Too much detail with little context for an opening. Needs an "agenda-setting" hook
+- COMMENT This is the language used in recent IM3/GCIMS papers to describe these scenarios. Would be good to keep the wording consistent.
+- COMMENT Good point, but this is a modeling issue, right? and would be better moved to support why higher-res demand matter for improved local scarcity modeling. And, this paragraph moves too quickly from water demand general statements to the modeling issue, missing a smooth transition.
+- COMMENT before presenting modeling challenges due to the lack of such data, suggest adding a paragraph reviewing existing water demand datasets in Table 1 and clarify their common limitations and why addressing these limitations matters in the context of water modeling, regarding spatial resolution, sectoral representation, and scenario plausibility. 
+- COMMENT Suggest adding why monthly resolution is important, e.g., for capturing seasonal patterns in water demand that differ by sector and so on.
+- COMMENT Suggest adding a box labeled Tethys to encompass the two green boxes. For temporal downscaling, change it to 5-year to monthly. In the Demeter box, add the downscaling scale: regional, 5-year to 1/8° spatial resolution, annual temporal resolution. Also spell out PET, HDD, and CDD in the figure caption, and "Monthly Climate Variables" should be "Monthly Meteorological Variables".
+- COMMENT Refer to the CERF paper I shared for scenario development and descriptions.
+- COMMENT this should be moved to "temporal downscaling" subsection
+- COMMENT Why the pi? Probably a good idea to replace 
+- COMMENT This should be introduced in the first section to  justify the proposed enhancements in Tethys 2.0
+- COMMENT replace MSD-Live link with DOI before publication
+- COMMENT Too much info for the main text 
+- COMMENT Could we jazz this up a bit. Also need to explain why we claimed 10- error in the abstract but these y axis spans -75 to 25%. also need to explain outliers 
+- COMMENT Could we please facet_grid here and maybe some styling or coloring of scatter by something meaningful 
+- COMMENT Need to mention the year.
+- COMMENT Too much information for a paper, this can be moved to the README for the dataset
+- COMMENT We should lead with this figure as Fig 1
+- COMMENT this section repeats some info already in the Methods. review it again and consider where trimming may make sense.
+- COMMENT this referes to a specific file in the metarepo, please only refer to the repo in general to abv

@@ -1,0 +1,420 @@
+\documentclass[fleqn,10pt]{wlscirep}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lineno}
+
+\linenumbers
+
+\title{High-resolution 21st-century monthly water demands for the contiguous United States}
+
+\author[1*]{Cameron Bracken}
+\author[2*]{Hassan Niazi}
+\author[1]{Travis Thurber}
+\author[2]{Isaac Thompson}
+\author[3]{Hisham Eldardiry}
+\author[1]{Kendall Mongird}
+\author[1,3]{Nathalie Voisin}
+\author[1]{Ning Sun}
+\author[1]{Jennie Rice}
+
+
+\affil[1]{Pacific Northwest National Laboratory, Richland, WA, USA}
+\affil[2]{Joint Global Change Research Institute, Pacific Northwest National Laboratory, College Park, MD, USA}
+\affil[4]{Cornell}
+\affil[3]{University of Washington, Seattle, WA, USA}
+
+\affil[*]{corresponding author(s): Cameron Bracken (cameron.bracken@pnnl.gov), Hassan Niazi (hassan.niazi@pnnl.gov)}
+
+\begin{abstract}
+Human water use reflects changes in water availability and water demands associated with existing and developing socio-economic conditions. Understanding how these changes affect sectoral water demands is critical to evaluating human and water resources impacts and the design of adaptation approaches. Accurate representation of impacts requires the use of high resolution water availability and water management models that capture local processes and behaviors. In this study we present a new dataset developed using a top-down approach to generate 1/8th degree, monthly projections of multi-sectoral water demand for the contiguous U.S. This dataset specifically represents the evolution of the electricity, municipal, industrial, and agricultural sectors over a historical period from 1980-2020 and using projected population change from 2020-2100 using eight socio-economic scenarios and xxx scenarios. We validate the data against the most recent United States Geological Survey water demands.
+\end{abstract}
+\begin{document}
+
+\flushbottom
+\maketitle
+%  Click the title above to edit the author information and abstract
+
+\thispagestyle{empty}
+
+
+\section*{Background \& Summary}
+
+Humans depend on water for many essential activities, including irrigation, electricity generation, municipal, and industrial use. Global water demand is expected to continue rising through the 21st century due to a combination of socioeconomic and climatic factors\cite{WWDR2019, RN9, RN12}, increasing stress on finite freshwater resources. 
+%Several kinds of models exist to study water scarcity at different scales, each with its respective tradeoffs \cite{Greve_2018,Brunner_2019,Liu_2017,de_Almeida_Castro_2018}. 
+Even when water availability appears sufficient to meet needs at regional scales, scarcity can manifest at local scales due to mismatches in location and timing of supply and demand so modeling at high-resolution is critical for future planning \cite{HADJIMICHAEL23}. However, there is generally a tradeoff between the level of detail captured by a model and its spatiotemporal extent due to computational, organizational, and jurisdictional constraints. For example, detailed water systems models are constrained by geographic and political boundaries, limiting their ability to represent global, long-term, multisector interactions like trade that can affect local water use. Hydrological models are able to achieve both high resolution and extent by focusing on physical processes in the natural system but often use simplified or static assumptions about water demanded by the human system \cite{Abeshu_2023,RN13,Wada_2017}. Models that do represent large spatial scales and multisector impacts often have coarse spatial and temporal resolutions \cite{van_Vliet_2021,Jones_2024}.
+
+While future water availability can be modeled at fine spatial and temporal resolutions, modeling the human water system at the same scale is difficult due to the patchwork of local, regional and/or nonexistent models and data. As a result, fine-scale assessments of future water scarcity commonly use fixed water demands based on historical records to focus on the supply-side drivers of scarcity \cite{Liu_2017}, but the demand-side drivers have been shown to be dominant regardless of climate or socio-economic conditions \cite{Graham_2020, RN12, RN6, RN9}.
+
+High-resolution estimates of future water demand are often made for sectors without taking into account major factors such as competing uses and global trade [citation]. Multi-sector dynamics models can represent these global economic interactions under different scenarios, but at coarser scales, with geopolitical regions (e.g., sometimes groups of countries) and water basins as their spatial units, and multi-year timesteps \cite{RN1, RN13, RN15, RN6, Zhao_gcamusa_water}. Water demand projections at these scales are useful for long-term integrated analysis, but are not directly usable for finer-scale applications. In order to bridge this gap, past studies \cite{hess-17-4555-2013} have downscaled outputs from these kinds of models in order to obtain gridded, monthly data, using the spatial distribution of proxy variables for each sector (e.g., assuming that municipal water demand is proportional to population).
+
+Recent work has focused on improving the scenario consistency of the proxies themselves in order to better model intra-regional shifts in water demand. For example, Khan et al. (2023)\cite{Khan2023} use per-crop irrigated area maps generated by coupling a multi-sector dynamics model with a land-use downscaling model in order to downscale irrigation water demand \cite{BIJL201675}. We utilize the same method to downscale irrigation in this study, demonstrate a similar advance in the electricity sector by soft-coupling with a power-plant siting model, and also use population maps based on the Shared Socioeconomic Pathways\cite{Jones_2016} (SSPs) to downscale municipal water demand. Additionally, we use climate variables consistent with the Representative Concentration Pathway (RCP) and General Circulation Model (GCM) scenario components in order to model their effects on intra-annual distributions for these sectors. 
+
+The resulting dataset contains eight scenarios of projected future water withdrawals and consumption for the irrigation, electricity, municipal, livestock, manufacturing, and mining sectors, at 1/8$^{th}$ (0.125) degree resolution and monthly timesteps for the conterminous United States (CONUS) from 1980 to 2100. We verify these results against publicly available Unites States Geological Survey (USGS) water demand data. This data may be of use to researchers studying future water scarcity, who require high-resolution water demand data that capture dynamics between sectors and across scales.
+
+\begin{figure}[ht]
+\centering
+%\includegraphics[width=\linewidth]{image1.png}
+\includegraphics[width=.8\linewidth]{flow-chart}
+\caption{Schematic overview of the study.}
+\label{fig:schematic}
+\end{figure}
+
+\section*{Methods and Data}
+
+\subsection*{GCAM-USA}
+
+The region-basin scale, quinquennial (every 5-years) water demand data downscaled by this study come from runs of the Global Change Analysis Model (GCAM)\cite{Zhao_gcamusa_water, Zhao2024}. We provide a very brief description here for convenience, but a more detailed discussion of the model is available in GCAM documentation papers\cite{Binsted_2022, RN1}.
+
+GCAM is an integrated, multi-sector model that represents dynamics among energy, water, land, and other systems under human-Earth system change \cite{Binsted_2022, RN1}. Fundamentally a market equilibrium model, GCAM solves for allocations that balance supply and demand, given a set of assumptions about future conditions, including population, labor productivity, technology efficiencies, and policies. GCAM operates at 5-year time steps with 32 geopolitical regions and 235 hydrological basins, which intersect to form 384 land regions globally. The GCAM-USA version additionally models the electricity generation, manufacturing, and municipal sectors for 50 states and D.C. in the US, providing increased spatial resolution. The eight GCAM-USA scenarios correspond to the plausible changes in the future due to alternative SSPs, RCPs and GCMs. 
+
+
+\subsection*{Spatial Downscaling}
+
+The location of water demands depends on the location of the activities that use water. Thus, following existing approaches, we assume that the spatial distribution of water demands within a region follows that of an appropriate gridded proxy. In general, the water demand for a grid cell is given by
+
+\begin{equation}
+\text{demand}_\text{cell} = \text{demand}_\text{region} \times \frac{\text{proxy}_\text{cell}}{\text{proxy}_\text{region}}.
+\end{equation}
+The following subsections describe the particulars of the proxies for each sector.
+
+\subsubsection*{Irrigation}
+
+GCAM-USA models 13 crop types: Corn, Wheat, Rice, RootTuber, OilCrop, SugarCrop, OtherGrain, FiberCrop, FodderGrass, FodderHerb, biomass, MiscCrop, and PalmFruit. We use Demeter\cite{Vernon-2018}, a land-use and land-cover disaggregation model, to downscale land area outputs from GCAM and obtain scenario-consistent maps of each crop's irrigated area. Demeter uses transition priority rules to determine grid cells where land types are likely to intensify (increase their share of the cell) or extensify (spread from a nearby cell) to adjust the initial map to be consistent with boundary conditions imposed by GCAM. We then use the irrigated area maps from Demeter as proxies for the spatial distribution of irrigation water demand.
+
+\subsubsection*{Electricity}
+Electricity sector water use encompasses cooling water used directly for thermoelectric generation plants, including coal, natural gas, and nuclear, not including hydropower. Prior water demand downscaling approaches for the electricity sector use population as a proxy with science questions associated with water footprints but caveats for water management. At coarser resolutions, this assumption is reasonable for thermo-electric power plants, as they tend to be located relatively near populated areas in order to reduce transmission cost. However, this relationship begins to break down at finer resolutions, since power plants are more sparsely distributed than people and usually some distance away from population center.
+
+To address this discrepancy between where electricity is used and where it is generated, we use a siting model to determine power plants locations. We use the Capacity Expansion Regional Feasibility model (CERF)\cite{Vernon2021}, to site power plants with a 1 km spatial resolution and 5-year incremental time step, consistent with the capacity expansions and retirements output at the state-level by GCAM. CERF uses a combination of exclusion layers (e.g., protected lands, unsuitable terrain) and the cost of connecting to the power grid from a certain location to identify likely candidates for future power plants, and makes specific considerations for different technologies. We convert the output locations from CERF into gridded maps for each technology, with installed capacity as the proxy quantity, and allocate the state-level water demands from GCAM proportionally.
+
+<you need to say more here right>? how do you go from states to 100s power plants? how is it weighted? How do youtranslate into water withdrawals based on technologies, whatis the assumption on the source of water ( surface water, ground water, saline, etc). is there a buffer from the coast etc?>
+
+\subsubsection*{Municipal}
+
+Gridded maps of population consistent with population growth scenarios \cite{Jones_2016} are used as proxies for municipal water demand. As these are available every 10 years between 2010 and 2100, while the GCAM outputs are every 5 years, we linearly interpolate to obtain values for the missing years.
+
+\subsubsection*{Livestock}
+
+GCAM represents 5 different livestock sectors based on animal commodities: Beef, Dairy, Pork, Poultry, and SheepGoat. The GLW version 3 dataset\cite{Gilbert2018} provides gridded maps of livestock animals, which are combined to form proxies for the GCAM categories as shown in Table \ref{tab:livestock}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{GCAM Livestock Sector} & \textbf{GLW Proxy Animal(s)} \\
+\hline
+Beef & Buffalo + Cattle \\
+Dairy & Buffalo + Cattle \\
+Pork & Pig \\
+Poultry & Chicken + Duck \\
+SheepGoat & Sheep + Goat \\
+\hline
+\end{tabular}
+\caption{\label{tab:livestock}Mapping from GCAM livestock sector to animals in the GLW dataset.}
+\end{table}
+
+GLW rasters are at 1/12th degree resolution, so they are first re-gridded to 1/8th degree according to a simple procedure. Values from source cells that partially overlap target cells are allocated in proportion to the overlap. Additionally, the dataset is only for 2010, so the same distribution is assumed for all years and scenarios. While this does not capture the shifting location of demand over time within a region, the total volume of water demand for livestock is low compared to the total, so the impact on the overall distribution is small.
+
+\subsubsection*{Others}
+
+For the manufacturing and mining sectors, population is also used as a proxy following prior approaches. While the total volume of water is low compared to other sectors, limiting the effects of this less than ideal proxy, there can be localized dynamics between water-intensive industrial processes that future work should model better.
+
+\subsection*{Temporal Downscaling}
+
+Since GCAM operates with 5-year timesteps, outputs from spatial downscaling are first linearly interpolated to obtain gridded, annual water demands. Then, sector-specific formulas are used in order to estimate each month's share of the annual demand based on projected future climate variables.
+
+\subsubsection*{Irrigation}
+
+Temporal downscaling for the irrigation sector follows the methodology from\cite{Moore_2015}, which combines the water deficit proportion \cite{Roy_2005} with a growing season index \cite{Jolly_2005}. For each year and each grid cell, monthly weights are calculated by
+
+\begin{equation}
+\text{weight}_\text{month} = \begin{cases}
+\left|\frac{1}{\text{P}_\text{month} - \text{PET}_\text{month}}\right| & \text{if } \text{P}_\text{month} > \text{PET}_\text{month} \\
+\left|\text{P}_\text{month} - \text{PET}_\text{month}\right| & \text{if } \text{P}_\text{month} \le \text{PET}_\text{month}
+\end{cases}
+\end{equation}
+
+Where P is precipitation volume and PET is potential evapotranspiration volume. These are then multiplied by the growing season indicator...
+
+
+%Tethys is indeed taking "USA" withdrawal values, which do not take into account conveyance losses. I sent note about supersector\_iterations not enabled, or code limitations around this issue
+
+%States summed up are consistently larger by a factor of 0.829937 (conveyance losses)
+
+%fix: we should be able to get around this by bumping up tethys demands by a factor of 0.829937 
+
+%we can talk about this in our meeting
+
+%As we move forward in time, the difference between GCAM and tethys grows.
+
+%2020 - GCAM: states 150.83, USA 125.18; Tethys 122.90
+
+%2050 - GCAM: states 194.25, USA 161.21; Tethys 148.81 
+
+%Fodder grass fix
+
+\subsubsection*{Electricity}
+
+We assume a constant relationship between water withdrawals needs and electricity generation. This assumption can be challenged in summer months when the water cooling potential decreases due to high stream temperature and more water is needed to maintain cooling efficiency. However, in power system model studies, thermo-electric plants get derated when this is the case \cite{hess-17-4555-2013} and thus we keep this constant relationship assumption.  We assume that monthly water demand is proportional to monthly electricity demand, which in turn depends on heating and cooling degree days (HDD and CDD). HDD for a month or year is defined as the sum of $(\text{temperature}_\text{day} - 18^{\circ}\text{C})$ across all days in the time period where $\text{temperature}_\text{day} > 18^{\circ}\text{C}$, while CDD is the sum of $(18^{\circ}\text{C} - \text{temperature}_\text{day})$ for all days where  $\text{temperature}_\text{day} < 18^{\circ}\text{C}$. For grid cells where annual HDD > 450 and CDD > 650,
+
+\begin{equation}
+\text{demand}_\text{month} = \text{demand}_\text{year} \times \left( p_\text{heating}\frac{\text{HDD}_\text{month}}{\text{HDD}_\text{year}} + p_\text{cooling}\frac{\text{CDD}_\text{month}}{\text{CDD}_\text{year}} + p_\text{other}\frac{1}{12} \right),
+\end{equation}
+    
+where $p_\text{heating}$ is the share of the region's annual electricity consumption used for heating buildings, $p_\text{cooling}$ is the share used for cooling buildings, and $p_\text{other}$ is the share for all other uses in buildings, as well as for industry and transportation. These proportions come from region-scale data, but there may be cells in a region that do not have heating or cooling infrastructure (for example, because it doesn't usually get cold there), so this formula is modified for cells depending on annual HDD and CDD as described in Huang et al. (2018)\cite{hess-22-2117-2018}. When HDD > 450, but CDD < 650, 
+
+\begin{equation}
+\text{demand}_\text{month} = \text{demand}_\text{year} \times \left( (p_\text{heating} + p_\text{cooling} )\frac{\text{HDD}_\text{month}}{\text{HDD}_\text{year}} + p_\text{other}\frac{1}{12} \right).
+\end{equation}
+
+Similarly, when CDD > 650, but HDD < 450
+
+\begin{equation}
+\text{demand}_\text{month} = \text{demand}_\text{year} \times \left( (p_\text{cooling} + p_\text{heating} )\frac{\text{CDD}_\text{month}}{\text{CDD}_\text{year}} + p_\text{other}\frac{1}{12} \right).
+\end{equation}
+    
+When both HDD < 450 and CDD < 650, all sources of monthly variation vanish, leaving
+
+\begin{equation}
+\text{demand}_\text{month} = \text{demand}_\text{year} \times \frac{1}{12}.
+\end{equation}
+
+Energy sector fix - CERF holds plants to site later - normalized aggregate - nuke plants are to dispersed 
+
+\subsubsection*{Municipal}
+
+Temporal downscaling for the municipal sector follows the formula from Wada et al. (2011)\cite{Wada2011}, which assumes demand is greater in warmer months, controlled by a regional amplitude coefficient. For each grid cell,
+
+\begin{equation}
+\text{demand}_\text{month} = \frac{\text{demand}_\text{year}}{12} \times \left(\frac{\text{temp}_\text{month} - \text{temp}_\text{mean}}{\text{temp}_\text{max} - \text{temp}_\text{min}}R_\text{cell} + 1\right)
+\end{equation}
+
+\subsubsection*{Others}
+
+Monthly water demands for the livestock, manufacturing, and mining sectors are assumed to be constant.
+
+\subsection{Gridded runoff shares}
+One of the major contributions of this work is determining the water source for each water demand in a grid cell over time. To translate GCAM’s basin-level water withdrawals into spatially explicit water sources for each demand, we stipulate that the basin-scale shares of renewable (surface) and non-renewable (groundwater) withdrawals apply uniformly across all end-use sectors within each basin. This reflects GCAM’s cost-based allocation of sectoral demands to competing surface and groundwater supplies. 
+% trash text 
+GCAM determines total water demands in a basin by aggregating individual demands from each of the 6 demanding sectors. These demands are met by renewable and non-renewable water sources based on cost and supply competition between these sources. This results in the quantities of renewable and non-renewable water withdrawn in a basin to meet water demands. Here, we use the share of renewable versus non-renewable water withdrawn in a basin to determine the water source of individual water-demanding sectors, except water used for electricity generation, which only uses surface water for thermoelectric cooling. 
+Following this adjustment, basin-level supply-source shares are recomputed to ensure internal consistency between thermoelectric prioritization of surface water and the overall renewable versus non-renewable extraction profile used in the downscaling framework.
+
+
+\subsection{Future Projection Methods}
+Discuss caveats with ``frankenstein approach''.
+\begin{itemize}
+    \item 
+\end{itemize}
+
+\section*{Data Records}
+
+The data is permanently hosted on MSD-Live \url{https://data.msdlive.org/uploads/p4xce-e8822} and consists of directories for eight scenarios and a historical directory (Table \ref{tab:scenarios}). Each scenario directory contains netCDF 4 files with the naming convention \verb|<sector>_<demand_type><temporal_resolution>.nc| where \verb|<sector>| can be ``Domestic'', ``Electricity'', ``Irrigation'', ``Livestock'', ``Manufacturing'', or ``Mining'', \verb|<demand_type>| is either consumption or withdrawals, and \verb|<temporal_resolution>| is either ``monthly'' or ``'' (empty) which denotes annual data. In the case of irrigation data, there are two additional files with the suffix \verb|_with_losses| which indicate that conveyance losses (losses due to evaporation or seepage during transport to the point of use). Irrigation files without this suffix do not have conveyance losses included. Figure \ref{fig:data-listing} shows an example of the netCDF data format. All demand types are similarly structured although with different variable names. 
+
+\begin{table}
+    \centering
+    \begin{tabular}{ccc}
+        Scenario & Time span & Description \\
+        \verb|historical| & 1980-2019 & \\
+        \verb|rcp45cooler_ssp3| & 2020-2099 & \\
+        \verb|rcp45cooler_ssp5| & 2020-2099 & \\
+        \verb|rcp45hotter_ssp3| & 2020-2099 & \\
+        \verb|rcp45hotter_ssp5| & 2020-2099 & \\
+        \verb|rcp85cooler_ssp3| & 2020-2099 & \\
+        \verb|rcp85cooler_ssp5| & 2020-2099 & \\
+        \verb|rcp85hotter_ssp3| & 2020-2099 & \\
+        \verb|rcp85hotter_ssp5| & 2020-2099 & \\
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:scenarios}
+\end{table}
+
+\begin{figure}
+    \centering
+    \begin{verbatim}
+netcdf Livestock_withdrawals_monthly {
+dimensions:
+    year = 46 ;
+    lat = 224 ;
+    lon = 464 ;
+    month = 12 ;
+variables:
+    float Beef(year, lat, lon, month) ;
+        Beef:_FillValue = NaNf ;
+        Beef:coordinates = "spatial_ref" ;
+    float Dairy(year, lat, lon, month) ;
+        Dairy:_FillValue = NaNf ;
+        Dairy:coordinates = "spatial_ref" ;
+    float Pork(year, lat, lon, month) ;
+        Pork:_FillValue = NaNf ;
+        Pork:coordinates = "spatial_ref" ;
+    float Poultry(year, lat, lon, month) ;
+        Poultry:_FillValue = NaNf ;
+        Poultry:coordinates = "spatial_ref" ;
+    float SheepGoat(year, lat, lon, month) ;
+        SheepGoat:_FillValue = NaNf ;
+        SheepGoat:coordinates = "spatial_ref" ;
+    double lat(lat) ;
+        lat:_FillValue = NaN ;
+    double lon(lon) ;
+        lon:_FillValue = NaN ;
+    int64 spatial_ref ;
+    int64 year(year) ;
+    int64 month(month) ;
+}
+\end{verbatim}
+    \caption{Example listing of the netCDF data structure for monthly Livestock withdrawals.}
+    \label{fig:data-listing}
+\end{figure}
+
+
+\subsection{Additional files}
+
+In addition to the main gridded demand data, each scenario contains 3 additional files. The first is the file \verb|gridded_runoff_shares.nc| which contains the proportion of water in each grid cell that is assigned to surface water versus groundwater. The file contains one grid per demand year. Each scenario also includes two YAML (text) configuration files from the Tethys model runs, \verb|config_withdrawals.yaml| and \verb|config_consumption.yaml| which are included for the purposes of reproducibility. 
+%The Data Records section should be used to explain each data record associated with this work, including the repository where this information is stored, and to provide an overview of the data files and their formats. Each external data record should be cited numerically in the text of this section, for example \cite{Hao2014}, and included in the main reference list as described below. A data citation should also be placed in the subsection of the Methods containing the data-collection or analytical procedure(s) used to derive the corresponding record. Providing a direct link to the dataset may also be helpful to readers (\hyperlink{https://doi.org/10.6084/m9.figshare.853801}{https://doi.org/10.6084/m9.figshare.853801}).
+
+%Tables should be used to support the data records, and should clearly indicate the samples and subjects (study inputs), their provenance, and the experimental manipulations performed on each (please see 'Tables' below). They should also specify the data output resulting from each data-collection or analytical step, should these form part of the archived record.
+
+\section*{Technical Validation}
+
+We conduct validation of 3 sectors of water demand (Irrigation, Domestic, and Electricity), which account for over 90\% of the total U.S. water demand (USGS 2025). The data we use for validation is the USGS water use data, which was finalized for these sectors in January 2025. 
+
+First, to examine the total water demand for each sector we computed the annual total across the entire CONUS (Figure \ref{fig:annual-total-timeseries}). Overall USGS and Tethys are in agreement on the total annual water demand. One limitation of Tethys is apparent, GCAM uses 5-year timesteps and interpolates years between. This causes a lack of interannual variability in the annual totals. We also note the difference in magnitude of the three sectoral demands with Irrigation dominating consumptive use and Electricity and Irrigation relatively similar in terms of withdrawals, although electricity withdrawals have been declining in recent years due to the lower use of cooling water for thermoelectric plants\cite{skinnerWaterWithdrawalConsumption2025}. Figure \ref{fig:annual-total-boxplot} shows the percent difference in annual volume of demand between USGS and Tethys with consumption on the left and Withdrawals on the right. We note that although the Domestic and Withdrawals section show large differences in consumptive use, these sectors are relatively small volumetrically as is shown by the low bias in the Total. 
+
+
+
+%The focus of our validation is to ensure that the downscaling methodology is reasonable, so that the spatial and temporal shifts in water demands are consistent with each scenario's global and local assumptions. We accomplish this by comparing downscaled data with historical records.
+
+
+%\begin{table}
+%    \centering
+%    \begin{tabular}{ccc}
+%         &  & \\
+%         &  & \\
+%         &  & \\
+%         &  & \\
+%    \end{tabular}
+%    \caption{Table with 2020 annual total GCAM vs USGS}
+%    \label{tab:my_label}
+%\end{table}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{val1-huc06-usgs-tethys-annual-total.png}
+    \caption{Annual total water use for Domestic (i.e. Municipal), Electricity, and Irrigation sectors. with water use estimates from Tethys shown in black and USGS shown in orange. The fourth column is the total of the three sectors. Note that the jump in the total withdrawals is due to the different record lengths in the USGS data and does not reflect a change in the actual water use. }
+    \label{fig:annual-total-timeseries}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{val2-huc06-usgs-tethys-annual-total-pdiff.png}
+    \caption{Percent difference in annual sectoral and total water use between USGS and Tethys for Domestic (i.e., Municipal), Electricity, and Irrigation sectors.}
+    \label{fig:annual-total-boxplot}
+\end{figure}
+
+USGS data is available at the Hydrologic Unit Code (HUC) 12 scale (for public supply and irrigation water) and by plant (for thermoelectric cooling water) while Tethys produces data at a 1/8th degree grid. The HUC basin delineations are available as part of the USGS water boundary dataset\footnote{\url{https://www.usgs.gov/national-hydrography/watershed-boundary-dataset}}. Some processing was necessary to compare these datasets. First the 1/8th degree grid was spatially aggregated to the HUC12 regions where the contribution of each grid cell to the water demand in a given HUC12 was computed based on the proportion of overlapping area. Then, both datasets were aggregated to courser spatial scales to examine different aspects of the differences. In Figure \ref{fig:map-pbias} we present the percent difference in the annual average water use for each basin. Tethys tends to be higher than USGS for the Electricity sector and lower than USGS for Irrigation. We note that the USGS data is a model derived product as well and in many cases there is little observational data to determine a ground truth. In addition, Figure \ref{fig:huc-correlation} shows the correlation between the annual average demand by HUC6 region, which generally shows good agreement at the annual time scale with correlations ranging from 0.71 to 0.95.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{val3-huc06-pdiff-usgs-tethys.png}
+    \caption{Percent difference by HUC6 basin in annual average water use for the  Domestic (i.e., Municipal), Electricity, and Irrigation sectors.}
+    \label{fig:map-pbias}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{val4-huc06-scatter-usgs-tethys.png}
+    \caption{Enter Caption}
+    \label{fig:huc-correlation}
+\end{figure}
+
+Finally, Figure \ref{fig:monthly} shows a comparison of monthly data for the CONUS region. The seasonal pattern of Irrigation and Electricity withdrawals generally shows good agreement, while electricity consumption shows some bias in non-summer months and Domestic water use shows a relatively consistent bias compared to USGS. These differences are likely due to underlying assumptions of the two datasets.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{val5-huc06-usgs-tethys-monthly-total.png}
+    \caption{Enter Caption}
+    \label{fig:monthly}
+\end{figure}
+
+%In order to ensure the technical quality of this dataset, we address sources of uncertainty invloved with projections of the future, and validate the downscaling methodology by comparing with available fine-scale water demand records for historical years.
+
+%Although the assumptions made about future socioeconomic and climate conditons in each scenario are the independent variables within this study, and thus not the focus of validation, the likelihood of these futures occurring is discussed in [citation]. The coarse-scale outputs from GCAM are conditional upon these assumptions, as well as the assumptions implied by its equations for supply and demand, but a thorough analysis of GCAM is beyond the scope of this study.
+
+
+
+%[figures]
+
+%This section presents any experiments or analyses that are needed to support the technical quality of the dataset. This section may be supported by figures and tables, as needed. This is a required section; authors must present information justifying the reliability of their data.
+
+%\section{Limitations}
+
+%\begin{itemize}
+%    \item Runoff share computation for electricity only grid cells 
+%    \item Riparian rights do not take only from channel, they can call from reservoir 
+%    \item 
+%\end{itemize}
+
+
+
+
+\section*{Usage Notes}
+
+
+\section*{Improvements over previous version}
+
+Differences from previous versions - CERF
+Different use cases 
+differences across scenarios 
+
+1. Improving the spatial distribution of powerplant water use based on actual and projected powerplant location instead of based on population.
+
+2. Updating the output resolution to 1/8th degrees from the existing 1/2 degree resolution.
+
+3. Including future population projections to improve on the current methodology which uses a static base year population map even for future years.
+
+4. Improving the downscaling of biomass water use which is currently distributed equally within each region.
+
+5. Making Tethys compatible with GCAM-USA, which allow use of more accurate state-level water use data instead of using national data as inputs to Tethys.
+
+6. Comparing gridded outputs against observational data for individual sectors and regions where data is available.
+
+7. GSI 
+
+8. supply source attribution (groundwater vs surface water split) for each sectoral demand in this version
+
+the paper needs to highlight 5 gcam-usa, 8 sources, 1 powerplants and 3 pop by scenario alot!! 
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{usage1-dominant-sector-tethys-grid.png}
+    \caption{The dominant water use sector for each grid cell by annual average consumptive use.}
+    \label{fig:monthly}
+\end{figure}
+
+%The Usage Notes should contain brief instructions to assist other researchers with reuse of the data. This may include discussion of software packages that are suitable for analyzing the assay data files, suggested downstream processing steps (e.g. normalization, etc.), or tips for integrating or comparing the data records with other datasets. Authors are encouraged to provide code, programs or data-processing workflows if they may help others understand or use the data. Please see our code availability policy for advice on supplying custom code alongside Data Descriptor manuscripts.
+
+%For studies involving privacy or safety controls on public access to the data, this section should describe in detail these controls, including how authors can apply to access the data, what criteria will be used to determine who may access the data, and any limitations on data use. 
+
+\section*{Code availability}
+
+For all studies using custom code in the generation or processing of datasets, a statement must be included under the heading "Code availability", indicating whether and how the code can be accessed, including any restrictions to access. This section should also include information on the versions of any software used, if relevant, and any specific variables or parameters used to generate, test, or process the current dataset. 
+
+\bibliography{Tethys}
+
+\section*{Acknowledgements}
+
+This research was supported by the U.S. Department of Energy, Office of Science, as part of research in MultiSector Dynamics, Earth and Environmental System Modeling Program.
+
+\section*{Author contributions statement}
+
+TODO
+
+Must include all authors, identified by initials, for example:
+A.A. conceived the experiment(s), A.A. and B.A. conducted the experiment(s), C.A. and D.A. analyzed the results. All authors reviewed the manuscript. 
+
+\section*{Competing interests}
+
+The authors declare no competing interests.
+
+\end{document}

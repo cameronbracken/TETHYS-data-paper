@@ -1,0 +1,4 @@
+scenario,hdd_threshold,cdd_threshold,case1_both_pct,case2_heating_only_pct,case3_cooling_only_pct,case4_uniform_pct
+low,325.0,225.0,48.5,34.9,16.3,0.3
+default,650.0,450.0,31.9,46.0,19.2,2.9
+high,975.0,675.0,19.6,53.7,22.0,4.8
