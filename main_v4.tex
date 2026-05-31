@@ -59,7 +59,7 @@
 \affil[*]{corresponding author(s): Cameron Bracken (cameron.bracken@pnnl.gov), Hassan Niazi (hassan.niazi@pnnl.gov)}
 
 \begin{abstract}
-U.S. water demand varies sharply by sector and region as climate, land use, population, and economic activity co-evolve. We present a gridded (1/8$^{\circ}$), monthly, multi-sector water demand dataset for the contiguous United States (CONUS) covering 1980--2100 across one historical period and eight future scenarios. The dataset reproduces the spatial pattern of USGS 2010--2020 water-use observations with HUC6 Pearson correlations of 0.73--0.95 across Domestic, Electricity, and Irrigation withdrawals; aggregate per-sector mean bias errors are within $\pm 7\%$, but normalized RMSE and median absolute percent error remain large (68--171\% NRMSE, 37--86\% MedAPE) because per-basin biases compensate at the CONUS aggregate. This dataset advances prior global products by combining GCAM-USA state-resolved sectoral demands, CERF-based future power-plant siting, and scenario-consistent high-resolution climate and population forcing. The fine-scale spatiotemporal patterns it provides support integrated energy-water-land modeling and local-to-regional water scarcity assessments across the eight scenarios.
+U.S. water demand varies sharply by sector and region as land use, population, weather patterns, and economic activity co-evolve. High-resolution water demand data is required to capture these dynamics, support integrated energy-water-land modeling, and local-to-regional water scarcity assessments. We present a gridded (1/8$^{\circ}$), monthly, multi-sector water demand dataset for the contiguous United States (CONUS) covering 1980--2100 across one historical period and eight future scenarios. The dataset is validated against the latest USGS 2010--2020 water-use data for the three largest water demand sectors (Domestic, Electricity, and Irrigation), with correlations ranging from 0.73--0.95 at the HUC6 scale. The two datasets largely agree on an aggregate basis with per-sector bias falling within $\pm 7\%$, but they disagree on the spatial allocation of water with individual HUC6 basins having normalized RMSE from 68--171\% and median absolute percent difference from 37--86\%. This dataset advances prior global products by combining state-resolved sectoral demands from GCAM-USA, future power-plant siting from the CERF model, and scenario-consistent high-resolution climate and population forcing data across the eight scenarios.
 \end{abstract}
 \begin{document}
 
@@ -79,13 +79,13 @@ U.S. water demand varies sharply by sector and region as climate, land use, popu
 
 \section*{Background \& Summary}
 
-Humans depend on water for irrigation, thermoelectric cooling, public supply, industry, and livestock. The relative importance of these sectors varies sharply across regions and over time. Global water demand has continued to rise through the 21st century under combined socioeconomic and climatic pressures\cite{WWDR2019, Niazi2024PeakWater, Awais2024Preprint}, and demand-side drivers, not supply-side limits, dominate most projected shifts in water scarcity\cite{Graham_2020, Awais2024Preprint, Kyle2023Sustainability}. Even where regional supply appears ample, scarcity can manifest locally when demand and availability are mismatched in space or time\cite{HADJIMICHAEL23}. Modeling scarcity under climate and socioeconomic change therefore requires demand resolved at the spatial and temporal scales of management decisions.
+Humans depend on water for irrigation, thermoelectric cooling, public supply (municipal), industry, and livestock purposes. The relative importance of these sectors varies sharply across regions and over time. Global water demand has continued to rise through the 21st century under combined socioeconomic and climatic pressures\cite{WWDR2019, Niazi2024PeakWater, Awais2024Preprint}, and demand-side drivers, not supply-side limits, dominate most projected shifts in water scarcity\cite{Graham_2020, Awais2024Preprint, Kyle2023Sustainability}. Even where regional supply appears ample, scarcity can manifest locally when demand and availability are mismatched in space or time\cite{HADJIMICHAEL23}. Modeling scarcity under climate and socioeconomic change therefore requires demand resolved at the spatial and temporal scales of management decisions.
 
 High-resolution, multi-sector water-demand projections remain scarce, constraining integrated modeling. Reconstructed historical datasets, such as Huang et al. (2018)\cite{Huang2018}, provide gridded benchmarks for past decades but do not extend to future scenarios. Global water scarcity assessments use coarse-resolution integrated assessment model outputs that lack the spatial detail required for river routing or local management modeling\cite{Wada_2017, van_Vliet_2021}. Bridging these scales requires spatial and temporal downscaling\cite{hess-17-4555-2013, van_Vliet_2021, Jones_2024}, but the choice of gridded proxy variables and the consistency of driving scenarios materially affect the resulting demand fields. Khan et al. (2023)\cite{Khan2023} produced the first global Tethys-downscaled multi-sector product at 1/2$^{\circ}$ monthly resolution; resolving CONUS-scale management decisions, however, requires finer spatial resolution and scenario-consistent climate, land-use, and population forcing.
 
 We present such a dataset here, refined to 1/8$^{\circ}$ resolution across CONUS. The published record contains gridded monthly water withdrawals and consumption for six sectors: irrigation, thermoelectric, municipal (public-supply and domestic), livestock, manufacturing, and mining. The spatial resolution is 1/8$^{\circ}$, on the CONUS extent $[25.0625^{\circ}\text{N},\,52.9375^{\circ}\text{N}] \times [-124.9375^{\circ}\text{W},\,-67.0625^{\circ}\text{W}]$, for one historical period (1980--2019) and eight future scenarios (2020--2100) that vary by RCP, Thermodynamic Global Warming (TGW) climate sample, and Shared Socioeconomic Pathway (SSP). For each scenario the dataset also provides per-cell renewable vs.\ non-renewable source shares. The downscaling chain improves on the prior Tethys CONUS product in six specific ways (see Section~``Improvements over previous version''): GCAM-USA integration, explicit CERF-based\cite{Vernon2021} power-plant siting, SSP-consistent population proxies, climate-forced irrigation temporal downscaling using TGW-WRF derived deficits and growing-season indices (GSI), USGS-anchored source-share adjustment, and resolution refinement from 1/2$^{\circ}$ to 1/8$^{\circ}$. The dataset supports MultiSector Dynamics (MSD) research on U.S.\ bulk-power-system resilience, groundwater sustainability, and regional climate extremes by providing a shared scenario-consistent demand foundation that enables inter-model comparisons across MSD analyses. Figure~\ref{fig:dominant-sector} shows the dominant sector at each 1/8$^{\circ}$ cell across CONUS in the historical record --- the multi-sector mosaic this dataset captures and that motivates the rest of the paper. Figure~\ref{fig:schematic} shows the workflow that produces it. Table~\ref{tab:prior-datasets} compares this dataset with closely related published records.
 
-\begin{figure}[ht]
+\begin{figure}[!ht]
 \centering
 % Workflow figure is built natively in TikZ and compiled separately as a
 % standalone PDF. Source: flow-chart.tex; rebuild with `pdflatex flow-chart.tex`.
@@ -302,14 +302,14 @@ We validate the downscaled dataset against USGS observations at the three sector
 \centering
 \begin{tabular}{lcccccc}
 \toprule
-\textbf{Sector} & \textbf{Pearson r} & \textbf{Spearman} & \textbf{NSE} & \textbf{MBE (\%)} & \textbf{NRMSE (\%)} & \textbf{MedAPE (\%)} \\
+\textbf{Sector} & \textbf{Pearson r} & \textbf{MBE (\%)} & \textbf{NRMSE (\%)} & \textbf{MedAPE (\%)} \\
 \midrule
-Domestic     & 0.95 & 0.97 & 0.86 & $+7$  & 68  & 37 \\
-Electricity  & 0.73 & 0.78 & 0.39 & $-2$  & 171 & 86 \\
-Irrigation   & 0.89 & 0.80 & 0.77 & $-2$  & 130 & 79 \\
+Domestic     & 0.95 & $+7$  & 68  & 37 \\
+Electricity  & 0.73 & $-2$  & 171 & 86 \\
+Irrigation   & 0.89 & $-2$  & 130 & 79 \\
 \bottomrule
 \end{tabular}
-\caption{Validation metrics for withdrawals in the three sectors that together account for over 90\% of CONUS water demand, against USGS five-year water-use records (2010--2020) at the HUC6 scale ($n=329$ HUC6 basins for Domestic, $n=230$ for Electricity, $n=297$ for Irrigation; differences reflect basins where USGS reports zero use for that sector). Metrics are computed on per-HUC6 means: USGS monthly demand summed to annual at each HUC6 and averaged across reporting years, compared against the matching Tethys aggregate. Domestic USGS values are scaled by 1.12 to align with the public-supply-only definition introduced after 2015~\cite{skinnerWaterWithdrawalConsumption2025}. Reported metrics include Pearson and Spearman correlations, Nash--Sutcliffe Efficiency (NSE), Mean Bias Error (MBE), Normalized Root Mean Square Error (NRMSE), and Median Absolute Percent Error (MedAPE). Values are reproducible from the integration meta-repository (see Code availability); the numerical CSV is shipped alongside the dataset. Livestock, Manufacturing, and Mining are not validated against USGS at HUC6 because they rely on static or population-proxy spatial allocation (see Limitations).}
+\caption{Validation metrics for withdrawals in the three sectors that together account for over 90\% of CONUS water demand, against USGS five-year water-use records (2010--2020) at the HUC6 scale ($n=329$ HUC6 basins for Domestic, $n=230$ for Electricity, $n=297$ for Irrigation; differences reflect basins where USGS reports zero use for that sector). Metrics are computed on per-HUC6 means: USGS monthly demand summed to annual at each HUC6 and averaged across reporting years, compared against the matching Tethys aggregate. Domestic USGS values are scaled by 1.12 to align with the public-supply-only definition introduced after 2015~\cite{skinnerWaterWithdrawalConsumption2025}. Reported metrics include Pearson correlations Mean Bias Error (MBE), Normalized Root Mean Square Error (NRMSE), and Median Absolute Percent Error (MedAPE). Values are reproducible from the integration meta-repository (see Code availability); the numerical CSV is shipped alongside the dataset. Livestock, Manufacturing, and Mining are not validated against USGS at HUC6 because they rely on static or population-proxy spatial allocation (see Limitations).}
 \label{tab:validation-metrics}
 \end{table}
 \subsection*{CONUS annual totals}
@@ -394,20 +394,11 @@ On the methodological side, the \emph{electricity source-share carve-out} in Eq.
 % -----------------------------------------------------------------------------
 \section*{Usage Notes}
 
-We distribute the dataset as netCDF~4 files. A typical Python workflow loads one scenario file and computes a CONUS total:
-\begin{verbatim}
-import xarray as xr
-ds = xr.open_dataset(
-    "rcp45cooler_ssp3/Domestic_withdrawals_monthly.nc"
-)
-# CONUS total by year and month:
-total = ds["Domestic"].sum(dim=("lat", "lon"))
-\end{verbatim}
-The result is a (year, month) array of CONUS-total Domestic withdrawals in km$^3$~yr$^{-1}$. Users convert from the native unit (km$^3$~yr$^{-1}$) to MGD by multiplying by $264{,}172.05124/365$, so $1\text{ km}^3\text{ yr}^{-1} \approx 723.76$~MGD.
+We distribute the dataset as netCDF~4 files. The netCDF files contain year and month dimensions. Each file contains either withdrawals or consumption in km$^3$~yr$^{-1}$. Users convert from the native unit (km$^3$~yr$^{-1}$) to MGD by multiplying by $264{,}172.05124/365$, so $1\text{ km}^3\text{ yr}^{-1} \approx 723.76$~MGD.
 
-The companion integration meta-repository provides HUC-level aggregation utilities that use the \texttt{xagg} library to compute overlap-weighted aggregates from the 1/8$^{\circ}$ grid to HUC2, HUC4, HUC6, HUC8, or HUC12 polygons; see the meta-repository README for usage.
+The companion integration meta-repository provides HUC-level aggregation utilities that use the \texttt{xagg} library to compute aggregations from the 1/8$^{\circ}$ grid to HUC2, HUC4, HUC6, HUC8, or HUC12 polygons; see the meta-repository README for usage.
 
-The dominant water-use sector at each 1/8$^{\circ}$ cell shown in Figure~\ref{fig:dominant-sector} (front of paper) is one example product that exercises the full multi-sector resolution; the prior Tethys global product cannot reproduce this multi-sector mosaic at this resolution, and the advances that make it possible are itemized next.
+The dominant water-use sector at each 1/8$^{\circ}$ cell shown in Figure~\ref{fig:dominant-sector} (front of paper) is one example product that exercises the full multi-sector resolution, additional advances are itemized in the next section.
 
 \section*{Improvements over previous version}
 
