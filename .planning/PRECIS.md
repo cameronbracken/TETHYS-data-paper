@@ -1,7 +1,7 @@
 # Precis: High-resolution monthly sectoral water demands for the U.S. over 1980–2100
 
 ## Thesis
-A scenario-consistent, gridded (1/8°), monthly, six-sector water-demand record for CONUS spanning 1980–2100 — produced by coupling GCAM-USA, Demeter, CERF, SSP-aware population, TGW-WRF climate forcing, and USGS-anchored source-share adjustment in the Tethys downscaling framework — improves on the prior 1/2° global Tethys product and supports integrated energy-water-land modeling and local-to-regional scarcity assessment, while exhibiting compensating sector-level biases (notably -45% Domestic, -30% Electricity, +5% Irrigation) that the descriptor characterizes transparently.
+A scenario-consistent, gridded (1/8°), monthly, six-sector water-demand record for CONUS spanning 1980–2100 -- produced by coupling GCAM-USA, Demeter, CERF, SSP-aware population, TGW-WRF climate forcing, and USGS-anchored source-share adjustment in the Tethys downscaling framework -- improves on the prior 1/2° global Tethys product and supports integrated energy-water-land modeling and local-to-regional scarcity assessment, while exhibiting compensating sector-level biases (notably -45% Domestic, -30% Electricity, +5% Irrigation) that the descriptor characterizes transparently.
 
 ## Audience
 *Scientific Data* readers: integrated assessment modelers, hydrologists, water-resources engineers, MultiSector Dynamics (MSD) researchers, regional planners, and developers of routing/water-management models (e.g., mosartwmpy) who need scenario-consistent demand inputs at sub-state resolution. They expect: complete metric panels (Pearson + Spearman, KGE/NSE, MBE, RMSE), statistical uncertainty (n, CIs, significance), explicit characterization of methodological choices, and reusable provenance.
@@ -10,7 +10,7 @@ A scenario-consistent, gridded (1/8°), monthly, six-sector water-demand record 
 Convince the reader that (a) this dataset is the highest-resolution scenario-consistent multi-sector water-demand record for CONUS, (b) the authors have characterized its biases honestly enough that downstream users can decide where to trust it, and (c) the data, code, and configuration are reproducible. The reader should be able to download a scenario directory, read the YAML config, run a sector aggregation, and know exactly what each sector represents.
 
 ## Hook
-Aggregate CONUS-scale agreement with USGS within 10% — but that 10% is the partial cancellation of a -45% domestic underestimate, a -30% thermoelectric underestimate, and a +5% irrigation overestimate. The dataset is useful precisely because its biases are sector-resolved and reported, not because it is uniformly accurate.
+Aggregate CONUS-scale agreement with USGS within 10% -- but that 10% is the partial cancellation of a -45% domestic underestimate, a -30% thermoelectric underestimate, and a +5% irrigation overestimate. The dataset is useful precisely because its biases are sector-resolved and reported, not because it is uniformly accurate.
 
 ## Key Claims
 - **CLAIM-01**: Existing high-resolution multi-sector demand records for CONUS either lack future projections (Huang 2018) or run at coarser global resolution (Khan 2023, Wada 2017, van Vliet 2021). → motivates the contribution and framing in Background & Summary.
@@ -53,4 +53,4 @@ Aggregate CONUS-scale agreement with USGS within 10% — but that 10% is the par
 - Direct uncertainty quantification of GCAM-USA scenarios.
 
 ## Domain
-general — physical-science data descriptor; *Scientific Data* style; not legal or pure economics. Use `writing-general` style rules (clean, declarative, evidence-anchored prose, no hedging, no AI smell).
+general -- physical-science data descriptor; *Scientific Data* style; not legal or pure economics. Use `writing-general` style rules (clean, declarative, evidence-anchored prose, no hedging, no AI smell).

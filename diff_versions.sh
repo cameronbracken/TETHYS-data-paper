@@ -15,17 +15,19 @@ OUT=$3
 
 cd "$(dirname "$0")"
 
-# --disable-citation-markup : don't insert \DIFadd/\DIFdel inside \cite{} args
-#                             (they break \@citew on multi-key citations)
-# --math-markup=whole       : treat math environments as atomic (don't mark up
-#                             internals, which can break soul/ulem)
-# PICTUREENV                : treat tikzpicture as an atomic block (the default
-#                             only covers picture/DIFnomarkup; without this,
-#                             latexdiff inserts \DIFaddFL inside \node[...]
-#                             arguments and breaks TikZ parsing)
+# --disable-citation-markup                : don't insert \DIFadd/\DIFdel inside \cite{} args
+#                                            (they break \@citew on multi-key citations)
+# --math-markup=whole                      : treat math environments as atomic (don't mark up
+#                                            internals, which can break soul/ulem)
+# --append-context2cmd="abstract,keywords" : treat the abstract and keywords environments 
+#                                            as ones that can be diffed
+# PICTUREENV                               : treat tikzpicture as an atomic block (the default
+#                                            only covers picture/DIFnomarkup; without this,
+#                                            latexdiff inserts \DIFaddFL inside \node[...]
+#                                            arguments and breaks TikZ parsing)
 latexdiff \
     --disable-citation-markup \
-    --append-context2cmd="author,affil,abstract,keywords" \
+    --append-context2cmd="abstract,keywords" \
     --math-markup=whole \
     --config "PICTUREENV=(?:picture|tikzpicture|DIFnomarkup)[\w\d*@]*" \
     "$OLD" "$NEW" > "${OUT}.tex"

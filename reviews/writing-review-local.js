@@ -12,8 +12,8 @@ export const meta = {
 
 // ── Inputs ──────────────────────────────────────────────────────────────────
 // args = {
-//   projectDir: "/abs/writing-project-dir",   // REQUIRED — holds .planning/, outlines/, drafts/, references/sources.bib
-//   pluginRoot: "/abs/.../workflows",          // optional — for resolving domain skill + bridge_repetition_check.py
+//   projectDir: "/abs/writing-project-dir",   // REQUIRED -- holds .planning/, outlines/, drafts/, references/sources.bib
+//   pluginRoot: "/abs/.../workflows",          // optional -- for resolving domain skill + bridge_repetition_check.py
 //   onlyChecks?: ["Section Name", ...],         // re-review loop: re-review only these sections; carry the rest
 //   priorReviews?: [<section objects>],         // re-review loop: prior per-section results to carry forward
 // }
@@ -52,7 +52,7 @@ const DISCOVERY_SCHEMA = {
   },
 }
 
-// Structure reviewer — the rich one (carries boundary summary + concepts + argument summary for L2/L3).
+// Structure reviewer -- the rich one (carries boundary summary + concepts + argument summary for L2/L3).
 const STRUCTURE_SCHEMA = {
   type: 'object', additionalProperties: false,
   required: ['section', 'check', 'itemsChecked', 'issues', 'precisClaimAdvanced', 'boundary', 'argumentSummary'],
@@ -76,7 +76,7 @@ const STRUCTURE_SCHEMA = {
   },
 }
 
-// Prose + fidelity reviewers — lean issue lists.
+// Prose + fidelity reviewers -- lean issue lists.
 const FINDINGS_SCHEMA = {
   type: 'object', additionalProperties: false, required: ['section', 'check', 'itemsChecked', 'issues'],
   properties: {
@@ -123,16 +123,16 @@ phase('Discover')
 const disc = await agent(
   `Enumerate the document's sections and resolve the review inputs. Working directory: ${PROJECT}
 
-1. Determine \`style\` (legal|econ|general): read .planning/ACTIVE_WORKFLOW.md if it exists; if it does NOT exist, infer from .planning/PRECIS.md's "Domain" line — pure law → legal, pure empirical → econ, and a **hybrid/mixed domain → general** (the safe baseline). ${cfg.style ? `Caller override: use style="${cfg.style}".` : ''}
+1. Determine \`style\` (legal|econ|general): read .planning/ACTIVE_WORKFLOW.md if it exists; if it does NOT exist, infer from .planning/PRECIS.md's "Domain" line -- pure law → legal, pure empirical → econ, and a **hybrid/mixed domain → general** (the safe baseline). ${cfg.style ? `Caller override: use style="${cfg.style}".` : ''}
 2. Resolve absolute paths: .planning/PRECIS.md, .planning/OUTLINE.md, references/sources.bib (or "" if absent).
 3. domainSkillPath = the writing-{style}/SKILL.md under the plugin. ${cfg.pluginRoot ? `Plugin root: ${cfg.pluginRoot}` : 'Resolve via: command ls -d ~/.claude/plugins/cache/*/workflows/*/skills/writing-{style}/SKILL.md or the in-repo skills/ dir.'}
 4. repetitionScript = the bridge_repetition_check.py under skills/writing-review/scripts/.
-5. From OUTLINE.md + Glob(outlines/*.md, drafts/*.md): list every section with its outlineFile, draftFile (absolute), and the PRECIS claim it advances. Every section MUST have both files — if a draft is missing, still list it but note in precisClaim "MISSING DRAFT".
+5. From OUTLINE.md + Glob(outlines/*.md, drafts/*.md): list every section with its outlineFile, draftFile (absolute), and the PRECIS claim it advances. Every section MUST have both files -- if a draft is missing, still list it but note in precisClaim "MISSING DRAFT".
 
 Return DISCOVERY_SCHEMA. Absolute paths.`,
   { label: 'discover', phase: 'Discover', schema: DISCOVERY_SCHEMA }
 )
-if (!disc.sections.length) throw new Error('No sections discovered — check OUTLINE.md / drafts/')
+if (!disc.sections.length) throw new Error('No sections discovered -- check OUTLINE.md / drafts/')
 let sections = disc.sections
 log(`Document: ${sections.length} sections (${disc.style}); ${ONLY ? `re-review ${ONLY.size}` : 'full review'}`)
 
@@ -141,18 +141,18 @@ phase('L1-Review')
 const reviewOne = (s) => {
   const common = `Section: "${s.name}"\nOutline: ${s.outlineFile}\nDraft: ${s.draftFile}\nPRECIS claim: ${s.precisClaim}`
   return parallel([
-    // (a) Structure reviewer — runs the section checklist; carries boundary + argument summaries.
+    // (a) Structure reviewer -- runs the section checklist; carries boundary + argument summaries.
     () => agent(
       `You are a READ-ONLY structure reviewer. Do NOT create, edit, or overwrite any files.
 Set section="${s.name}", check="structure" verbatim in your record.
 ${common}
 Read the draft + outline. Run the section review checklist: outline compliance, a topic-sentence inventory (every paragraph), subsection boundaries, domain style (read ${disc.domainSkillPath}), prose-constraint and AI-anti-pattern checks. Every issue needs a verbatim quote + file:line location. Also produce the boundary summary (first/last sentence verbatim, what it assumes from prev / hands to next, argument state, concepts introduced/used, core terms) and argumentSummary (main points, for whole-doc repetition/thesis checks). itemsChecked = paragraphs reviewed. Return STRUCTURE_SCHEMA.`,
       { label: `${s.name}:structure`, phase: 'L1-Review', schema: STRUCTURE_SCHEMA }),
-    // (b) Prose-quality reviewer — the real agent.
+    // (b) Prose-quality reviewer -- the real agent.
     () => agent(
       `Set section="${s.name}", check="prose". Grade prose quality for ${s.draftFile} (domain: ${disc.style}). Read the domain skill, ai-anti-patterns, and prose constraints first. Grade every paragraph; report violations with file:line + verbatim quote. Map grades to severity: F→critical, C→major, lesser→minor. itemsChecked = paragraphs graded. Return FINDINGS_SCHEMA.`,
       { label: `${s.name}:prose`, phase: 'L1-Review', schema: FINDINGS_SCHEMA, agentType: 'workflows:writing-prose-reviewer' }),
-    // (c) Source-fidelity reviewer — the real agent.
+    // (c) Source-fidelity reviewer -- the real agent.
     () => agent(
       `Set section="${s.name}", check="fidelity". Verify citation fidelity for ${s.draftFile}. Read ${disc.sourcesBib || 'references/sources.bib'} first. Check every pandoc cite-key resolves to a bib entry; verify hand-written footnotes match. Severity: unanchored citation→critical, detail mismatch→major, claim-fidelity concern→minor. Each issue needs file:line + the citation text as quote. itemsChecked = citations checked. Return FINDINGS_SCHEMA.`,
       { label: `${s.name}:fidelity`, phase: 'L1-Review', schema: FINDINGS_SCHEMA, agentType: 'workflows:writing-source-fidelity-reviewer' }),
@@ -186,7 +186,7 @@ for (const s of sections) {
 const liveSections = (await parallel(tasks)).filter(Boolean)
 if (ONLY) log(`Selective re-review: ${reran} section(s) live, ${carriedCount} carried`)
 
-// ── Phase 3: Verify quotes resolve to the draft (mechanical — kills fabrication) ─
+// ── Phase 3: Verify quotes resolve to the draft (mechanical -- kills fabrication) ─
 phase('Verify')
 const draftByName = Object.fromEntries(sections.map(s => [s.name, s.draftFile]))
 const verifs = (await parallel(liveSections.map(sec => () =>
@@ -222,7 +222,7 @@ const [l2, l3] = await parallel([
     { label: 'L2:transitions', phase: 'L2-L3', schema: TRANSITION_SCHEMA }),
   () => agent(
     `READ-ONLY document reviewer (Level 3). Working dir ${PROJECT}.
-1. Run the repetition detector and parse its file:line pairs: \`uv run ${disc.repetitionScript} drafts/*.md\` — classify each flagged pair REDUNDANT vs INTENTIONAL_CALLBACK.
+1. Run the repetition detector and parse its file:line pairs: \`uv run ${disc.repetitionScript} drafts/*.md\` -- classify each flagged pair REDUNDANT vs INTENTIONAL_CALLBACK.
 2. Concept introduction order: using the per-section concepts + argument summaries, flag concepts used before introduced.
 3. Thesis threading: read ${disc.precisPath}; for each section does it advance the thesis? flag drift.
 4. Structural completeness: all PRECIS claims addressed? all counterarguments confronted? scope honored? hook delivered? conclusion follows?
@@ -246,7 +246,7 @@ for (const t of transIssues) sev.major++
 
 const total = sev.critical + sev.major + sev.minor
 // Substrate gate (the convergence signal): argument-breaking (critical) + structural (major) findings must be 0.
-// These are real and they converge as you fix them. MINOR findings are advisory prose polish — the per-section
+// These are real and they converge as you fix them. MINOR findings are advisory prose polish -- the per-section
 // prose reviewers (LLM) regenerate subjective minors run-to-run, so requiring minor===0 is a treadmill (the
 // writing analog of chasing composite 9.5; see project_wc_mode3_asymptote). The /writing-revise loop drives
 // criticals+majors to 0 HARD, then treats residual minors as best-effort polish the writer accepts at the cap.
@@ -257,8 +257,8 @@ const overallPass = substratePass
 const unreliableSections = allSections.filter(s => s.unreliable).map(s => s.section)
 
 log(substratePass
-  ? (sev.minor === 0 ? '✅ Review CLEAN — no issues' : `✅ Review CLEAN — 0 critical / 0 major; ${sev.minor} advisory minor polish note(s)`)
-  : `Review: ISSUES FOUND — ${sev.critical} critical / ${sev.major} major (blocking) / ${sev.minor} minor (advisory)`)
+  ? (sev.minor === 0 ? '✅ Review CLEAN -- no issues' : `✅ Review CLEAN -- 0 critical / 0 major; ${sev.minor} advisory minor polish note(s)`)
+  : `Review: ISSUES FOUND -- ${sev.critical} critical / ${sev.major} major (blocking) / ${sev.minor} minor (advisory)`)
 
 return {
   overallPass,                      // == substratePass: critical===0 && major===0 (minors are advisory, NOT blocking)
@@ -269,6 +269,6 @@ return {
   sections: allSections,            // per-section issues + boundary + argumentSummary (skill renders REVIEW.md from this)
   transitions: l2?.transitions || [],
   documentLevel: l3 || null,
-  unreliableSections,               // sections where a reviewer returned nothing — flag, don't trust
+  unreliableSections,               // sections where a reviewer returned nothing -- flag, don't trust
   sectionsThatFlagged: allSections.filter(s => (s.issues || []).length || s.unreliable).map(s => s.section), // pass as onlyChecks on re-review
 }

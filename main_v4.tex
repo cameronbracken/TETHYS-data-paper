@@ -1,36 +1,11 @@
 % -----------------------------------------------------------------------------
-% main_v4.tex — fourth draft of the Tethys data paper.
-%
-% v4 incorporates the v3 review round (REVIEW.md, the v3-2026-05-29 independent
-% review, and Wenwei's COAUTHOR_COMMENTS.md). Highlights vs v3:
-%   - Validation Table 2 numbers replaced with values from the actual pipeline
-%     (compute-table2-metrics.py); n=329 HUC6 basins; bias signs reconciled.
-%   - Skinner2025USGS bib key renamed to Harris2025 (first author is Harris).
-%   - Eq. 5 HDD/CDD threshold sensitivity test added.
-%   - Figure 1 flow chart redrawn natively in TikZ; per Wenwei's comment a
-%     "Tethys" box now wraps Spatial + Temporal Downscaling, Demeter scale
-%     annotated, "Monthly Climate Variables" -> "Monthly Meteorological
-%     Variables", PET/HDD/CDD/GSI spelled out in caption.
-%   - Dominant water-use sector map promoted to flagship figure (now Figure 1)
-%     with a Background & Summary in-text reference.
-%   - val6 scenarios timeseries regenerated so the historical line connects to
-%     the future scenario lines (no visual gap at 2020).
-%   - Backup PNGs preserved for figures that were updated.
-% Companion documents:
-%   - EQUATIONS_AUDIT.md  -- per-equation reconciliation of paper vs code
-%   - STYLE_NOTES.md      -- distilled voice/structure from 3 Bracken SciData papers
-%   - RESPONSE_TO_COMMENTS_v3.md -- review-by-review reconciliation
-%
-% Open issues flagged for coauthor resolution:
-%   - Author list ordering and affiliation numbering (please verify).
-%   - Author CRediT statement is illustrative; needs coauthor pass.
-%   - Eq. 8 clip three numbers (basin-level mass-balance residual) -- Bracken
-%     to verify; flagged in RESPONSE_TO_COMMENTS_v3.md.
+% main_v4.tex - fourth draft of the Tethys data paper.
 % -----------------------------------------------------------------------------
 
 \documentclass[fleqn,10pt]{wlscirep}
 %\usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{textcomp}
 \usepackage{lineno}
 \usepackage{booktabs}
 
@@ -119,7 +94,7 @@ Wada et al.\cite{Wada_2017}                    & 0.5$^{\circ}$ global & monthly 
 \section*{Methods and Data}
 
 
-Figure~\ref{fig:schematic} shows the workflow that produces it. Table~\ref{tab:prior-datasets} compares this dataset with closely related published records. The Tethys downscaling chain (Figure~\ref{fig:schematic}) converts state- and basin-scale water-demand projections from GCAM-USA\cite{Zhao_gcamusa_water,Zhao2024,Calvin2019GCAM,Binsted_2022} into 1/8$^{\circ}$ monthly gridded fields by applying sector-specific spatial proxies including land use (Demeter\cite{Vernon-2018}), power-plant siting (CERF\cite{Zhao2024,Mongird2025CERF}), population (Jones \& O'Neill SSPs\cite{Jones_2016}), and livestock (GLW~3\cite{Gilbert2018}), distributing the annual values into months using TGW-WRF\cite{Jones2023TGW} derived meteorological indicators (deficit, growing-season index, heating- and cooling-degree-days), and finally adjusting each cell's gw/sw share (based on Superwell\cite{Niazi2024PeakWater} model adjusted by USGS observations). The downscaling process is run for each of 8 scenarios constructed jointly with the IM3/GCIMS framework\cite{zhaoMongird2025CERF}. 
+Figure~\ref{fig:schematic} shows the workflow that produces it. Table~\ref{tab:prior-datasets} compares this dataset with closely related published records. The Tethys downscaling chain (Figure~\ref{fig:schematic}) converts state- and basin-scale water-demand projections from GCAM-USA\cite{Zhao_gcamusa_water,Zhao2024,Calvin2019GCAM,Binsted_2022} into 1/8$^{\circ}$ monthly gridded fields by applying sector-specific spatial proxies including land use (Demeter\cite{Vernon-2018}), power-plant siting (CERF\cite{Zhao2024,Mongird2025CERF}), population (Jones \& O'Neill SSPs\cite{Jones_2016}), and livestock (GLW~3\cite{Gilbert2018}), distributing the annual values into months using TGW-WRF\cite{Jones2023TGW} derived meteorological indicators (deficit, growing-season index, heating- and cooling-degree-days), and finally adjusting each cell's gw/sw share (based on Superwell\cite{Niazi2024PeakWater} model adjusted by USGS observations). The downscaling process is run for each of 8 scenarios constructed jointly with the IM3/GCIMS framework\cite{Zhao2024,Mongird2025CERF}. 
 
 The remainder of this section is organized in two parts. The first part describes the exogenous scenarios and inputs to Tethys: the TGW meteorological forcing, GCAM-USA water demands, the Demeter land-use projections, and the CERF power-plant projections. The second part describes the Tethys mechanics: the spatial-downscaling step (Eq.~\ref{eq:spatial}) with sector-specific proxies, the temporal-downscaling step with sector-specific monthly weights, and the gw/sw source share split post-processing (Eq.~\ref{eq:source-shares}). The closing subsection documents the modular one-way coupling design.
 
@@ -134,11 +109,11 @@ The remainder of this section is organized in two parts. The first part describe
 
 \subsection*{Scenarios}
 
-The dataset spans one historical period (1980--2019) and eight future scenarios (2020--2100), constructed jointly with the IM3/GCIMS framework\cite{Zhao2024,Mongird2025CERF}. The future scenarios include three dimensions: emissions constraints (rcp45 = moderate constraints, rcp85 = no constraints), GCM-temperature sensitivity over CONUS (cooler vs.\ hotter CMIP6 model groups), and Shared Socioeconomic Pathway (SSP3 = low population/economic growth, SSP5 = high growth). Following the IM3/GCIMS convention\cite{zhaoMongird2025CERF}, we use the acronym ``rcp'' for brevity in scenario names, although the underlying perturbed-thermodynamics simulations are derived from CMIP6, not CMIP5\cite{Mongird2025CERF}. The eight scenario directory names in the dataset (e.g., \texttt{rcp45cooler\_ssp3}) appear in Table~\ref{tab:scenarios} and the inter-scenario behavior of CONUS demand is shown in Figure~\ref{fig:scenarios}.
+The dataset spans one historical period (1980--2019) and eight future scenarios (2020--2100), constructed jointly with the IM3/GCIMS framework\cite{Zhao2024,Mongird2025CERF}. The future scenarios include three dimensions: emissions constraints (rcp45 = moderate constraints, rcp85 = no constraints), GCM-temperature sensitivity over CONUS (cooler vs.\ hotter CMIP6 model groups), and Shared Socioeconomic Pathway (SSP3 = low population/economic growth, SSP5 = high growth). Following the IM3/GCIMS convention\cite{Zhao2024,Mongird2025CERF}, we use the acronym ``rcp'' for brevity in scenario names, although the underlying perturbed-thermodynamics simulations are derived from CMIP6, not CMIP5\cite{Mongird2025CERF}. The eight scenario directory names in the dataset (e.g., \texttt{rcp45cooler\_ssp3}) appear in Table~\ref{tab:scenarios} and the inter-scenario behavior of CONUS demand is shown in Figure~\ref{fig:scenarios}.
 
 \subsection*{Meteorological forcing (TGW-WRF)}
 
-The historical and projected meteorological data is from perturbed thermodynamics experiments \cite{Jones2022,Jones2023} (\href{https://tgw-data.msdlive.org/}{https://tgw-data.msdlive.org/}) which provides hourly atmospheric variables at 1/8$^{\circ}$ over CONUS, dynamically downscaled with WRF from a 30-km ERA5 historical baseline (1980--2019) and from CMIP6-derived monthly thermodynamic perturbations (2020--2100). The TGW approach replays historical weather sequences with added thermodynamic signals, retaining the synoptic structure of observed weather while shifting its mean state to match each future scenario. For each TGW scenario we compute daily potential evapotranspiration (PET), precipitation ($P$), mean temperature, heating degree days (HDD), cooling degree days (CDD), and a growing-season index (GSI). These are aggregated to monthly totals or means and reprojected to the Tethys 1/8$^{\circ}$ CONUS grid.
+The historical and projected meteorological data is from perturbed thermodynamics experiments \cite{Jones2023TGW} (\href{https://tgw-data.msdlive.org/}{https://tgw-data.msdlive.org/}) which provides hourly atmospheric variables at 1/8$^{\circ}$ over CONUS, dynamically downscaled with WRF from a 30-km ERA5 historical baseline (1980--2019) and from CMIP6-derived monthly thermodynamic perturbations (2020--2100). The TGW approach replays historical weather sequences with added thermodynamic signals, retaining the synoptic structure of observed weather while shifting its mean state to match each future scenario. For each TGW scenario we compute daily potential evapotranspiration (PET), precipitation ($P$), mean temperature, heating degree days (HDD), cooling degree days (CDD), and a growing-season index (GSI). These are aggregated to monthly totals or means and reprojected to the Tethys 1/8$^{\circ}$ CONUS grid.
 
 The monthly water deficit used in irrigation temporal downscaling is $\Delta_m = \max\!\big(\text{PET}_m - P_m,\, 0\big)$. The monthly GSI is derived from a simplified version of Jolly et al.\cite{Jolly_2005}, retaining the daily minimum-temperature ($iT_{\min}$) and daylength photoperiod indicators ($iPhoto$) but omitting the vapour-pressure-deficit term. For each day $d$,
 \begin{equation}

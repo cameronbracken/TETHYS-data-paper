@@ -1,4 +1,4 @@
-# Equations audit — `main.tex` v1 vs. canonical code
+# Equations audit -- `main.tex` v1 vs. canonical code
 
 Generated 2026-05-01 as Stage 2 of the Tethys data paper v2 work. For each
 equation and semi-quantitative prose claim in the current v1 draft
@@ -10,7 +10,7 @@ resolved before the v2 draft can be written.
 truth for what the published dataset actually contains. The paper text
 is updated to match the code. Separately, if the code itself deviates
 from its cited reference (Huang 2018, Moore 2015, Wada 2011), that's
-flagged as a secondary concern for follow-up — but it doesn't change
+flagged as a secondary concern for follow-up -- but it doesn't change
 what we write in the paper.
 
 Code paths below reflect the post-cleanup layout (branch
@@ -20,21 +20,21 @@ Code paths below reflect the post-cleanup layout (branch
 
 | Paper equation / claim | Paper loc. | Code loc. | Status | Action |
 |---|---|---|---|---|
-| Eq. 1 — spatial downscaling | L75–77 | `tethys-code/tethys/model.py:197` | ✅ MATCH | none |
-| Eq. 2 — irrigation monthly weight | L129–134 | `metarepo/scripts/0_preprocessing/compute_monthly_weights.py`; `compute_deficit.py`; `compute_gsi.py`; plus `gsi_nersc/` for upstream | ❌ **WRONG FORMULA** | rewrite Eq. 2 to match code (GSI × deficit, not 1/(P−PET)) |
-| Eqs. 3–6 — electricity HDD/CDD thresholds and reallocation | L157–179 | `tethys-code/tethys/tdmethods/electricity.py:29–34` | ⚠️ **THRESHOLDS SWAPPED** | swap 450/650 in paper text; flag Huang 2018 cross-check |
-| Eq. 7 — domestic (Wada 2011) | L187–189 | `tethys-code/tethys/tdmethods/domestic.py:11–14` | ✅ MATCH structurally | minor — clarify `R_cell` ≡ `amplitude` variable name |
+| Eq. 1 -- spatial downscaling | L75–77 | `tethys-code/tethys/model.py:197` | ✅ MATCH | none |
+| Eq. 2 -- irrigation monthly weight | L129–134 | `metarepo/scripts/0_preprocessing/compute_monthly_weights.py`; `compute_deficit.py`; `compute_gsi.py`; plus `gsi_nersc/` for upstream | ❌ **WRONG FORMULA** | rewrite Eq. 2 to match code (GSI × deficit, not 1/(P−PET)) |
+| Eqs. 3–6 -- electricity HDD/CDD thresholds and reallocation | L157–179 | `tethys-code/tethys/tdmethods/electricity.py:29–34` | ⚠️ **THRESHOLDS SWAPPED** | swap 450/650 in paper text; flag Huang 2018 cross-check |
+| Eq. 7 -- domestic (Wada 2011) | L187–189 | `tethys-code/tethys/tdmethods/domestic.py:11–14` | ✅ MATCH structurally | minor -- clarify `R_cell` ≡ `amplitude` variable name |
 | Runoff-share adjustment | L196–199 (prose only, no eq.) | `metarepo/scripts/2_postprocess/adjust_runoff_shares/adjust_runoff_shares_method2_kazi.py:92–102` | ❌ **MISSING EQUATION** | add explicit equation for the USGS-anchored ratio adjustment |
 
 ## Detailed findings
 
-### Eq. 1 — spatial downscaling ✅
+### Eq. 1 -- spatial downscaling ✅
 
 **Paper (L75–77)**
 
 $$\text{demand}_\text{cell} = \text{demand}_\text{region} \times \frac{\text{proxy}_\text{cell}}{\text{proxy}_\text{region}}.$$
 
-**Code** — `tethys-code/tethys/model.py:179–197`:
+**Code** -- `tethys-code/tethys/model.py:179–197`:
 
 ```python
 def downscale(self, distribution, inputs, region_masks):
@@ -47,7 +47,7 @@ The inline comment literally quotes the paper equation. No action.
 
 ---
 
-### Eq. 2 — Irrigation monthly weight ❌ WRONG
+### Eq. 2 -- Irrigation monthly weight ❌ WRONG
 
 **Paper (L129–134)** currently reads:
 
@@ -57,38 +57,38 @@ $$\text{weight}_\text{month} =
 \left|P_\text{month} - \text{PET}_\text{month}\right| & P_\text{month} \le \text{PET}_\text{month}
 \end{cases}$$
 
-with the text after stating these are "multiplied by the growing season indicator" (and the sentence is incomplete — ends on ellipsis).
+with the text after stating these are "multiplied by the growing season indicator" (and the sentence is incomplete -- ends on ellipsis).
 
 **Problems:**
 1. The reciprocal branch (`|1/(P−PET)|` when P > PET) is not what the code computes, and it is mathematically pathological: as P approaches PET from above, the weight diverges to infinity. That's the opposite of the desired behaviour (in a wet month, irrigation demand should be small, not infinite).
 2. The code does not use P − PET (wet) vs |P − PET| (dry). It uses a single `deficit = PET − P` and lets it go negative in wet months, which is then zeroed out via the normalisation.
 3. The equation never actually shows the GSI multiplication or the normalisation to sum = 1.
 
-**Code** — authoritative pipeline (paths post-cleanup):
+**Code** -- authoritative pipeline (paths post-cleanup):
 
-**Step A** — `scripts/0_preprocessing/compute_deficit.py:21`:
+**Step A** -- `scripts/0_preprocessing/compute_deficit.py:21`:
 ```python
 ds['deficit'] = ds.PET - ds.precip
 ```
 Note: `deficit = PET − P`, **monthly**, computed from daily TGW-WRF outputs resampled to monthly sums.
 
-**Step B** — `scripts/0_preprocessing/compute_gsi.py:40–41`:
+**Step B** -- `scripts/0_preprocessing/compute_gsi.py:40–41`:
 ```python
 ds = (ds.clip(-2, 5) + 2) / 7      # f(Tmin):  Tmin=-2°C → 0, Tmin=+5°C → 1
 ds *= daylengths(ds.lat, ...).clip(10, 11) - 10
                                     # g(daylength): ≤10 h → 0, ≥11 h → 1
 ```
 So GSI = f(Tmin) × g(daylength) ∈ [0, 1], computed daily, then resampled to monthly mean.
-**Note:** this is a simplified GSI vs. Jolly et al. 2005 — it drops the VPD (vapour-pressure-deficit) indicator.
+**Note:** this is a simplified GSI vs. Jolly et al. 2005 -- it drops the VPD (vapour-pressure-deficit) indicator.
 
-**Step C** — `scripts/0_preprocessing/compute_monthly_weights.py:17–19`:
+**Step C** -- `scripts/0_preprocessing/compute_monthly_weights.py:17–19`:
 ```python
 ds = deficit * gsi
 ds /= days_in_month     # lambda x,y: monthrange(x,y)[1]
 ds /= ds.sum(dim='month').where(lambda x: x != 0, 1)   # normalise to sum=1 across 12 months
 ```
 
-**Step D** — the per-cell, per-year normalised monthly weights are written to `irrigation_weight_{scenario}.nc` and consumed in `tethys-code/tethys/tdmethods/weights.py` as the `pirrww` variable (the prenormalised flag is set to True in `test_config.yml`, so `weights.py` does not re-normalise).
+**Step D** -- the per-cell, per-year normalised monthly weights are written to `irrigation_weight_{scenario}.nc` and consumed in `tethys-code/tethys/tdmethods/weights.py` as the `pirrww` variable (the prenormalised flag is set to True in `test_config.yml`, so `weights.py` does not re-normalise).
 
 **Correct equation** (what to put in the paper):
 
@@ -100,7 +100,7 @@ $$
 
 so that $\sum_m w_m = 1$ per cell per year. The monthly irrigation demand is then $\text{demand}_m = w_m \times \text{demand}_{\text{year}}$.
 
-(The `max(·, 0)` is the cleanest paper-facing statement; the actual code keeps the sign on `deficit` and relies on the sum-normalisation to handle net-wet years — but for paper prose, clipping at 0 is equivalent under the normalisation.)
+(The `max(·, 0)` is the cleanest paper-facing statement; the actual code keeps the sign on `deficit` and relies on the sum-normalisation to handle net-wet years -- but for paper prose, clipping at 0 is equivalent under the normalisation.)
 
 **GSI expression for the paper:**
 
@@ -121,7 +121,7 @@ where $T_{\min}$ is daily-minimum air temperature in °C (from TGW-WRF) and $L$ 
 
 ---
 
-### Eqs. 3–6 — Electricity monthly weights (HDD/CDD) ⚠️ THRESHOLDS SWAPPED
+### Eqs. 3–6 -- Electricity monthly weights (HDD/CDD) ⚠️ THRESHOLDS SWAPPED
 
 **Paper (L157–179)** text around Eq. 2 says:
 
@@ -129,7 +129,7 @@ where $T_{\min}$ is daily-minimum air temperature in °C (from TGW-WRF) and $L$ 
 
 That is: HDD threshold = 450, CDD threshold = 650.
 
-**Code** — `tethys-code/tethys/tdmethods/electricity.py:29–34`:
+**Code** -- `tethys-code/tethys/tdmethods/electricity.py:29–34`:
 
 ```python
 # when hdd under threshold but cdd above threshold, cooling percent is added to heating signal
@@ -144,13 +144,13 @@ cdd = xr.where((hdd_sums < 650) & (cdd_sums < 450), 1 / 12, cdd)
 i.e., HDD threshold = **650**, CDD threshold = **450**. Exactly swapped.
 
 **Three possible explanations:**
-1. The paper text is a transcription error — code is right. Most likely.
-2. The code has a bug — paper is right, code needs fixing. Would mean the published dataset has bad monthly electricity weights in border climates. Worth checking.
-3. Both paper and code diverge from Huang et al. 2018 — cross-checking the original paper settles the question.
+1. The paper text is a transcription error -- code is right. Most likely.
+2. The code has a bug -- paper is right, code needs fixing. Would mean the published dataset has bad monthly electricity weights in border climates. Worth checking.
+3. Both paper and code diverge from Huang et al. 2018 -- cross-checking the original paper settles the question.
 
 **Action for paper v2:** write the prose with the *code* values (HDD > 650 ⇒ region has meaningful heating season; CDD > 450 ⇒ region has meaningful cooling season). Keep the Huang et al. 2018 citation but make sure the numerical thresholds are consistent with what the code actually runs.
 
-**Follow-up (outside paper scope):** read Huang et al. 2018 §3 to confirm the canonical thresholds. If Huang says (450, 650), the code has a bug and the dataset should be regenerated — but that's a much bigger problem than a paper edit, so handle separately.
+**Follow-up (outside paper scope):** read Huang et al. 2018 §3 to confirm the canonical thresholds. If Huang says (450, 650), the code has a bug and the dataset should be regenerated -- but that's a much bigger problem than a paper edit, so handle separately.
 
 **Paper equation reformulated to match code (one option, using code-consistent thresholds):**
 
@@ -172,11 +172,11 @@ $$
 \text{demand}_m = \text{demand}_\text{year} \times \big(p_\text{heat}\,\hat{h}_m + p_\text{cool}\,\hat{c}_m + p_\text{other}\,\hat{o}_m\big).
 $$
 
-This compresses Eqs. 3–6 into a single cases-block equation that mirrors the code exactly. The v2 draft should use this form (or the four-equation form with corrected thresholds) — author's choice, just be consistent.
+This compresses Eqs. 3–6 into a single cases-block equation that mirrors the code exactly. The v2 draft should use this form (or the four-equation form with corrected thresholds) -- author's choice, just be consistent.
 
 ---
 
-### Eq. 7 — Domestic monthly (Wada 2011) ✅ MATCH
+### Eq. 7 -- Domestic monthly (Wada 2011) ✅ MATCH
 
 **Paper (L187–189)**
 
@@ -186,7 +186,7 @@ $$
 
 where $\bar{T}$ is the annual mean temperature, $T_\text{max}$, $T_\text{min}$ are annual extremes, and $R_\text{cell}$ is a region-level amplitude coefficient.
 
-**Code** — `tethys-code/tethys/tdmethods/domestic.py:11–14`:
+**Code** -- `tethys-code/tethys/tdmethods/domestic.py:11–14`:
 
 ```python
 ranges = tas.max(dim='month') - tas.min(dim='month')
@@ -212,7 +212,7 @@ $$
 
 There is **no equation**, and the prose glosses over the key step: the output dataset uses the **USGS-anchored method-2 adjustment**, not the raw GCAM basin shares.
 
-**Code** — `scripts/2_postprocess/adjust_runoff_shares/adjust_runoff_shares_method2_kazi.py:92–102`:
+**Code** -- `scripts/2_postprocess/adjust_runoff_shares/adjust_runoff_shares_method2_kazi.py:92–102`:
 
 ```python
 for i, yr in enumerate(years):
@@ -246,11 +246,11 @@ In plain words: within the USGS-observable region, the 2015 USGS pattern is anch
 
 ## Secondary findings (not equations, but prose issues)
 
-1. **L89** — inline TODO question from a coauthor about CERF → state → grid weighting remains unresolved in the text. The answer is in `scripts/0_preprocessing/cerf_to_tethys/cerf_to_tethys.py` plus the notes in the prior Tethys paper (Khan 2023). Resolve in v2.
-2. **L139–152** — commented-out conveyance-losses discussion block. These notes point at a real issue (GCAM state sums differ from GCAM USA totals by a factor of ~0.83 due to conveyance losses not being modelled in the US). The v2 paper needs an explicit paragraph here — either documenting the conveyance-loss correction applied in Tethys, or flagging it as a known limitation.
-3. **L181** — stray single-line note "Energy sector fix - CERF holds plants to site later - normalized aggregate - nuke plants are to dispersed". Looks like an author comment. Either expand into prose or delete.
-4. **L202–206** — "Future Projection Methods" is a stub with an empty bullet list. Needs full treatment in v2.
-5. **L383–384** — bullet 8 ("supply source attribution") refers to the method we now audit as "WRONG" above. The v2 draft needs the corrected eq. + caption for this claim.
+1. **L89** -- inline TODO question from a coauthor about CERF → state → grid weighting remains unresolved in the text. The answer is in `scripts/0_preprocessing/cerf_to_tethys/cerf_to_tethys.py` plus the notes in the prior Tethys paper (Khan 2023). Resolve in v2.
+2. **L139–152** -- commented-out conveyance-losses discussion block. These notes point at a real issue (GCAM state sums differ from GCAM USA totals by a factor of ~0.83 due to conveyance losses not being modelled in the US). The v2 paper needs an explicit paragraph here -- either documenting the conveyance-loss correction applied in Tethys, or flagging it as a known limitation.
+3. **L181** -- stray single-line note "Energy sector fix - CERF holds plants to site later - normalized aggregate - nuke plants are to dispersed". Looks like an author comment. Either expand into prose or delete.
+4. **L202–206** -- "Future Projection Methods" is a stub with an empty bullet list. Needs full treatment in v2.
+5. **L383–384** -- bullet 8 ("supply source attribution") refers to the method we now audit as "WRONG" above. The v2 draft needs the corrected eq. + caption for this claim.
 
 ## Authoritative file paths (post-cleanup)
 

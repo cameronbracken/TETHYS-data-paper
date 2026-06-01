@@ -1,6 +1,6 @@
 # ScholarEval: TETHYS Data Paper v2
 
-**Manuscript:** `main_v2.tex` — "High-resolution monthly sectoral water demands for the U.S. over 1980–2100"
+**Manuscript:** `main_v2.tex` -- "High-resolution monthly sectoral water demands for the U.S. over 1980–2100"
 **Venue:** Scientific Data (data descriptor)
 **Date:** 2026-05-28
 **Companion:** `TETHYS_data_paper_v3-review.md` (qualitative peer review of compiled v3 PDF)
@@ -30,7 +30,7 @@ Validation-weighted aggregate weights Dimension 5 ×1.5 because technical valida
 
 ---
 
-## Dimension 1 — Problem formulation & dataset rationale (4/5)
+## Dimension 1 -- Problem formulation & dataset rationale (4/5)
 
 ### Strengths
 - The contribution is articulated as six concrete advances over Khan et al. 2023, each tied to a specific upstream model component (GCAM-USA, CERF, Demeter, Jones-O'Neill SSPs, TGW-WRF, USGS anchoring). This is harder to do well than it looks.
@@ -51,7 +51,7 @@ Validation-weighted aggregate weights Dimension 5 ×1.5 because technical valida
 
 ---
 
-## Dimension 2 — Literature positioning (3.5/5)
+## Dimension 2 -- Literature positioning (3.5/5)
 
 ### Strengths
 - The downscaling-chain references (Khan 2023, Vernon 2018/2021, Jones-O'Neill 2016, Jolly 2005, Moore 2015, Roy 2005, Wada 2011) are appropriate primary sources for each method choice and they each get cited at the point of use.
@@ -71,7 +71,7 @@ Validation-weighted aggregate weights Dimension 5 ×1.5 because technical valida
 
 ---
 
-## Dimension 3 — Methodology & workflow design (4/5)
+## Dimension 3 -- Methodology & workflow design (4/5)
 
 ### Strengths
 - The downscaling chain is described phase by phase (preprocessing → spatial → temporal → source-share adjustment) with equations matched to code locations (`scripts/0_preprocessing/gsi_nersc/` etc.). The `EQUATIONS_AUDIT.md` companion file documents per-equation reconciliation, which is unusual rigor for this genre.
@@ -94,7 +94,7 @@ Validation-weighted aggregate weights Dimension 5 ×1.5 because technical valida
 
 ---
 
-## Dimension 4 — Input data & sources (4/5)
+## Dimension 4 -- Input data & sources (4/5)
 
 ### Strengths
 - Inputs span the IM3 stack (GCAM-USA, Demeter, CERF, TGW-WRF) and external authoritative datasets (Jones-O'Neill SSPs, GLW3, GPPD, USGS). Each is cited and most have DOIs.
@@ -116,7 +116,7 @@ Validation-weighted aggregate weights Dimension 5 ×1.5 because technical valida
 
 ---
 
-## Dimension 5 — Analysis & technical validation (2.5/5)
+## Dimension 5 -- Analysis & technical validation (2.5/5)
 
 This is the lowest-scoring dimension and the one most likely to attract reviewer pushback at Scientific Data. The structure of the validation is right (CONUS annual → HUC6 spatial → seasonal cycle → inter-scenario), but the statistical content is thin.
 
@@ -147,7 +147,7 @@ A Technical Validation section that includes: (a) a per-sector × demand-type va
 
 ---
 
-## Dimension 6 — Data records & figures (3.5/5)
+## Dimension 6 -- Data records & figures (3.5/5)
 
 ### Strengths
 - File schema is clean and documented with a CDL excerpt (Fig. 2). The naming convention (`<Sector>_<demand_type>[_monthly].nc`) is readable and machine-parseable.
@@ -155,14 +155,14 @@ A Technical Validation section that includes: (a) a per-sector × demand-type va
 - Conveyance-loss variants are flagged via filename suffix.
 
 ### Weaknesses
-- `gridded_runoff_shares.nc` documentation is thin — the per-cell, per-year `s^adj` definition is in the manuscript but the netCDF metadata (units, valid range, fill value, mask interpretation) should also be readable from the file itself.
+- `gridded_runoff_shares.nc` documentation is thin -- the per-cell, per-year `s^adj` definition is in the manuscript but the netCDF metadata (units, valid range, fill value, mask interpretation) should also be readable from the file itself.
 - Conveyance-loss formulation, rate, and spatial variation are not documented (Reviewer 1 issue 20).
 - Fig. 9 (dominant-sector map) appears without textual reference (Reviewer 1 issue 21).
 - Fig. 1 (workflow) precedes the introduction of Demeter, CERF, etc., without forward reference; reorganizing so the figure caption resolves all acronyms would help.
 
 ---
 
-## Dimension 7 — Scholarly writing (4/5)
+## Dimension 7 -- Scholarly writing (4/5)
 
 ### Strengths
 - Tight, appropriately formal voice. Few wasted words. Strong sectional organization that mirrors Scientific Data conventions (Background & Summary → Methods and Data → Data Records → Technical Validation → Usage Notes).
@@ -178,7 +178,7 @@ A Technical Validation section that includes: (a) a per-sector × demand-type va
 
 ---
 
-## Dimension 8 — Citations & references (3/5)
+## Dimension 8 -- Citations & references (3/5)
 
 ### Strengths
 - 34 unique citation keys, all at point of use.
@@ -223,7 +223,7 @@ A Technical Validation section that includes: (a) a per-sector × demand-type va
 
 7. Quantify Eq. 8 clip behavior (cell fraction in 𝓜, fraction where clip binds, basin-level mass-balance residuals). (Dim. 3)
 8. Eq. 5 threshold sensitivity (perturb (650, 450) and report monthly CONUS Electricity demand spread; map cells within ±20% of threshold under historical and rcp85hotter 2090–2100). (Dim. 3)
-9. Diagnose the −45% Domestic bias — units, GCAM-USA total, or downscaling artifact. (Dim. 5)
+9. Diagnose the −45% Domestic bias -- units, GCAM-USA total, or downscaling artifact. (Dim. 5)
 10. Promote 2020 historical→future discontinuity to a Limitations bullet with magnitude. (Dim. 3)
 11. Add Limitations bullet on 5-year GCAM linear interpolation suppressing interannual variability. (Dim. 3)
 12. Expand existing-dataset paragraph (Huang 2018, Wada 2017, van Vliet 2021, Khan 2023) beyond Table 1. (Dim. 2)

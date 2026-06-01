@@ -1,4 +1,4 @@
-# Independent Review: TETHYS CONUS Data Paper — v3
+# Independent Review: TETHYS CONUS Data Paper -- v3
 
 **Manuscript:** "High-resolution monthly sectoral water demands for the U.S. over 1980–2100"
 **File reviewed:** `main_v3.tex` (455 lines, written 2026-05-28)
@@ -16,7 +16,7 @@
 
 v3 is a substantial improvement over v2. The two highest-priority items from the prior review are now addressed: (a) the abstract has been rewritten to lead with sector-level biases, and (b) a validation metrics table (Table 2) has been added with Pearson r, Spearman ρ, NSE/KGE, MBE, NRMSE, and MedAPE. The opaque `RN*` cite keys have been resolved to proper author-year keys, the `TODO-TGW-WRF` placeholder has been replaced with the canonical `Jones2023TGW` reference, and a new bias-diagnosis subsection has been added.
 
-**However**, v3 introduces several issues that need to be cleaned up before submission. Most importantly: **the values in the new validation metrics table (Table 2) appear to be illustrative rather than computed from the actual outputs.** The "Industrial" sector row is not part of the dataset's six-sector decomposition (which is Irrigation, Electricity, Domestic, Livestock, Manufacturing, Mining), and the row values do not reconcile with the text or figures. This is the single largest blocker — the table either needs to be replaced with real numbers or removed.
+**However**, v3 introduces several issues that need to be cleaned up before submission. Most importantly: **the values in the new validation metrics table (Table 2) appear to be illustrative rather than computed from the actual outputs.** The "Industrial" sector row is not part of the dataset's six-sector decomposition (which is Irrigation, Electricity, Domestic, Livestock, Manufacturing, Mining), and the row values do not reconcile with the text or figures. This is the single largest blocker -- the table either needs to be replaced with real numbers or removed.
 
 Beyond Table 2, v3 has duplicated paragraphs in the Background, an unresolved cite-key collision in Table 1, several leftover TODO and stub artifacts in the file header and author-contributions section, and a still-unresolved Bracken 2025 GODEEEP-hydro reference flagged in the file header. None of these threaten the contribution; they are the kind of issues that arise from a fast revision pass and need a brief clean-up before submission.
 
@@ -29,7 +29,7 @@ If the validation table is replaced with real numbers and the duplications/TODOs
 | Prior issue | Status | Where |
 |---|---|---|
 | **M1.** Abstract overstates aggregate agreement | **RESOLVED.** Abstract now leads with sector-level biases (−45% Domestic, −30% Electricity, +5% Irrigation) and explicitly notes cancellation. | Line 45 |
-| **M2.** Validation metrics panel incomplete | **PARTIALLY RESOLVED.** Table 2 added with Pearson r, Spearman ρ, NSE/KGE, MBE, NRMSE, MedAPE. **However see Critical Issue C1 below — values appear illustrative, not computed.** Sample size n=208 added to figure captions for Figs 4 and 6. CIs and Moran's I still missing. | Lines 287–304, 319, 337 |
+| **M2.** Validation metrics panel incomplete | **PARTIALLY RESOLVED.** Table 2 added with Pearson r, Spearman ρ, NSE/KGE, MBE, NRMSE, MedAPE. **However see Critical Issue C1 below -- values appear illustrative, not computed.** Sample size n=208 added to figure captions for Figs 4 and 6. CIs and Moran's I still missing. | Lines 287–304, 319, 337 |
 | **M5.** Domestic −45% bias asserted not demonstrated | **PARTIALLY RESOLVED.** New "Bias diagnosis and uncertainty" subsection added (line 341). Two candidate explanations now offered (Wada R coefficient, GCAM-USA base-year mismatch) and USGS uncertainty acknowledged with `Skinner2025USGS` and `Stets2025USGS` citations. **Still no diagnostic plot.** | Lines 341–342 |
 | **M8.** Opaque `RN*` cite keys | **RESOLVED at the bib level.** All renamed to author-year keys (`Calvin2019GCAM`, `Niazi2024PeakWater`, etc.) in `Tethys.bib`. Manuscript updated. | Throughout |
 | **`TODO-TGW-WRF`** placeholder | **RESOLVED.** Replaced with `\cite{Jones2023TGW}` at lines 102 and 427. | Lines 102, 427 |
@@ -43,7 +43,7 @@ If the validation table is replaced with real numbers and the duplications/TODOs
 | **M3.** Eq. 8 `min(·,1)` clip asymmetry, mass balance, coverage of 𝓜 | **NOT ADDRESSED.** Equation unchanged. Text discussion has minor reword (line 217: "reflecting the trade-off between mass balance conservation and binding fraction limits"), but the three quantitative items (fraction in 𝓜, fraction where clip binds, basin-level mass-balance residual) are still missing. | Lines 213–217 |
 | **M4.** Eq. 5 thresholds (HDD ≥ 650, CDD ≥ 450) sensitivity | **NOT ADDRESSED.** No partition fractions, no sensitivity test. | Line 195 |
 | **M6.** Fig. 8 lacks uncertainty envelope | **NOT ADDRESSED.** Figure 8 still shows deterministic single trajectories. | Line 357 |
-| **M7.** Background does not explicitly contrast each row of Table 1 | **PARTIALLY RESOLVED.** Background reorganization (lines 58–60) now explicitly references Huang 2018, Wada 2017, van Vliet 2021, Khan 2023 — but the contrast is implicit, not row-by-row as recommended. Acceptable for *Scientific Data*. | Lines 58–62 |
+| **M7.** Background does not explicitly contrast each row of Table 1 | **PARTIALLY RESOLVED.** Background reorganization (lines 58–60) now explicitly references Huang 2018, Wada 2017, van Vliet 2021, Khan 2023 -- but the contrast is implicit, not row-by-row as recommended. Acceptable for *Scientific Data*. | Lines 58–62 |
 
 ---
 
@@ -55,13 +55,13 @@ If the validation table is replaced with real numbers and the duplications/TODOs
 
 The table reports a row for an "Industrial" sector that is not part of the dataset's actual six-sector decomposition. The manuscript repeatedly states the dataset covers six sectors: Irrigation, Electricity (= Thermoelectric), Municipal/Domestic, Livestock, Manufacturing, and Mining (lines 64, 230). Manufacturing and Mining are also explicitly stated to use a population proxy at line 175 and discussed in Limitations (line 369). Neither is called "Industrial," and no discussion in the Technical Validation text references an Industrial validation result.
 
-In addition, the values in the table do not cleanly reconcile with the text or figures. The text states (line 325) that HUC6 Pearson correlations range from **0.71 to 0.95** across Domestic / Electricity / Irrigation. Table 2 shows 0.71 / 0.88 / 0.95 for those three sectors — consistent with the text. But it also shows Industrial (0.82), Livestock (0.85), and a Total of 0.93 (NSE/KGE 0.82, MBE −10%) — none of which are mentioned anywhere in the body. The figures (Fig. 5, Fig. 6) only show Domestic / Electricity / Irrigation.
+In addition, the values in the table do not cleanly reconcile with the text or figures. The text states (line 325) that HUC6 Pearson correlations range from **0.71 to 0.95** across Domestic / Electricity / Irrigation. Table 2 shows 0.71 / 0.88 / 0.95 for those three sectors -- consistent with the text. But it also shows Industrial (0.82), Livestock (0.85), and a Total of 0.93 (NSE/KGE 0.82, MBE −10%) -- none of which are mentioned anywhere in the body. The figures (Fig. 5, Fig. 6) only show Domestic / Electricity / Irrigation.
 
 This is the most consequential issue in the v3 draft: a *Scientific Data* validation table that contains a non-existent sector and unmotivated rows undermines the credibility of the entire validation. Two reviewers would catch this.
 
 **Recommendation.** One of the following:
 
-1. **Preferred:** Replace Table 2 with the actually computed metrics for the three validated sectors (Domestic, Electricity, Irrigation) — the values for these three sectors in the table appear to be plausible but should be regenerated from the validation pipeline (`tethys_integration_metarepo/validation/` or `tethys-validation/`) and confirmed. Drop the Industrial, Livestock, and Total rows entirely; the manuscript is clear that only three sectors are validated.
+1. **Preferred:** Replace Table 2 with the actually computed metrics for the three validated sectors (Domestic, Electricity, Irrigation) -- the values for these three sectors in the table appear to be plausible but should be regenerated from the validation pipeline (`tethys_integration_metarepo/validation/` or `tethys-validation/`) and confirmed. Drop the Industrial, Livestock, and Total rows entirely; the manuscript is clear that only three sectors are validated.
 2. **Acceptable alternative:** Add Manufacturing+Mining as a single row and Livestock as another (using their actual proxy-based estimates), but only after running the validation pipeline against USGS for those sectors. State clearly that those sectors carry larger uncertainty per the static proxies.
 3. **Not acceptable:** Leaving the table as-is.
 
@@ -83,7 +83,7 @@ Table 1 still uses the old cite key `\cite{hess-22-2117-2018}` for the Huang et 
 
 The same paper IS already cited as `Huang2018` in line 60 of the Background. So the Table-1 reference is the only remaining occurrence of the old key.
 
-**Recommendation.** Change `\cite{hess-22-2117-2018}` to `\cite{Huang2018}` at line 81. (The same fix at line 195 — Eq. 5 paragraph — is **already in place** in v3 if I'm reading correctly; double-check.) Once this is done, all 29 cite keys in v3 resolve cleanly in `Tethys.bib`. The duplicate restoration entry I staged in `new-entries.bib` for `hess-22-2117-2018` can then be removed; the staged `Huang2018` already in `Tethys.bib` is sufficient.
+**Recommendation.** Change `\cite{hess-22-2117-2018}` to `\cite{Huang2018}` at line 81. (The same fix at line 195 -- Eq. 5 paragraph -- is **already in place** in v3 if I'm reading correctly; double-check.) Once this is done, all 29 cite keys in v3 resolve cleanly in `Tethys.bib`. The duplicate restoration entry I staged in `new-entries.bib` for `hess-22-2117-2018` can then be removed; the staged `Huang2018` already in `Tethys.bib` is sufficient.
 
 ---
 
@@ -107,7 +107,7 @@ Same as prior M6. v3 figure unchanged.
 
 **Where:** Lines 341–342.
 
-The new "Bias diagnosis and uncertainty" subsection is one paragraph long and is positioned between "HUC6 spatial agreement" (Fig. 6) and "Seasonal cycle" (Fig. 7) without a section break in the rendered output (the `\subsection*{Seasonal cycle}` directly abuts the bias-diagnosis paragraph on line 342, suggesting a missing newline). Also, the bias-diagnosis paragraph cites `Skinner2025USGS` and `Stets2025USGS` for "USGS reanalysis uncertainty" — which is the right framing — but does not actually quantify what that uncertainty is (e.g., USGS Circular 1492 vs. Stets reanalysis differences for the relevant sectors). This is fine for a one-paragraph addition but reads as a placeholder.
+The new "Bias diagnosis and uncertainty" subsection is one paragraph long and is positioned between "HUC6 spatial agreement" (Fig. 6) and "Seasonal cycle" (Fig. 7) without a section break in the rendered output (the `\subsection*{Seasonal cycle}` directly abuts the bias-diagnosis paragraph on line 342, suggesting a missing newline). Also, the bias-diagnosis paragraph cites `Skinner2025USGS` and `Stets2025USGS` for "USGS reanalysis uncertainty" -- which is the right framing -- but does not actually quantify what that uncertainty is (e.g., USGS Circular 1492 vs. Stets reanalysis differences for the relevant sectors). This is fine for a one-paragraph addition but reads as a placeholder.
 
 **Recommendation.** (a) Add a blank line before `\subsection*{Seasonal cycle}` at line 342 so it renders as a proper subsection. (b) If feasible, add one number quantifying the USGS-side uncertainty (e.g., the Stets reanalysis revised X% of HUC6 thermoelectric estimates by more than ±10%). (c) Otherwise, soften the language to "reference USGS estimates have themselves been revised in recent reanalyses" and let the citation do the work.
 
@@ -115,9 +115,9 @@ The new "Bias diagnosis and uncertainty" subsection is one paragraph long and is
 
 **Where:** File header lines 12–13 ("TGW-WRF primary reference is missing from Tethys.bib; marked with TODO. Bracken et al. 2025 GODEEEP-hydro reference also missing; marked with TODO.").
 
-The TGW-WRF half of this header note has been resolved (Jones2023TGW). The Bracken 2025 GODEEEP-hydro half has not been. The header note itself is now stale — the v2 header text was carried into v3 unchanged.
+The TGW-WRF half of this header note has been resolved (Jones2023TGW). The Bracken 2025 GODEEEP-hydro half has not been. The header note itself is now stale -- the v2 header text was carried into v3 unchanged.
 
-**Recommendation.** (a) Decide whether GODEEEP-hydro needs to be cited at all in this manuscript — if it is upstream of the GCAM-USA-CERF-Tethys-mosartwmpy chain or used in any of the inputs, cite it; if not, drop the TODO. (b) Update the file-header comment block to reflect the v3 state (TGW-WRF resolved; v2/v3 lineage description is now wrong).
+**Recommendation.** (a) Decide whether GODEEEP-hydro needs to be cited at all in this manuscript -- if it is upstream of the GCAM-USA-CERF-Tethys-mosartwmpy chain or used in any of the inputs, cite it; if not, drop the TODO. (b) Update the file-header comment block to reflect the v3 state (TGW-WRF resolved; v2/v3 lineage description is now wrong).
 
 ---
 
@@ -127,9 +127,9 @@ The TGW-WRF half of this header note has been resolved (Jones2023TGW). The Brack
 
 **Where:** Lines 1–14 of `main_v3.tex`.
 
-The header still says "main_v2.tex — second draft of the Tethys data paper" and still flags the TGW-WRF TODO. With v3 now active, the header should be updated.
+The header still says "main_v2.tex -- second draft of the Tethys data paper" and still flags the TGW-WRF TODO. With v3 now active, the header should be updated.
 
-**Recommendation.** Rename file-header to "main_v3.tex — third draft" and remove resolved TODOs. Note that v3 is *not* a ground-up rewrite of v2 in the way v2 was of v1; describe the change correctly.
+**Recommendation.** Rename file-header to "main_v3.tex -- third draft" and remove resolved TODOs. Note that v3 is *not* a ground-up rewrite of v2 in the way v2 was of v1; describe the change correctly.
 
 ### m2. Header line 14 still has the corrupted ASCII rule
 
@@ -153,7 +153,7 @@ The manuscript otherwise refers to the dataset as "Tethys CONUS multi-sector wat
 
 **Where:** Line 342.
 
-The body uses `R` for the amplitude coefficient throughout, so "Wada R coefficient" reads naturally — but cite `Wada2011` (which is in the bib and is cited at Eq. 9, line 213) at the first mention in the bias-diagnosis paragraph for clarity.
+The body uses `R` for the amplitude coefficient throughout, so "Wada R coefficient" reads naturally -- but cite `Wada2011` (which is in the bib and is cited at Eq. 9, line 213) at the first mention in the bias-diagnosis paragraph for clarity.
 
 ### m6. Skinner 2025 (`Skinner2025USGS`) and `skinnerWaterWithdrawalConsumption2025` are different papers cited inconsistently
 
@@ -161,7 +161,7 @@ The body uses `R` for the amplitude coefficient throughout, so "Wada R coefficie
 
 These are different Skinner-led papers with different scopes (one on automated physics-based estimation, one on the 2008–2020 trend analysis). Both are valid and useful. But the reader will be confused if both keys appear with similar abbreviated citations.
 
-**Recommendation.** Verify each citation is using the right Skinner paper. The 2008–2020 trend paper (`skinnerWaterWithdrawalConsumption2025`) is correct for the "decline in electricity withdrawals" claim at line 307. The "physics-based thermoelectric water-use estimation" paper (`Skinner2025USGS` — actually Harris/Skinner) is correct for the USGS-uncertainty discussion at line 342. Consider renaming `Skinner2025USGS` to `Harris2025` for clarity — the first author is Harris, not Skinner.
+**Recommendation.** Verify each citation is using the right Skinner paper. The 2008–2020 trend paper (`skinnerWaterWithdrawalConsumption2025`) is correct for the "decline in electricity withdrawals" claim at line 307. The "physics-based thermoelectric water-use estimation" paper (`Skinner2025USGS` -- actually Harris/Skinner) is correct for the USGS-uncertainty discussion at line 342. Consider renaming `Skinner2025USGS` to `Harris2025` for clarity -- the first author is Harris, not Skinner.
 
 ### m7. Number of HUC6s reported as n=208
 
@@ -191,13 +191,13 @@ The "Open issues" list is from v2 and is no longer accurate. Update to reflect v
 
 ## Editorial / Polish
 
-- **Line 102:** "\cite{Jones2023TGW}at" — missing space before "at". Cosmetic.
-- **Line 195:** still cites `Huang2018` (good — this is the right key now). Carryover from v2 only at table line 81.
-- **Line 305:** `\subsection*{CONUS annual totals}` — would benefit from a blank line before for visual readability of source.
+- **Line 102:** "\cite{Jones2023TGW}at" -- missing space before "at". Cosmetic.
+- **Line 195:** still cites `Huang2018` (good -- this is the right key now). Carryover from v2 only at table line 81.
+- **Line 305:** `\subsection*{CONUS annual totals}` -- would benefit from a blank line before for visual readability of source.
 - **Line 342:** `\subsection*{Seasonal cycle}` is jammed against the preceding paragraph end. Add newline.
-- **Line 416:** "supports detailed scenario analysis" — good (was "supports detailed scenario." in v2 — fixed).
+- **Line 416:** "supports detailed scenario analysis" -- good (was "supports detailed scenario." in v2 -- fixed).
 - **Line 433:** Acknowledgments still mention only TGW-WRF, GCAM-USA, and USGS. If GODEEEP-hydro is cited, acknowledge that team here.
-- **Line 444:** "K.M. Developed CERF--Tethys integration" — good (was "Developed CERF CERF--Tethys integration" in v2).
+- **Line 444:** "K.M. Developed CERF--Tethys integration" -- good (was "Developed CERF CERF--Tethys integration" in v2).
 
 ---
 
@@ -225,13 +225,13 @@ Stets2025USGS, van_Vliet_2021, Vernon-2018, Vernon2021, Wada_2017, Wada2011,
 WWDR2019, Zhao_gcamusa_water, Zhao2024
 ```
 
-29 unique cite keys appear in `main_v3.tex`. **One mismatch remains:** `\cite{hess-22-2117-2018}` at Table 1 line 81 does not resolve in the new bib (use `Huang2018` instead — see C3).
+29 unique cite keys appear in `main_v3.tex`. **One mismatch remains:** `\cite{hess-22-2117-2018}` at Table 1 line 81 does not resolve in the new bib (use `Huang2018` instead -- see C3).
 
 After fixing C3, all citations resolve cleanly. The duplicate `hess-22-2117-2018` and `Abeshu_2023`, `BIJL201675` restoration entries staged in `new-entries.bib` (from the v2 review) are no longer needed:
 
 - `Abeshu_2023` is **not cited from v3** (was only at v2 line 67, that paragraph has been removed).
 - `BIJL201675` is **not cited from v3** (was only at v2 line 67, removed).
-- `hess-22-2117-2018` is cited from v3 at line 81 only — fix by switching to `Huang2018` (already in bib).
+- `hess-22-2117-2018` is cited from v3 at line 81 only -- fix by switching to `Huang2018` (already in bib).
 
 → `new-entries.bib` can be **deleted or archived**; nothing in it is needed by v3 except as a record of restored metadata in case the user later wants those references back. The Bracken2025GODEEEP stub remains useful as a placeholder.
 
@@ -257,7 +257,7 @@ When run, candidate BibTeX entries will be added to `new-entries.bib`.
 
 The single highest-priority item is:
 
-1. **Replace or remove the Industrial-sector row in Table 2 (C1)** and verify all values in the validation metrics table against the actual outputs of the validation pipeline. This is the only blocker — *Scientific Data* reviewers will catch this.
+1. **Replace or remove the Industrial-sector row in Table 2 (C1)** and verify all values in the validation metrics table against the actual outputs of the validation pipeline. This is the only blocker -- *Scientific Data* reviewers will catch this.
 
 Beyond that:
 
@@ -265,11 +265,11 @@ Beyond that:
 3. **Fix the `hess-22-2117-2018` → `Huang2018` cite-key at Table 1 line 81 (C3).** One-character edit.
 4. **Decide and act on the Bracken 2025 GODEEEP-hydro reference (M5).** Either cite it or drop the TODO from the file header.
 5. **Update the file header (lines 1–14, m1, m2, m11)** to reflect v3 state.
-6. **Quantify Eq. 8 clip impact (M1 carryover)** — three sentences, no re-run.
-7. **Resolve author CRediT statement (m3)** — coauthor task, but flag it.
+6. **Quantify Eq. 8 clip impact (M1 carryover)** -- three sentences, no re-run.
+7. **Resolve author CRediT statement (m3)** -- coauthor task, but flag it.
 8. **Verify Table 2 caption uses consistent dataset name (m4).**
 
-Items M2/M3/M4 (carryover) and minor issues are not blockers for *Scientific Data* — they can be addressed in a final polish.
+Items M2/M3/M4 (carryover) and minor issues are not blockers for *Scientific Data* -- they can be addressed in a final polish.
 
 After fixes 1–5, the manuscript should be ready for *Scientific Data* on a minor-revision turnaround. The dataset itself is solid, the methodology is clearly described, and the contribution is well-motivated.
 

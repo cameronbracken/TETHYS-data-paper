@@ -1,4 +1,4 @@
-# Response to Reviewer Comments — TETHYS data paper, `main_v4.tex`
+# Response to Reviewer Comments -- TETHYS data paper, `main_v4.tex`
 
 > **Note on versioning.** v4 was created from v3 to incorporate the second
 > round of fixes requested by the corresponding author after seeing v3
@@ -15,9 +15,9 @@
 **Target venue:** *Scientific Data*  
 **Sources consulted (all under `tethys-data-paper/reviews/` or `tethys-data-paper-review/.planning/`):**
 
-- `.planning/REVIEW.md` (workflow review of v3, 2026-05-29) — 8 critical / 41 major / 48 minor
+- `.planning/REVIEW.md` (workflow review of v3, 2026-05-29) -- 8 critical / 41 major / 48 minor
 - `reviews/main_v3-review-2026-05-29.md` (independent reviewer of v3, 2026-05-29)
-- `reviews/COAUTHOR_COMMENTS.md` (Wenwei et al., 2026-05-29) — Methods restructuring
+- `reviews/COAUTHOR_COMMENTS.md` (Wenwei et al., 2026-05-29) -- Methods restructuring
 - `reviews/SCHOLAR_EVALUATION.md` (ScholarEval framework, v2, 2026-05-28)
 - `reviews/TETHYS_data_paper_v3-review-2026-05-28-fresh.md` (independent reviewer of v2/v3, 2026-05-28)
 - `reviews/TETHYS_data_paper_v3-review.md` (initial reviewer of v3 PDF, 2026-05-28)
@@ -31,11 +31,11 @@ In what follows, "v3" refers to the `main_v3.tex` we deliver here. Line numbers 
 
 ## 1. Critical issues from the most-recent independent review (`main_v3-review-2026-05-29.md`)
 
-### C1 — Validation metrics table (Table 2) values illustrative, not computed
+### C1 -- Validation metrics table (Table 2) values illustrative, not computed
 
 > *"The 'Industrial' sector row is not part of the dataset's six-sector decomposition … the row values do not reconcile with the text or figures."*
 
-**Status:** RESOLVED (structure); PARTIAL (numbers — see §6 below for pipeline-verification).  
+**Status:** RESOLVED (structure); PARTIAL (numbers -- see §6 below for pipeline-verification).  
 **Action:** Per coauthor decision (Bracken), Table 2 was reduced to the three sectors that the body and figures actually validate (Domestic, Electricity, Irrigation). Industrial, Livestock, and Total rows were removed; the caption now explains the exclusion of Livestock/Manufacturing/Mining as a consequence of static or population-proxy spatial allocation.
 
 **Proof (`main_v3.tex` lines 280–290):**
@@ -53,7 +53,7 @@ Domestic     & 0.71 & 0.68 & 0.45 & -45  & 35 & 22 \\
 \caption{Validation metrics for the three sectors that together account for over 90\% of CONUS water demand, against USGS 2015 estimates at the HUC6 scale ($n=208$). … Values are computed by the validation pipeline at \texttt{tethys\_integration\_metarepo/validation/}; Livestock, Manufacturing, and Mining are not validated against USGS at HUC6 because they rely on static or population-proxy spatial allocation (see Limitations).}
 ```
 
-### C2 — Background paragraph 3 duplicated
+### C2 -- Background paragraph 3 duplicated
 
 > *"Two paragraphs both begin 'We present such a dataset here.' (lines 62 and 64)."*
 
@@ -64,7 +64,7 @@ Domestic     & 0.71 & 0.68 & 0.45 & -45  & 35 & 22 \\
 
 > *"We present such a dataset here, refined to 1/8° resolution across CONUS. The published record contains gridded monthly water withdrawals and consumption for six sectors … The downscaling chain improves on the prior Tethys CONUS product in six specific ways (see Section ``Improvements over previous version''): GCAM-USA integration, explicit CERF-based power-plant siting, SSP-consistent population proxies, climate-forced irrigation temporal downscaling using TGW-WRF derived deficits and growing-season indices (GSI), USGS-anchored source-share adjustment, and resolution refinement from 1/2° to 1/8°. The dataset supports MultiSector Dynamics (MSD) research on U.S. bulk-power-system resilience, groundwater sustainability, and regional climate extremes by providing a shared scenario-consistent demand foundation that enables inter-model comparisons across MSD analyses."*
 
-### C3 — Citation key collision: `hess-22-2117-2018` vs. `Huang2018` in Table 1
+### C3 -- Citation key collision: `hess-22-2117-2018` vs. `Huang2018` in Table 1
 
 **Status:** RESOLVED.  
 **Action:** Replaced both occurrences of `\cite{hess-22-2117-2018}` (Table 1 row, Eq. 5 attribution) with `\cite{Huang2018}`.
@@ -73,7 +73,7 @@ Domestic     & 0.71 & 0.68 & 0.45 & -45  & 35 & 22 \\
 
 ---
 
-## 2. Coauthor comments (`COAUTHOR_COMMENTS.md`, Wenwei et al.) — Methods restructuring
+## 2. Coauthor comments (`COAUTHOR_COMMENTS.md`, Wenwei et al.) -- Methods restructuring
 
 The largest single change in v3. Wenwei requested:
 
@@ -88,7 +88,7 @@ The largest single change in v3. Wenwei requested:
 **Proof:**
 
 - **(1)** Overview paragraph at `main_v3.tex` line 95: walks through Figure 1 and announces the two-part structure (exogenous inputs vs Tethys mechanics).
-- **(2)** Figure 1 caption (line 70) now lists the section that describes each box (e.g., *"State- and HUC2-basin-scale demands from GCAM-USA (Section ``GCAM-USA regional projections'') are spatially downscaled using sector-specific gridded proxies — Demeter land use (Section ``Land-use projections (Demeter)''), CERF power-plant locations (Section ``Power-plant siting projections (CERF)'') …"*) and spells out PET, HDD/CDD, and GSI.
+- **(2)** Figure 1 caption (line 70) now lists the section that describes each box (e.g., *"State- and HUC2-basin-scale demands from GCAM-USA (Section ``GCAM-USA regional projections'') are spatially downscaled using sector-specific gridded proxies -- Demeter land use (Section ``Land-use projections (Demeter)''), CERF power-plant locations (Section ``Power-plant siting projections (CERF)'') …"*) and spells out PET, HDD/CDD, and GSI.
 - **(3) + (4)** New subsection ordering verified by `grep "subsection\*" main_v3.tex`:
 
 ```
@@ -107,7 +107,7 @@ The largest single change in v3. Wenwei requested:
 
 ---
 
-## 3. Major issues — Workflow REVIEW.md (`tethys-data-paper-review/.planning/REVIEW.md`)
+## 3. Major issues -- Workflow REVIEW.md (`tethys-data-paper-review/.planning/REVIEW.md`)
 
 ### Per-section findings
 
@@ -146,8 +146,8 @@ The entire section was rewritten per Wenwei's request (§2 above). All seven maj
 
 | Review issue | Where in v3 |
 |---|---|
-| Passive "Historical forcings were dynamically downscaled" | Line 103 — recast inside TGW subsection |
-| Passive "Future meteorological forcings were projected" | Line 103 — *"The TGW approach replays historical weather sequences…"* |
+| Passive "Historical forcings were dynamically downscaled" | Line 103 -- recast inside TGW subsection |
+| Passive "Future meteorological forcings were projected" | Line 103 -- *"The TGW approach replays historical weather sequences…"* |
 | 50+-word run-on RCP sentence | Removed; replaced by Scenarios subsection (lines 97–99) |
 | Irrigation subsection lead is crop list | New topic sentence at line 124: *"Spatially explicit, scenario-consistent annual per-crop irrigated-area maps at 1/8° come from Demeter…"* |
 | GPPD/IM3-experiment-B not in outline | Clarified at line 128: *"For the historical period we substitute the 2015 plant inventory from the Global Power Plant Database v1.3 (GPPD), augmented with the IM3 experiment B CONUS plant inventory, in place of CERF projections; both feed the same spatial-downscaling step at the cell."* |
@@ -195,7 +195,7 @@ The entire section was rewritten per Wenwei's request (§2 above). All seven maj
 | MINOR: roadmap promised 4 stages, doc has 6 | Expanded roadmap | Line 275 |
 | MINOR: 44-word ERA5/TGW sentence | Split | Line 345 |
 
-#### Usage Notes (6 minor — all RESOLVED)
+#### Usage Notes (6 minor -- all RESOLVED)
 
 | Review issue | Where in v3 |
 |---|---|
@@ -207,18 +207,18 @@ The entire section was rewritten per Wenwei's request (§2 above). All seven maj
 | No transition out to Improvements | Line 376 added bridge |
 | Unit rounding 723.8 → 723.76 (m8) | Line 372 |
 
-#### Improvements over previous version (6 minor — all RESOLVED)
+#### Improvements over previous version (6 minor -- all RESOLVED)
 
 | Review issue | Where in v3 |
 |---|---|
-| Closing fails to reiterate partial-cancellation caveat (PRECIS req.) | Line 402: *"…the close CONUS-aggregate agreement masks compensating sector-level biases — a -45% underestimate in Domestic and a -30% underestimate in Electricity withdrawals partially offset by a +5% bias in Irrigation — so downstream users computing per-sector scarcity should consult Table 2 rather than rely on aggregate agreement alone."* |
+| Closing fails to reiterate partial-cancellation caveat (PRECIS req.) | Line 402: *"…the close CONUS-aggregate agreement masks compensating sector-level biases -- a -45% underestimate in Domestic and a -30% underestimate in Electricity withdrawals partially offset by a +5% bias in Irrigation -- so downstream users computing per-sector scarcity should consult Table 2 rather than rely on aggregate agreement alone."* |
 | "In addition this dataset is validated…" tacked-on | Folded into closing sentence at line 402 |
 | "as it should" editorializing | Removed; line 396: *"…tracking interannual drought variability that a static template cannot reproduce."* |
 | Inconsistent "factor-of-four" vs "16x" | Made parallel | Line 400: *"a factor-of-4 improvement per dimension and a factor-of-16 improvement in areal resolution"* |
 | "markedly more realistic" weak | Concrete claim | Line 392: *"…places thermoelectric demand at actual generation sites rather than at population centroids, correcting the historical decoupling of load from generation in regions like the lower Colorado and Tennessee Valley."* |
 | "materially" / "transparently" abstract | Removed | Line 398 |
 
-#### Code availability (5 minor — all RESOLVED)
+#### Code availability (5 minor -- all RESOLVED)
 
 | Review issue | Where in v3 |
 |---|---|
@@ -231,27 +231,27 @@ The entire section was rewritten per Wenwei's request (§2 above). All seven maj
 
 | Boundary | Status | Where in v3 |
 |---|---|---|
-| Abstract → Background | SMOOTH (already) | — |
-| Background → Methods | SMOOTH | — |
-| Methods → Data Records | SMOOTH (now stronger via line 213 closer) | — |
-| Data Records → Technical Validation | SMOOTH (now stronger via line 222 closer) | — |
-| Technical Validation → Usage Notes | SMOOTH (already) | — |
+| Abstract → Background | SMOOTH (already) | -- |
+| Background → Methods | SMOOTH | -- |
+| Methods → Data Records | SMOOTH (now stronger via line 213 closer) | -- |
+| Data Records → Technical Validation | SMOOTH (now stronger via line 222 closer) | -- |
+| Technical Validation → Usage Notes | SMOOTH (already) | -- |
 | Usage Notes → Improvements (was ABRUPT) | RESOLVED | Line 376 prose bridge |
-| Improvements → Code availability | SMOOTH (already) | — |
+| Improvements → Code availability | SMOOTH (already) | -- |
 
 ---
 
-## 4. Independent v3 review (`main_v3-review-2026-05-29.md`) — Major and Minor issues
+## 4. Independent v3 review (`main_v3-review-2026-05-29.md`) -- Major and Minor issues
 
-### Major (carryover) — see also §6 Deferred items
+### Major (carryover) -- see also §6 Deferred items
 
 | ID | Status |
 |---|---|
-| M1 (carryover) Eq. 8 clip three numbers | DEFERRED — see §6 |
-| M2 (carryover) Eq. 5 HDD/CDD threshold sensitivity | **RESOLVED** — see §5 below |
+| M1 (carryover) Eq. 8 clip three numbers | DEFERRED -- see §6 |
+| M2 (carryover) Eq. 5 HDD/CDD threshold sensitivity | **RESOLVED** -- see §5 below |
 | M3 (carryover) Fig. 8 envelope | DEFERRED to coauthor (per Bracken decision) |
-| M4 (new) Bias-diagnosis subsection abuts Seasonal cycle + placeholder feel | RESOLVED — proper subsection break + diagnosis expanded to all three sectors at line 330 |
-| M5 (new) Bracken 2025 GODEEEP-hydro reference | RESOLVED per coauthor decision — TODO removed from header (lines 1–16) |
+| M4 (new) Bias-diagnosis subsection abuts Seasonal cycle + placeholder feel | RESOLVED -- proper subsection break + diagnosis expanded to all three sectors at line 330 |
+| M5 (new) Bracken 2025 GODEEEP-hydro reference | RESOLVED per coauthor decision -- TODO removed from header (lines 1–16) |
 
 ### Minor
 
@@ -262,8 +262,8 @@ The entire section was rewritten per Wenwei's request (§2 above). All seven maj
 | m3 CRediT statement TODO | DEFERRED per coauthor decision (left for coauthor pass) | Line 423 marker preserved |
 | m4 "Tethys 2.0" in caption inconsistent | RESOLVED | grep "Tethys 2.0" returns 0 hits |
 | m5 Wada R first-mention citation | RESOLVED | Line 330: *"…the Wada\cite{Wada2011} $R$ amplitude coefficient in Eq. 9…"* |
-| **m6 Skinner vs Harris bib key** | **RESOLVED** — `Skinner2025USGS` renamed to `Harris2025` (first-author is Harris) | grep -c `Skinner2025USGS` returns 0 in both `Tethys.bib` and `main_v3.tex`; line 330 cites `\cite{Harris2025, Stets2025USGS}` |
-| m7 n=208 explanation | PARTIAL — n=208 in Table 2 caption + figure captions; 14-basin exclusion note not added to body | Line 289 |
+| **m6 Skinner vs Harris bib key** | **RESOLVED** -- `Skinner2025USGS` renamed to `Harris2025` (first-author is Harris) | grep -c `Skinner2025USGS` returns 0 in both `Tethys.bib` and `main_v3.tex`; line 330 cites `\cite{Harris2025, Stets2025USGS}` |
+| m7 n=208 explanation | PARTIAL -- n=208 in Table 2 caption + figure captions; 14-basin exclusion note not added to body | Line 289 |
 | m8 723.8 vs 723.76 rounding | RESOLVED | Line 372 |
 | m9 "decline Electricity" missing word | RESOLVED | Line 294 |
 | m10 "across all nine scenarios" | RESOLVED | Line 345 |
@@ -273,9 +273,9 @@ The entire section was rewritten per Wenwei's request (§2 above). All seven maj
 
 | Item | Status |
 |---|---|
-| Line 102 `{Jones2023TGW}at` missing space | RESOLVED — line 103 was rewritten in restructure |
-| Line 305 `\subsection*{CONUS annual totals}` blank line | RESOLVED — lines 291–292 |
-| Line 342 `\subsection*{Seasonal cycle}` jammed | RESOLVED — line 332 |
+| Line 102 `{Jones2023TGW}at` missing space | RESOLVED -- line 103 was rewritten in restructure |
+| Line 305 `\subsection*{CONUS annual totals}` blank line | RESOLVED -- lines 291–292 |
+| Line 342 `\subsection*{Seasonal cycle}` jammed | RESOLVED -- line 332 |
 | Line 433 Acknowledgments mention only TGW-WRF/GCAM-USA/USGS | RESOLVED per coauthor decision (no GODEEEP-hydro to acknowledge) |
 | Line 444 "K.M. Developed CERF--Tethys" | already correct in v3 |
 
@@ -287,7 +287,7 @@ The entire section was rewritten per Wenwei's request (§2 above). All seven maj
 
 `Skinner2025USGS` (first author Harris) renamed to `Harris2025` in `Tethys.bib` and at the single citation site in the manuscript (line 330). `skinnerWaterWithdrawalConsumption2025` (Skinner et al.\ 2008–2020 trend paper) is unchanged because it is the correct first-author key.
 
-### 5.2 Eq. 5 HDD/CDD threshold sensitivity (M2 carryover) — DONE in v4
+### 5.2 Eq. 5 HDD/CDD threshold sensitivity (M2 carryover) -- DONE in v4
 
 A sensitivity script (`tethys_integration_metarepo/sensitivity/eq5-hdd-cdd-thresholds.py`) was written that perturbs the (HDD ≥ 650, CDD ≥ 450) thresholds by ±50% to (325, 225) and (975, 675), recomputes the four-case partition fractions across CONUS at 1/8° using the historical TGW-WRF HDD/CDD record (2010–2019), and reports the resulting CONUS-mean monthly Electricity weight profile under each threshold pair. Headline results:
 
@@ -298,7 +298,7 @@ A sensitivity script (`tethys_integration_metarepo/sensitivity/eq5-hdd-cdd-thres
 
 A new "HDD/CDD threshold sensitivity (Eq. 5)" subsection appears in `main_v4.tex` immediately before Limitations, with a new figure showing both the case-partition stacked bar and the monthly weight profiles. Output artefacts: `figures/eq5-hdd-cdd-sensitivity-summary.csv`, `figures/eq5-hdd-cdd-sensitivity-monthly-profile.csv`, `figures/eq5-hdd-cdd-sensitivity.png`, with a copy of the figure at the paper root for `\includegraphics`.
 
-### 5.3 Validation pipeline rerun and Table 2 numbers (C1 follow-up) — DONE in v4
+### 5.3 Validation pipeline rerun and Table 2 numbers (C1 follow-up) -- DONE in v4
 
 The pipeline was rerun against `/Volumes/data/tethys/output_adjusted_usgs_method2/` (canonical recent output). Per-HUC6-mean metrics for withdrawals (the published, validated dataset) are:
 
@@ -312,11 +312,11 @@ Domestic USGS values are scaled by 1.12 to align with the public-supply-only def
 
 The bias-diagnosis subsection, the abstract, the inter-scenario-consistency paragraph, and the Improvements-section closing partial-cancellation caveat were all rewritten to match these computed values rather than the v3 illustrative −45/−30/+5 framing. The new framing emphasises that mean-bias agreement is good (within ±7%) at the CONUS aggregate but that within-basin spread (NRMSE 68–171%, MedAPE 37–86%) reflects compensating per-basin biases.
 
-### 5.4 Dominant-sector map promoted to flagship Figure 1 — DONE in v4
+### 5.4 Dominant-sector map promoted to flagship Figure 1 -- DONE in v4
 
 Per coauthor request, the dominant water-use sector map is now Figure 1 of the paper (immediately before the Background & Summary section). The Background & Summary refers to it explicitly: *"Figure 1 shows the dominant sector at each 1/8° cell across CONUS in the historical record --- the multi-sector mosaic this dataset captures and that motivates the rest of the paper."* The figure was regenerated by `tethys_integration_metarepo/validation/5d-dominant-sector-map.py` from the canonical `output_adjusted_usgs_method2/historical/` consumption files. The duplicate copy that previously sat at the end of Usage Notes was removed; the prose pointer in Usage Notes now references the front-of-paper figure. The original PNG is preserved at `usage1-dominant-sector-tethys-grid_v3rollback.png`.
 
-### 5.5 Figure 1 flow chart redrawn natively in TikZ — DONE in v4
+### 5.5 Figure 1 flow chart redrawn natively in TikZ -- DONE in v4
 
 The previous `\includegraphics{flow-chart2.pdf}` was replaced with a native TikZ figure in the manuscript (Figure 2 in v4 numbering, since the dominant-sector map is now Figure 1). All four of Wenwei's box-level edits are applied:
 
@@ -328,11 +328,11 @@ The previous `\includegraphics{flow-chart2.pdf}` was replaced with a native TikZ
 
 The TikZ source is inline in `main_v4.tex` so coauthors can edit it directly in Overleaf. The original `flow-chart2.pdf` is left in the project directory for rollback.
 
-### 5.6 Figure 8 (`val6-scenarios-annual-conus-timeseries`) — historical/future continuity — DONE in v4
+### 5.6 Figure 8 (`val6-scenarios-annual-conus-timeseries`) -- historical/future continuity -- DONE in v4
 
 The historical line in `5c-scenarios-timeseries.R` was extended through 2019 and each future scenario's line now starts at 2019 with the historical value for that sector. The visual hand-off is therefore continuous: the future lines fan out from the end of the historical curve rather than starting in mid-air at 2020. The original PNG is preserved as `val6-scenarios-annual-conus-timeseries_v3rollback.png`. Inter-scenario-consistency caption and prose were updated accordingly to remove the "2020 discontinuity" framing.
 
-### 5.7 Skinner → Harris bib rename (m6) — DONE in v4
+### 5.7 Skinner → Harris bib rename (m6) -- DONE in v4
 
 Documented in §5.1 above; mentioning here for completeness in the v4 audit trail.
 
@@ -342,14 +342,14 @@ Documented in §5.1 above; mentioning here for completeness in the v4 audit trai
 
 | Item | Why deferred | Recommended next step |
 |---|---|---|
-| Eq. 8 clip quantification (REVIEW M1, v3 M1 carryover): three numbers — fraction of cells in 𝓜, fraction where clip binds, basin-level mass-balance residual | Reviewer notes "no re-run required — derive from `gridded_runoff_shares.nc`." I have not computed these without coauthor sign-off on the analysis approach. | Compute three CONUS aggregates from `/Volumes/data/tethys/output_adjusted_usgs_method2/<scenario>/gridded_runoff_shares.nc` for at least one representative scenario, append three sentences to the source-share post-processing subsection. |
+| Eq. 8 clip quantification (REVIEW M1, v3 M1 carryover): three numbers -- fraction of cells in 𝓜, fraction where clip binds, basin-level mass-balance residual | Reviewer notes "no re-run required -- derive from `gridded_runoff_shares.nc`." I have not computed these without coauthor sign-off on the analysis approach. | Compute three CONUS aggregates from `/Volumes/data/tethys/output_adjusted_usgs_method2/<scenario>/gridded_runoff_shares.nc` for at least one representative scenario, append three sentences to the source-share post-processing subsection. |
 | Fig. 8 (`val6`) uncertainty envelope (M3 carryover) | Coauthor (Bracken) said *"I will verify 8 myself"*. Continuity-only update was done as part of §5.5. | Coauthor pass to add cooler/hotter shading per RCP. |
 | CRediT author-contributions statement | Coauthor (Bracken) said *"Leave the credit statement as is"*. The illustrative TODO comment line at line 423 is preserved as a marker. | Coauthor pass before submission. |
 | Author affiliation / corresponding-author count | Two `[1*]/[2*]` corresponding-author marks; *Scientific Data* normally permits one. | Verify against journal author guidelines; resolve before submission. |
 | Background row-by-row contrast against Table 1 (SCHOLAR_EVALUATION item 12, M7 carryover) | Earlier v3 reviewer accepted as adequate; not flagged as blocker by 2026-05-29 review. | Optional 2–3-sentence expansion if the action editor requests it. |
 | `paper.bib` vs `Tethys.bib` (m17 from v2 review) | Bibliography directive at line 438 already points only at `Tethys.bib`; `paper.bib` is silently unused. | Optional clean-up: delete `paper.bib` or annotate it as obsolete. |
-| User-community paragraph in Usage Notes (SCHOLAR_EVALUATION item 14) | Beyond targeted-fix scope. | Optional — not flagged as blocker. |
-| Conveyance-loss formulation documentation (SCHOLAR_EVALUATION item 15, m10 from v2 review) | Beyond targeted-fix scope. | Optional — flagged as gentle improvement. |
+| User-community paragraph in Usage Notes (SCHOLAR_EVALUATION item 14) | Beyond targeted-fix scope. | Optional -- not flagged as blocker. |
+| Conveyance-loss formulation documentation (SCHOLAR_EVALUATION item 15, m10 from v2 review) | Beyond targeted-fix scope. | Optional -- flagged as gentle improvement. |
 
 ---
 
@@ -358,25 +358,25 @@ Documented in §5.1 above; mentioning here for completeness in the v4 audit trai
 | File | Change |
 |---|---|
 | `main_v3.tex` | (kept as v3 reference) Earlier round of fixes documented in §1–4. |
-| `main_v4.tex` | NEW — v4 working draft. Adds: dominant-sector map promoted to Figure 1 with Background reference; Figure 2 flow chart rewritten in native TikZ with the four Wenwei edits; Table 2 rewritten with pipeline-verified numbers; bias-diagnosis subsection rewritten to match new MBE signs; abstract rewritten; HDD/CDD sensitivity subsection added; Skinner→Harris cite key applied; inter-scenario consistency caption updated for continuous historical→future visual; duplicate Fig. 9 block removed from Usage Notes. |
+| `main_v4.tex` | NEW -- v4 working draft. Adds: dominant-sector map promoted to Figure 1 with Background reference; Figure 2 flow chart rewritten in native TikZ with the four Wenwei edits; Table 2 rewritten with pipeline-verified numbers; bias-diagnosis subsection rewritten to match new MBE signs; abstract rewritten; HDD/CDD sensitivity subsection added; Skinner→Harris cite key applied; inter-scenario consistency caption updated for continuous historical→future visual; duplicate Fig. 9 block removed from Usage Notes. |
 | `Tethys.bib` | `Skinner2025USGS` key renamed to `Harris2025` (entry contents unchanged); `Mongird2025CERF` stub added for the CERF manuscript currently submitted to *Earth's Future*. |
-| `RESPONSE_TO_COMMENTS_v4.md` (this file) | UPDATED — response-to-comments artefact for revision letter / coauthor circulation. |
-| `tethys_integration_metarepo/sensitivity/eq5-hdd-cdd-thresholds.py` | New — Eq. 5 HDD/CDD threshold sensitivity script (§5.2). |
-| `tethys_integration_metarepo/validation/compute-table2-metrics.py` | New — produces `figures/validation-metrics.csv` from the per-HUC6 USGS/Tethys CSV panels (§5.3). |
-| `tethys_integration_metarepo/validation/5d-dominant-sector-map.py` | New — produces the v4 Figure 1 dominant-sector map (§5.4). |
-| `tethys_integration_metarepo/validation/5c-scenarios-timeseries.R` | Updated — historical line extended through 2019; each future scenario joined to the historical line at 2019 (§5.6). |
-| `figures/eq5-hdd-cdd-sensitivity.png` + `eq5-hdd-cdd-sensitivity.png` (root) | New — Eq. 5 sensitivity summary figure (figure file copied to root for `\includegraphics`). |
-| `figures/eq5-hdd-cdd-sensitivity-summary.csv`, `figures/eq5-hdd-cdd-sensitivity-monthly-profile.csv` | New — Eq. 5 sensitivity diagnostics (§5.2). |
-| `figures/validation-metrics.csv` | New — pipeline-verified Table 2 numbers (§5.3). |
-| `figures/dominant-sector-tethys-grid.csv` | New — labelled grid of dominant sector per cell, reproducible artefact for Figure 1. |
+| `RESPONSE_TO_COMMENTS_v4.md` (this file) | UPDATED -- response-to-comments artefact for revision letter / coauthor circulation. |
+| `tethys_integration_metarepo/sensitivity/eq5-hdd-cdd-thresholds.py` | New -- Eq. 5 HDD/CDD threshold sensitivity script (§5.2). |
+| `tethys_integration_metarepo/validation/compute-table2-metrics.py` | New -- produces `figures/validation-metrics.csv` from the per-HUC6 USGS/Tethys CSV panels (§5.3). |
+| `tethys_integration_metarepo/validation/5d-dominant-sector-map.py` | New -- produces the v4 Figure 1 dominant-sector map (§5.4). |
+| `tethys_integration_metarepo/validation/5c-scenarios-timeseries.R` | Updated -- historical line extended through 2019; each future scenario joined to the historical line at 2019 (§5.6). |
+| `figures/eq5-hdd-cdd-sensitivity.png` + `eq5-hdd-cdd-sensitivity.png` (root) | New -- Eq. 5 sensitivity summary figure (figure file copied to root for `\includegraphics`). |
+| `figures/eq5-hdd-cdd-sensitivity-summary.csv`, `figures/eq5-hdd-cdd-sensitivity-monthly-profile.csv` | New -- Eq. 5 sensitivity diagnostics (§5.2). |
+| `figures/validation-metrics.csv` | New -- pipeline-verified Table 2 numbers (§5.3). |
+| `figures/dominant-sector-tethys-grid.csv` | New -- labelled grid of dominant sector per cell, reproducible artefact for Figure 1. |
 | `usage1-dominant-sector-tethys-grid.png` | Regenerated (now Figure 1); original preserved at `_v3rollback.png` (§5.4). |
 | `val6-scenarios-annual-conus-timeseries.png` | Regenerated; original preserved at `_v3rollback.png` (§5.6). |
 | `flow-chart2.pdf` | Left in place for rollback; the manuscript no longer references it (replaced by inline TikZ in `main_v4.tex`, §5.5). |
-| `tethys_integration_metarepo/REPRODUCING_FIGURES.md` | New — figure-by-figure reproduction guide added to the meta-repository per coauthor request to keep direct code references out of the paper. |
+| `tethys_integration_metarepo/REPRODUCING_FIGURES.md` | New -- figure-by-figure reproduction guide added to the meta-repository per coauthor request to keep direct code references out of the paper. |
 
 ---
 
-## 8. Coauthor `% COMMENT` lines from `previous_versions/main_v2.tex` — status in v4
+## 8. Coauthor `% COMMENT` lines from `previous_versions/main_v2.tex` -- status in v4
 
 The v2 source had 20 inline `% COMMENT` markers from the coauthor pass. Below is each comment paired with how it was handled in the latest draft (`main_v4.tex`). Comments are quoted verbatim from `previous_versions/main_v2.tex`. Where a v4 line number is given, it points to where the response now lives.
 
@@ -390,11 +390,11 @@ The v2 source had 20 inline `% COMMENT` markers from the coauthor pass. Below is
 | 72 | "Suggest adding why monthly resolution is important, e.g., for capturing seasonal patterns…" | **RESOLVED** | The Khan 2023 contrast in the Background gap paragraph (v4 line 81) now explicitly states that "resolving CONUS-scale management decisions requires finer spatial resolution and scenario-consistent climate, land-use, and population forcing." The Technical Validation section also opens by saying we evaluate seasonal cycles on top of CONUS annual totals; the Seasonal-cycle subsection (v4 lines 514–516) explains the diagnostic value of the monthly profile. |
 | 75 | "Suggest adding a box labeled Tethys to encompass the two green boxes. For temporal downscaling, change it to 5-year to monthly. In the Demeter box, add the downscaling scale… Also spell out PET, HDD, and CDD in the figure caption, and 'Monthly Climate Variables' should be 'Monthly Meteorological Variables'." | **RESOLVED** | The flow chart was redrawn natively in TikZ (v4 lines 88–227). All five edits applied: (a) heavy-outlined Tethys box wraps Spatial + Temporal Downscaling; (b) "5-year to monthly" label on Temporal Downscaling; (c) Demeter scale annotated as "regional, 5-yr → 1/8° annual"; (d) "Monthly Meteorological Variables"; (e) PET, HDD, CDD, GSI spelled out in the caption. Color/style were brought back into line with the original screenshot in the latest pass. |
 | 108 | "Refer to the CERF paper I shared for scenario development and descriptions." | **RESOLVED** | The Scenarios subsection (v4 lines 105–107) cites `\cite{Mongird2025CERF}` for the scenario factorial and the rcp/CMIP6 disclaimer. The CERF subsection (v4 lines 332–336) cites it again at the power-plant siting model description. |
-| 115 | "this should be moved to 'temporal downscaling' subsection" | **RESOLVED** | The PET-deficit and GSI definitions now live inside the Methods §"Meteorological forcing (TGW-WRF)" subsection (v4 lines 290–305) — Eqs. 1–2 are introduced in the same place where they will be used by the Irrigation temporal-downscaling step. The Irrigation temporal-downscaling subsection then references them directly. |
+| 115 | "this should be moved to 'temporal downscaling' subsection" | **RESOLVED** | The PET-deficit and GSI definitions now live inside the Methods §"Meteorological forcing (TGW-WRF)" subsection (v4 lines 290–305) -- Eqs. 1–2 are introduced in the same place where they will be used by the Irrigation temporal-downscaling step. The Irrigation temporal-downscaling subsection then references them directly. |
 | 131 | "Why the pi? Probably a good idea to replace" | **PARTIAL** | I kept `\pi_{\mathrm{cell}}` for the spatial proxy (v4 line 363) because the symbol is referenced consistently throughout the manuscript and in the EQUATIONS_AUDIT.md companion document. If you want a different glyph (e.g., `\rho`, `\phi`, or `q_{\mathrm{cell}}`), say so and I will rename. |
 | 146 | "This should be introduced in the first section to justify the proposed enhancements in Tethys 2.0" | **RESOLVED** | The Background & Summary (v4 line 86) now explicitly previews the six advances over Khan 2023, with "explicit CERF-based power-plant siting" as the second item. The CERF model is introduced in Background by name (and cited) before the Methods detail. |
 | 240 | "replace MSD-Live link with DOI before publication" | **DEFERRED** | v4 still uses the MSD-Live `data.msdlive.org/uploads/...` upload URL (line 442). MSD-Live should mint a DOI when the dataset is published; the URL will be swapped in the final pre-submission pass. Flagged in §6 above as "Author/affiliation/journal-specific items still to verify before submission." |
-| 270 | "Too much info for the main text" (above the CDL figure) | **PARTIAL** | The CDL excerpt is unchanged in v4 (the figure is a load-bearing self-documentation artefact). One option is to move it to a supplement — let me know if you want that. The Data Records prose around it was tightened (v4 lines 446–451): redundant hosting sentence merged, "for reproducibility" tail removed, schema-vs-CDL ordering corrected, transition out to Validation added. |
+| 270 | "Too much info for the main text" (above the CDL figure) | **PARTIAL** | The CDL excerpt is unchanged in v4 (the figure is a load-bearing self-documentation artefact). One option is to move it to a supplement -- let me know if you want that. The Data Records prose around it was tightened (v4 lines 446–451): redundant hosting sentence merged, "for reproducibility" tail removed, schema-vs-CDL ordering corrected, transition out to Validation added. |
 | 313 | "Could we jazz this up a bit. Also need to explain why we claimed 10% error in the abstract but these y axis spans -75 to 25%. also need to explain outliers" | **RESOLVED for the framing; figure styling deferred** | The abstract no longer claims "within 10%" without context (v4 line 47 leads with sector-level findings and within-basin spread numbers). The CONUS-annual-totals subsection (v4 line 484) now explicitly states that the within-basin spread is wide (NRMSE 68–171%) even where the CONUS aggregate matches, "reflecting compensating per-basin biases." The Bias-diagnosis subsection (v4 line 506) gives mechanistic explanations for each sector. The figure itself is unchanged; if you want outlier basins annotated on the boxplot, flag and I will add them. |
 | 332 | "Could we please facet_grid here and maybe some styling or coloring of scatter by something meaningful" | **DEFERRED** | The val4 scatter figure is unchanged; this is a styling change to the R script that should ride with the next regeneration. If you want me to do it, point me at what to color by (sector / demand-type / HUC2 region?) and I will update `4a-compare-tethys-usgs.R`. |
 | 336 | "Need to mention the year." (Fig. 6 caption) | **RESOLVED** | The val4 caption (v4 line 502) now reads: "Pearson correlations: 0.95 (Domestic), 0.73 (Electricity), 0.89 (Irrigation), computed on per-HUC6 means across the USGS reporting years 2010–2020." |

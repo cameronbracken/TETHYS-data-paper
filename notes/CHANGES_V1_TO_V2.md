@@ -1,11 +1,11 @@
-# `main.tex` (v1) → `main_v2.tex` (v2) — changes for coauthor review
+# `main.tex` (v1) → `main_v2.tex` (v2) -- changes for coauthor review
 
 This file summarises what changed between the existing draft (`main.tex`,
 preserved unchanged) and the second draft (`main_v2.tex`). Companion
 documents in this directory:
 
-- `EQUATIONS_AUDIT.md` — per-equation reconciliation of paper vs. code, with every mismatch and how it was resolved.
-- `STYLE_NOTES.md` — distilled voice/structure from three Bracken *Scientific Data* descriptors that informed v2.
+- `EQUATIONS_AUDIT.md` -- per-equation reconciliation of paper vs. code, with every mismatch and how it was resolved.
+- `STYLE_NOTES.md` -- distilled voice/structure from three Bracken *Scientific Data* descriptors that informed v2.
 
 All v2 content derives from the actual code in `tethys-code/` and
 `tethys_integration_metarepo/` (post-cleanup, on branch
@@ -34,7 +34,7 @@ Total change: ~95% rewrite. About 15 sentences of v1 prose are retained verbatim
 
 ## Equation changes (see `EQUATIONS_AUDIT.md` for full reasoning)
 
-### Eq. 2 — Irrigation monthly weight — **COMPLETELY REWRITTEN**
+### Eq. 2 -- Irrigation monthly weight -- **COMPLETELY REWRITTEN**
 
 v1 had
 ```
@@ -47,19 +47,19 @@ w_m = (Δ_m · G_m / N_m)  /  Σ_k (Δ_k · G_k / N_k)
 ```
 where `Δ_m = max(PET_m − P_m, 0)`, `G_m` is a monthly growing-season index, and `N_m` is month length. The v2 draft uses this form (Eq. 4) and adds the GSI component formulas (Eqs. 1–2) to document how `G_m` is built from daily Tmin and daylength.
 
-**Implication for the dataset:** no change — the code was always correct; only the paper's description was wrong.
+**Implication for the dataset:** no change -- the code was always correct; only the paper's description was wrong.
 
-### Eqs. 3–6 — Electricity HDD/CDD thresholds — **SWAPPED to match code**
+### Eqs. 3–6 -- Electricity HDD/CDD thresholds -- **SWAPPED to match code**
 
 v1 said "HDD > 450 and CDD > 650". The code (`tethys-code/tethys/tdmethods/electricity.py:29–34`) uses HDD ≥ 650 and CDD ≥ 450. v2 swaps the thresholds and rewrites the four piecewise equations as a single cases-block (Eq. 5) and a single demand equation (Eq. 6), citing Huang et al. 2018.
 
 **Implication:** if Huang 2018 actually says (450, 650), then the code has a bug and our dataset is affected in border-climate cells. I recommend we verify Huang's original thresholds as a follow-up; the v2 draft documents whatever the code does.
 
-### Eq. 7 — Domestic — **UNCHANGED (matches code)**
+### Eq. 7 -- Domestic -- **UNCHANGED (matches code)**
 
 v2 keeps the same equation, adds a sentence clarifying that `R` is region-level amplitude (the code variable is `amplitude`; v1 used `R_cell` which was a slight misnomer since the coefficient is not strictly per-cell).
 
-### Runoff-share adjustment — **NEW EQUATION ADDED**
+### Runoff-share adjustment -- **NEW EQUATION ADDED**
 
 v1 had only prose describing the basin-level split. v2 adds Eq. 7 (USGS-anchored ratio adjustment) to document the `adjust_runoff_shares_method2_kazi.py` implementation explicitly:
 ```
@@ -69,14 +69,14 @@ s_adj[c,y] = s_GCAM[c,y]                                        otherwise
 
 ## New figure and its caption
 
-`val6-scenarios-annual-conus-timeseries.png` — generated from
+`val6-scenarios-annual-conus-timeseries.png` -- generated from
 `tethys_integration_metarepo/validation/5c-scenarios-timeseries.R`.
 
 4 panels (Domestic, Electricity, Irrigation, Total), x = year, y = annual CONUS demand (km³/yr), historical in black (1975–2015) + 8 futures (2020–2100) encoded by color (RCP), linetype (SSP), and line width (cooler/hotter climate sample). Reads from `/Volumes/data/tethys/output_adjusted_usgs_method2/`.
 
 Placed in **Technical Validation → Inter-scenario consistency** (new subsection).
 
-## Author list and affiliations — FLAGGED FOR YOU
+## Author list and affiliations -- FLAGGED FOR YOU
 
 v1 had:
 - `\affil[4]{Cornell}` (no author assigned to [4])
@@ -92,9 +92,9 @@ I kept Isaac Thompson tagged as `[2]` (JGCRI) based on the JGCRI/PNNL affiliatio
 ## Things I did NOT change
 
 - `flow-chart.pdf` is referenced as Fig 1 (unchanged from v1). The file `flow-chart2.pdf` is a newer-looking variant in the directory but is not referenced by v1 or v2. If you want to swap, it's a one-line change.
-- `paper.bib` — v2 still uses `Tethys.bib` (same as v1). Keys used: all of v1's plus `TODO-TGW-WRF` (placeholder for the TGW-WRF primary reference, which is missing from `Tethys.bib`).
-- Author order — preserved from v1.
-- `wlscirep.cls` and other SciData template files — unchanged.
+- `paper.bib` -- v2 still uses `Tethys.bib` (same as v1). Keys used: all of v1's plus `TODO-TGW-WRF` (placeholder for the TGW-WRF primary reference, which is missing from `Tethys.bib`).
+- Author order -- preserved from v1.
+- `wlscirep.cls` and other SciData template files -- unchanged.
 - `\linenumbers` is on for coauthor review. Remove before final submission.
 
 ## Open items for coauthors

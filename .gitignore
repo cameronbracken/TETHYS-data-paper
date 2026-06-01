@@ -7,4 +7,7 @@
 *.fls
 *.log
 *.out
+
+# main doc files we dont want in the repo
 diff_*.tex
+*.pdf

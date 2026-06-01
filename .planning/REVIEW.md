@@ -1,4 +1,4 @@
-# Writing Review — TETHYS data paper, main_v3.tex
+# Writing Review -- TETHYS data paper, main_v3.tex
 
 **Source**: `tethys-data-paper/main_v3.tex` (455 lines)  
 **Workflow**: `workflows:writing-review` v5.20.0 (patched to use main-loop model)  
@@ -16,7 +16,7 @@
 
 ## ⚠ Unreliable sections
 
-All sections are flagged unreliable because the prose-quality and source-fidelity reviewers (custom subagent types `workflows:writing-prose-reviewer` / `workflows:writing-source-fidelity-reviewer`) failed with `subagent completed without calling StructuredOutput` — likely because the harness's custom-agent system prompts in this PNNL gateway environment did not surface the StructuredOutput tool. Only the **structure reviewers, transition analyzer, and document-level reviewer ran successfully**. The findings below are real but the prose-style and citation-fidelity legs are missing — treat the count as a lower bound.
+All sections are flagged unreliable because the prose-quality and source-fidelity reviewers (custom subagent types `workflows:writing-prose-reviewer` / `workflows:writing-source-fidelity-reviewer`) failed with `subagent completed without calling StructuredOutput` -- likely because the harness's custom-agent system prompts in this PNNL gateway environment did not surface the StructuredOutput tool. Only the **structure reviewers, transition analyzer, and document-level reviewer ran successfully**. The findings below are real but the prose-style and citation-fidelity legs are missing -- treat the count as a lower bound.
 
 ## Document-level findings
 
@@ -63,7 +63,7 @@ All sections are flagged unreliable because the prose-quality and source-fidelit
 ### Completeness
 
 - **Claims addressed**: All six PRECIS claims (CLAIM-01 through CLAIM-06) are addressed in the appropriate sections: CLAIM-01 in Background & Summary (Huang 2018, Khan 2023, Wada 2017, van Vliet 2021 cited; Table tab:prior-datasets compares scope), CLAIM-02 in Methods and Data (six-step chain explicit through GCAM-USA → Demeter/CERF/SSP-pop/GLW-3 → TGW-WRF temporal proxies → USGS-anchored source-share clip; eight scenarios named), CLAIM-03 in Data Records + Code availability (MSD-Live URL, netCDF schema, YAML config files, Tethys version pinning), CLAIM-04 in Technical Validation (Pearson r 0.71–0.95 at HUC6 in Table tab:validation-metrics; sector-level biases -45%/-30%/+5% explicit), CLAIM-05 in Improvements over previous version (six paragraphs, one per advance), CLAIM-06 in Technical Validation Limitations subsection (all six itemized).
-- **Counterarguments confronted**: Of the five counterarguments PRECIS commits to confronting: (1) aggregate-vs-sector cancellation — fully confronted in Abstract and Validation; (2) statistical thinness — PARTIALLY confronted (panel of metrics present, but no n, no CIs, no significance, no residual spatial autocorrelation as PRECIS commits); (3) frankenstein coupling — fully confronted in Methods Future projection methods subsection (line 219–221) with Khan 2023 precedent and explicit framing as scenario-plausible for sensitivity studies; (4) source-share clip mass conservation — PARTIALLY confronted (trade-off acknowledged qualitatively at line 217 but not quantified as PRECIS commits); (5) HDD/CDD threshold sensitivity — INSUFFICIENTLY confronted (Huang precedent cited but no sensitivity table and no explicit justification for why thresholds were not perturbed). Three of five fully addressed, two partially.
+- **Counterarguments confronted**: Of the five counterarguments PRECIS commits to confronting: (1) aggregate-vs-sector cancellation -- fully confronted in Abstract and Validation; (2) statistical thinness -- PARTIALLY confronted (panel of metrics present, but no n, no CIs, no significance, no residual spatial autocorrelation as PRECIS commits); (3) frankenstein coupling -- fully confronted in Methods Future projection methods subsection (line 219–221) with Khan 2023 precedent and explicit framing as scenario-plausible for sensitivity studies; (4) source-share clip mass conservation -- PARTIALLY confronted (trade-off acknowledged qualitatively at line 217 but not quantified as PRECIS commits); (5) HDD/CDD threshold sensitivity -- INSUFFICIENTLY confronted (Huang precedent cited but no sensitivity table and no explicit justification for why thresholds were not perturbed). Three of five fully addressed, two partially.
 - **Scope honored**: True
 - **Hook delivered**: True
 - **Conclusion follows**: True
@@ -75,45 +75,45 @@ All sections are flagged unreliable because the prose-quality and source-fidelit
 - Counterargument #5 (HDD/CDD threshold sensitivity) under-delivered: Huang precedent is cited but neither a sensitivity table nor an explicit non-perturbation justification is given.
 - Bias diagnosis subsection diagnoses Domestic -45% but is silent on the -30% Electricity bias mechanism, which is equally central to the Hook.
 - Background paragraph 'We present such a dataset here.' (line 62) and the next paragraph 'We present such a dataset here.' (line 64) are duplicate sentence-starts that should be consolidated.
-- Data Records paragraphs at lines 226 and 228 both state 'openly available ... at MSD-Live (https://data.msdlive.org/uploads/p4xce-e8822)' verbatim — clear redundancy, should be merged.
+- Data Records paragraphs at lines 226 and 228 both state 'openly available ... at MSD-Live (https://data.msdlive.org/uploads/p4xce-e8822)' verbatim -- clear redundancy, should be merged.
 
 
 ## Transitions (Level 2)
 
-### Abstract → Background and Summary — **SMOOTH**
+### Abstract → Background and Summary -- **SMOOTH**
 
 - *Closes*: > By capturing the fine-scale spatiotemporal patterns of demand across diverse futures, this dataset supports integrated energy-water-land modeling and local-to-regional water scarcity assessments.
 - *Opens*: > Humans depend on water for irrigation, thermoelectric cooling, public supply, industry, and livestock, with the relative importance of these sectors varying sharply across regions and over time.
 
-### Background and Summary → Methods and Data — **SMOOTH**
+### Background and Summary → Methods and Data -- **SMOOTH**
 
 - *Closes*: > Table~\ref{tab:prior-datasets} compares this dataset with closely related published records.
 - *Opens*: > Region-scale water-demand inputs come from the Global Change Analysis Model (GCAM-USA version).
 - *Optional*: Optionally add a one-sentence Methods preamble naming the six chain stages (GCAM-USA inputs -> meteorological forcing -> spatial proxies -> temporal weights -> source-share clip -> frankenstein coupling) so the reader sees the structure before diving into stage 1. Not required for correctness.
 
-### Methods and Data → Data Records — **SMOOTH**
+### Methods and Data → Data Records -- **SMOOTH**
 
 - *Closes*: > This ``frankenstein'' design is an established compromise in multi-sector dynamics modeling and is, in our view, the right one for a dataset intended to support sensitivity and adaptation studies rather than causal attribution.
 - *Opens*: > The dataset is openly available for public access at MSD-Live (\url{https://data.msdlive.org/uploads/p4xce-e8822}) and the Tethys model is available at: \href{https://github.com/JGCRI/tethys}{github.com/JGCRI/tethys}.
 
-### Data Records → Technical Validation — **SMOOTH**
+### Data Records → Technical Validation -- **SMOOTH**
 
 - *Closes*: > All sector files share the same \texttt{(year, lat, lon)} or \texttt{(year, lat, lon, month)} schema with sector-specific sub-variables.
 - *Opens*: > We validate the downscaled dataset at the three sectors that together account for over 90\% of CONUS water demand: irrigation, thermoelectric, and domestic (public supply)\cite{skinnerWaterWithdrawalConsumption2025}.
 
-### Technical Validation → Usage Notes — **SMOOTH**
+### Technical Validation → Usage Notes -- **SMOOTH**
 
 - *Closes*: > Users coupling the dataset to hydrologic routing should select the appropriate variant for their application.
 - *Opens*: > The dataset is provided in netCDF~4 and is readable in any standard scientific-computing environment.
 
-### Usage Notes → Improvements over previous version — **ABRUPT**
+### Usage Notes → Improvements over previous version -- **ABRUPT**
 
 - *Closes*: > \caption{Dominant water-use sector at each 1/8$^{\circ}$ cell, by annual-average consumption.}
 - *Opens*: > Compared with the prior Tethys global product, the dataset presented here advances the representation of demand in six specific ways.
-- **Problem**: The boundary as captured ends on a figure caption ('Dominant water-use sector at each 1/8 deg cell, by annual-average consumption.') rather than on a closing prose sentence — the boundary metadata explicitly notes 'transition is implicit (the figure float ends the section without a prose bridge).' The next section then jumps to a comparison with the prior Tethys global product. Both halves are fine on their own (the dominant-sector map is a good closing artifact, and the six-improvements lede is a strong opener for a comparison section), but there is no prose connector. The reader moves from a caption about per-cell sector dominance to a section comparing this dataset against Khan 2023 with no bridging sentence. The OUTLINE expected Usage Notes to close in a way that invites the improvements comparison; instead it closes on an orientation figure, leaving the link to be inferred. No conceptual contradiction, but the rhetorical seam is visible.
-- **Suggestion**: Add a one-sentence closing paragraph to Usage Notes after the dominant-sector figure, e.g., 'These usage patterns — multi-sector at 1/8 deg, with explicit groundwater/surface-water shares — reflect the specific advances this dataset makes over the prior Tethys global product, which we itemize next.' This restores the planned hand-off and explicitly bridges the dominant-sector map to the six-way comparison.
+- **Problem**: The boundary as captured ends on a figure caption ('Dominant water-use sector at each 1/8 deg cell, by annual-average consumption.') rather than on a closing prose sentence -- the boundary metadata explicitly notes 'transition is implicit (the figure float ends the section without a prose bridge).' The next section then jumps to a comparison with the prior Tethys global product. Both halves are fine on their own (the dominant-sector map is a good closing artifact, and the six-improvements lede is a strong opener for a comparison section), but there is no prose connector. The reader moves from a caption about per-cell sector dominance to a section comparing this dataset against Khan 2023 with no bridging sentence. The OUTLINE expected Usage Notes to close in a way that invites the improvements comparison; instead it closes on an orientation figure, leaving the link to be inferred. No conceptual contradiction, but the rhetorical seam is visible.
+- **Suggestion**: Add a one-sentence closing paragraph to Usage Notes after the dominant-sector figure, e.g., 'These usage patterns -- multi-sector at 1/8 deg, with explicit groundwater/surface-water shares -- reflect the specific advances this dataset makes over the prior Tethys global product, which we itemize next.' This restores the planned hand-off and explicitly bridges the dominant-sector map to the six-way comparison.
 
-### Improvements over previous version → Code availability — **SMOOTH**
+### Improvements over previous version → Code availability -- **SMOOTH**
 
 - *Closes*: > In addition this dataset is validated against the refreshed January 2025 USGS water-use record, which includes updated thermoelectric cooling-water estimates.
 - *Opens*: > All code used to generate and validate the dataset is publicly available under permissive open-source licenses.
@@ -122,7 +122,7 @@ All sections are flagged unreliable because the prose-quality and source-fidelit
 
 ### Abstract
 
-*PRECIS claim*: Summarizes the dataset, scope, and sector-first validation framing — implements CLAIM-01, CLAIM-02, CLAIM-04, CLAIM-05; foregrounds the partial-cancellation caveat (Hook).
+*PRECIS claim*: Summarizes the dataset, scope, and sector-first validation framing -- implements CLAIM-01, CLAIM-02, CLAIM-04, CLAIM-05; foregrounds the partial-cancellation caveat (Hook).
 
 _Counts_: 0 critical, 2 major, 4 minor
 
@@ -133,7 +133,7 @@ _Counts_: 0 critical, 2 major, 4 minor
 
 - **[MAJOR/structure]** `drafts/01-abstract.md:8 (main_v3.tex:45, sentence 3)`
   - Quote: > Our analysis reveals that while aggregate CONUS-scale annual demand aligns within 10\% of USGS 2015 estimates, this close agreement reflects the partial cancellation of significant sectoral biases: a -45\% underestimate in domestic demand and a -30\% underestimate in thermoelectric withdrawals are largely offset by a +5\% bias in irrigation.
-  - Issue: Roughly 55 words with nested clauses — exceeds the writing-general 40-word red flag for breaking into 2-3 sentences. Also stacks weak openers ('Our analysis reveals that') and hedges ('largely offset') and reuses the filler 'significant' a second time in the same paragraph. The sector-first framing is the abstract's load-bearing claim and should land in punchier sentences.
+  - Issue: Roughly 55 words with nested clauses -- exceeds the writing-general 40-word red flag for breaking into 2-3 sentences. Also stacks weak openers ('Our analysis reveals that') and hedges ('largely offset') and reuses the filler 'significant' a second time in the same paragraph. The sector-first framing is the abstract's load-bearing claim and should land in punchier sentences.
   - Fix: Split into two sentences, lead with the punchline: 'Aggregate CONUS demand matches USGS 2015 within 10%, but this agreement is misleading: a -45% bias in Domestic and a -30% bias in Electricity withdrawals cancel against a +5% bias in Irrigation.' Then a short follow-up framing the implication for sector-first validation.
 
 - **[MINOR/structure]** `drafts/01-abstract.md:8 (main_v3.tex:45, sentence 3)`
@@ -148,7 +148,7 @@ _Counts_: 0 critical, 2 major, 4 minor
 
 - **[MINOR/structure]** `drafts/01-abstract.md:8 (main_v3.tex:45, sentence 4)`
   - Quote: > This dataset improves upon previous global products by incorporating state-resolved sectoral demands from the Global Change Analysis Model (GCAM-USA), explicit future power plant siting via the CERF model, and scenario-consistent high-resolution climate and population forcing.
-  - Issue: Long enumerative sentence (~40 words) using the bland verb 'improves upon'. Acceptable but borderline — a stronger verb (e.g. 'advances', 'replaces aggregated forcings with') would carry the contribution claim more concretely.
+  - Issue: Long enumerative sentence (~40 words) using the bland verb 'improves upon'. Acceptable but borderline -- a stronger verb (e.g. 'advances', 'replaces aggregated forcings with') would carry the contribution claim more concretely.
   - Fix: Tighten the verb: 'This dataset advances prior global products by combining GCAM-USA state-resolved sectoral demands, CERF-based future power-plant siting, and scenario-consistent high-resolution climate and population forcing.'
 
 - **[MINOR/structure]** `drafts/01-abstract.md:8 (main_v3.tex:45, sentence 5)`
@@ -160,18 +160,18 @@ _Counts_: 0 critical, 2 major, 4 minor
 
 - *First sentence*: > Water demand in the United States is characterized by significant sectoral and regional heterogeneity, driven by the coupled evolution of climate, land use, population, and economic activity.
 - *Last sentence*: > By capturing the fine-scale spatiotemporal patterns of demand across diverse futures, this dataset supports integrated energy-water-land modeling and local-to-regional water scarcity assessments.
-- *Assumes from prev*: None — this is the opening section. Assumes only that the reader knows what water demand and CONUS are at a general level.
-- *Hands off to next*: Hands off to the Introduction the heterogeneity hook, the partial-cancellation caveat (sector-first framing), and the headline claim that this dataset advances prior global products via GCAM-USA + CERF + scenario-consistent forcing — all of which the Introduction must motivate at length.
+- *Assumes from prev*: None -- this is the opening section. Assumes only that the reader knows what water demand and CONUS are at a general level.
+- *Hands off to next*: Hands off to the Introduction the heterogeneity hook, the partial-cancellation caveat (sector-first framing), and the headline claim that this dataset advances prior global products via GCAM-USA + CERF + scenario-consistent forcing -- all of which the Introduction must motivate at length.
 
 ### Background and Summary
 
-*PRECIS claim*: Establishes the gap that motivates the contribution — implements CLAIM-01 (existing high-resolution multi-sector demand records lack future projections or coarser global resolution) and forward-references CLAIM-02 and CLAIM-05.
+*PRECIS claim*: Establishes the gap that motivates the contribution -- implements CLAIM-01 (existing high-resolution multi-sector demand records lack future projections or coarser global resolution) and forward-references CLAIM-02 and CLAIM-05.
 
 _Counts_: 1 critical, 5 major, 7 minor
 
 - **[CRITICAL/structure]** `drafts/02-background-and-summary.md:13-15 (main_v3.tex lines 62 and 64)`
   - Quote: > We present such a dataset here, refined to 1/8$^{\circ}$ resolution across CONUS. ... We present such a dataset here.
-  - Issue: The phrase 'We present such a dataset here.' appears twice — once opening paragraph 3 (line 62) and again opening paragraph 4 (line 64). This is a duplicated topic sentence, almost certainly a copy/paste leftover. Paragraph 4 then re-announces what paragraph 3 already announced, creating redundancy and a broken topic-sentence inventory.
+  - Issue: The phrase 'We present such a dataset here.' appears twice -- once opening paragraph 3 (line 62) and again opening paragraph 4 (line 64). This is a duplicated topic sentence, almost certainly a copy/paste leftover. Paragraph 4 then re-announces what paragraph 3 already announced, creating redundancy and a broken topic-sentence inventory.
   - Fix: Delete the duplicate 'We present such a dataset here.' opening of paragraph 4 (line 64). Replace with a topic sentence that pivots to the concrete contents of the published record, e.g., 'The published record contains gridded monthly water withdrawals and consumption for six sectors...' Alternatively, merge paragraphs 3 and 4: keep the MSD-community framing as a tail of paragraph 3 and start paragraph 4 with 'The published record contains...'.
 
 - **[MAJOR/structure]** `drafts/02-background-and-summary.md:13 (main_v3.tex line 62) and :15 (line 64)`
@@ -186,8 +186,8 @@ _Counts_: 1 critical, 5 major, 7 minor
 
 - **[MAJOR/structure]** `drafts/02-background-and-summary.md:11 (main_v3.tex line 60)`
   - Quote: > Bridging these scales requires spatial and temporal downscaling\cite{hess-17-4555-2013, van_Vliet_2021, Jones_2024}, but the choice of gridded proxy variables and the consistency of driving scenarios materially affects the resulting demand fields.
-  - Issue: Two issues. (1) Subject-verb agreement: 'the choice ... and the consistency ...' is a compound subject and takes 'affect', not 'affects'. (2) The clause introduces 'choice of gridded proxy variables and the consistency of driving scenarios' as a new concept that is not picked up in the rest of the section — the next sentence pivots to Khan 2023 and seasonal/scenario-consistent forcing without explicitly tying back to 'gridded proxy variables'. Concept introduced but not used downstream.
-  - Fix: Fix agreement: '... materially affect the resulting demand fields.' Then either drop the 'gridded proxy variables' phrase or thread it forward into the contribution paragraph (e.g., 'sector-specific gridded proxies — Demeter land use, CERF power-plant locations, SSP population, fixed livestock distributions — drive the spatial step') so the concept is reused, not orphaned.
+  - Issue: Two issues. (1) Subject-verb agreement: 'the choice ... and the consistency ...' is a compound subject and takes 'affect', not 'affects'. (2) The clause introduces 'choice of gridded proxy variables and the consistency of driving scenarios' as a new concept that is not picked up in the rest of the section -- the next sentence pivots to Khan 2023 and seasonal/scenario-consistent forcing without explicitly tying back to 'gridded proxy variables'. Concept introduced but not used downstream.
+  - Fix: Fix agreement: '... materially affect the resulting demand fields.' Then either drop the 'gridded proxy variables' phrase or thread it forward into the contribution paragraph (e.g., 'sector-specific gridded proxies -- Demeter land use, CERF power-plant locations, SSP population, fixed livestock distributions -- drive the spatial step') so the concept is reused, not orphaned.
 
 - **[MAJOR/structure]** `drafts/02-background-and-summary.md:11 (main_v3.tex line 60)`
   - Quote: > Khan et al. (2023)\cite{Khan2023} produced the first global Tethys-downscaled multi-sector product at 1/2$^{\circ}$ resolution; however, resolving seasonal patterns---which differ sharply across sectors and regions---requires monthly resolution and scenario-consistent climate and population forcing.
@@ -243,7 +243,7 @@ _Counts_: 1 critical, 5 major, 7 minor
 
 ### Methods and Data
 
-*PRECIS claim*: Specifies the six-step downscaling chain (GCAM-USA → Demeter/CERF/SSP-pop/GLW-3 spatial proxies → TGW-WRF temporal proxies → USGS-anchored source-share clip) producing 1/8° monthly demand under one historical and eight future scenarios — implements CLAIM-02.
+*PRECIS claim*: Specifies the six-step downscaling chain (GCAM-USA → Demeter/CERF/SSP-pop/GLW-3 spatial proxies → TGW-WRF temporal proxies → USGS-anchored source-share clip) producing 1/8° monthly demand under one historical and eight future scenarios -- implements CLAIM-02.
 
 _Counts_: 0 critical, 7 major, 8 minor
 
@@ -279,7 +279,7 @@ _Counts_: 0 critical, 7 major, 8 minor
 
 - **[MAJOR/structure]** `drafts/03-methods-and-data.md:60`
   - Quote: > For manufacturing and mining, population is used as the spatial proxy, matching the approach of prior Tethys work\cite{Khan2023}.
-  - Issue: Passive voice hiding the actor ('is used'). Also 'See "Limitations"' (line 60) — second forward reference to a section not present in this draft.
+  - Issue: Passive voice hiding the actor ('is used'). Also 'See "Limitations"' (line 60) -- second forward reference to a section not present in this draft.
   - Fix: Active rewrite: 'We use population as the spatial proxy for manufacturing and mining, following Khan et al. (2023).' Drop or inline the Limitations cross-reference.
 
 - **[MINOR/structure]** `drafts/03-methods-and-data.md:64`
@@ -304,12 +304,12 @@ _Counts_: 0 critical, 7 major, 8 minor
 
 - **[MINOR/structure]** `drafts/03-methods-and-data.md:115`
   - Quote: > The $\min(\cdot,1)$ clip bounds ratio amplifications where the GCAM 2015 baseline is small, reflecting the trade-off between mass balance conservation and binding fraction limits in groundwater-dominated regions.
-  - Issue: Sentence is dense with abstractions ('reflecting the trade-off between mass balance conservation and binding fraction limits') — Strunk & White flags abstract nouns. Also slightly self-aggrandizing in framing ('reflecting the trade-off').
+  - Issue: Sentence is dense with abstractions ('reflecting the trade-off between mass balance conservation and binding fraction limits') -- Strunk & White flags abstract nouns. Also slightly self-aggrandizing in framing ('reflecting the trade-off').
   - Fix: Rewrite plainly: 'The min(·,1) clip prevents amplifications when the 2015 GCAM baseline is small. In groundwater-dominated regions the clip can mask trajectory increases, but it preserves the physical bound that a share cannot exceed one.'
 
 - **[MINOR/structure]** `drafts/03-methods-and-data.md:119`
   - Quote: > This ``frankenstein'' design is an established compromise in multi-sector dynamics modeling\cite{Khan2023} and is, in our view, the right one for a dataset intended to support sensitivity and adaptation studies rather than causal attribution.
-  - Issue: Closing sentence editorializes ('in our view, the right one') — Strunk & White prefers definite assertions but warns against overstatement. Also long compound clause structure (>40 words) with parenthetical hedge.
+  - Issue: Closing sentence editorializes ('in our view, the right one') -- Strunk & White prefers definite assertions but warns against overstatement. Also long compound clause structure (>40 words) with parenthetical hedge.
   - Fix: Tighten: 'This frankenstein design is an established compromise in multi-sector dynamics modeling and is appropriate for a dataset intended to support sensitivity and adaptation studies, not causal attribution.'
 
 - **[MINOR/structure]** `drafts/03-methods-and-data.md:11`
@@ -320,7 +320,7 @@ _Counts_: 0 critical, 7 major, 8 minor
 - **[MINOR/structure]** `drafts/03-methods-and-data.md (overall)`
   - Quote: > \subsection*{Future projection methods}
   - Issue: Subsection-boundary check: outline lists 'Future projection methods: frankenstein-coupling rationale' as a Methods subsection, but conceptually the frankenstein discussion is more a design-justification/limitation than a method specification. Placement within Methods is defensible but the subsection makes no forward hand-off to Data Records (the next section), undermining the outline's stated 'Transition out: methods produce the published record (Data Records).'
-  - Fix: Add a one-sentence bridge at the end: 'The combined chain — GCAM-USA → Demeter/CERF/SSP-pop/GLW-3 spatial proxies → TGW-driven temporal weights → USGS-anchored source-share clip — produces the 1/8° monthly gridded record described next.'
+  - Fix: Add a one-sentence bridge at the end: 'The combined chain -- GCAM-USA → Demeter/CERF/SSP-pop/GLW-3 spatial proxies → TGW-driven temporal weights → USGS-anchored source-share clip -- produces the 1/8° monthly gridded record described next.'
 
 **Boundary summary:**
 
@@ -331,23 +331,23 @@ _Counts_: 0 critical, 7 major, 8 minor
 
 ### Data Records
 
-*PRECIS claim*: Documents the MSD-Live publication, netCDF schema, and per-scenario YAML configurations sufficient to identify the exact Tethys run that produced each scenario — implements CLAIM-03.
+*PRECIS claim*: Documents the MSD-Live publication, netCDF schema, and per-scenario YAML configurations sufficient to identify the exact Tethys run that produced each scenario -- implements CLAIM-03.
 
 _Counts_: 1 critical, 4 major, 4 minor
 
 - **[CRITICAL/structure]** `drafts/04-data-records.md:11 (main_v3.tex line 226)`
   - Quote: > The dataset is openly available for public access at MSD-Live (\url{https://data.msdlive.org/uploads/p4xce-e8822}) and the Tethys model is available at: \href{https://github.com/JGCRI/tethys}{github.com/JGCRI/tethys}.
-  - Issue: Paragraph 1 (line 226) and paragraph 2 (line 228) both open with 'The dataset is openly available ... at MSD-Live (\url{https://data.msdlive.org/uploads/p4xce-e8822})' — the hosting statement and the URL are repeated verbatim. The duplication is not stylistic; it is two near-identical sentences in adjacent paragraphs.
+  - Issue: Paragraph 1 (line 226) and paragraph 2 (line 228) both open with 'The dataset is openly available ... at MSD-Live (\url{https://data.msdlive.org/uploads/p4xce-e8822})' -- the hosting statement and the URL are repeated verbatim. The duplication is not stylistic; it is two near-identical sentences in adjacent paragraphs.
   - Fix: Merge the two openings into a single sentence that names MSD-Live and the Tethys GitHub repo once, then proceed directly to scenario directory contents. E.g., 'The dataset is permanently archived at MSD-Live (\url{...}); the Tethys model source is at \href{...}{github.com/JGCRI/tethys}. Each scenario directory (Table~\ref{tab:scenarios}) contains ...'.
 
 - **[MAJOR/structure]** `drafts/04-data-records.md:13 (main_v3.tex line 228)`
   - Quote: > The dataset is openly available and  permanently on MSD-Live
-  - Issue: Two-space gap between 'and' and 'permanently', and the phrasing is ungrammatical — 'openly available and permanently on MSD-Live' lacks a verb/adjective parallel ('available ... and [is] permanently [archived] on MSD-Live'). Reads as an unfinished edit.
-  - Fix: Rewrite as 'The dataset is permanently archived and openly available on MSD-Live' (single space, parallel adjectives) — and fold into the merged opening sentence per the previous issue.
+  - Issue: Two-space gap between 'and' and 'permanently', and the phrasing is ungrammatical -- 'openly available and permanently on MSD-Live' lacks a verb/adjective parallel ('available ... and [is] permanently [archived] on MSD-Live'). Reads as an unfinished edit.
+  - Fix: Rewrite as 'The dataset is permanently archived and openly available on MSD-Live' (single space, parallel adjectives) -- and fold into the merged opening sentence per the previous issue.
 
 - **[MAJOR/structure]** `drafts/04-data-records.md:14 (main_v3.tex line 231)`
   - Quote: > two YAML configuration files (\texttt{config\_withdrawals.yaml}, \texttt{config\_consumption.yaml}) that record the exact Tethys run configuration used to produce the files, for reproducibility
-  - Issue: 'for reproducibility' is a tacked-on justification that adds no information — recording the exact run configuration IS reproducibility. Strunk & White: omit needless words; don't tell the reader the obvious purpose of a fact you just stated.
+  - Issue: 'for reproducibility' is a tacked-on justification that adds no information -- recording the exact run configuration IS reproducibility. Strunk & White: omit needless words; don't tell the reader the obvious purpose of a fact you just stated.
   - Fix: Drop ', for reproducibility'. The clause 'that record the exact Tethys run configuration used to produce the files' already conveys the point.
 
 - **[MAJOR/structure]** `drafts/04-data-records.md:14 (main_v3.tex line 231)`
@@ -357,17 +357,17 @@ _Counts_: 1 critical, 4 major, 4 minor
 
 - **[MAJOR/structure]** `drafts/04-data-records.md:7-17 (entire section)`
   - Quote: > [scenarios table at lines 234–253; CDL listing figure at lines 255–279]
-  - Issue: Section is only two body paragraphs (plus the table/figure stubs). The outline calls for distinct points (hosting, naming convention, YAML configs, gridded_runoff_shares, schema, scenario table) — paragraph 2 jams the convention, the YAML configs, the runoff-shares file, the CDL pointer, AND the schema into one paragraph. No topic sentence governs it; it reads as a list rendered as prose.
+  - Issue: Section is only two body paragraphs (plus the table/figure stubs). The outline calls for distinct points (hosting, naming convention, YAML configs, gridded_runoff_shares, schema, scenario table) -- paragraph 2 jams the convention, the YAML configs, the runoff-shares file, the CDL pointer, AND the schema into one paragraph. No topic sentence governs it; it reads as a list rendered as prose.
   - Fix: Split paragraph 2 into two: (a) one paragraph on the per-scenario file inventory and naming convention (sector files + irrigation _with_losses + monthly suffix), and (b) one paragraph on the per-scenario reproducibility metadata (gridded_runoff_shares.nc, two YAML configs) and the shared schema with the CDL pointer. Each paragraph then has one main idea, matching the outline.
 
 - **[MINOR/structure]** `drafts/04-data-records.md:11 (main_v3.tex line 226)`
   - Quote: > The dataset is openly available for public access at MSD-Live
-  - Issue: 'openly available for public access' is redundant — 'openly available' already means publicly accessible. Strunk & White 'omit needless words'.
+  - Issue: 'openly available for public access' is redundant -- 'openly available' already means publicly accessible. Strunk & White 'omit needless words'.
   - Fix: 'The dataset is openly available at MSD-Live ...' or, after the merge, 'permanently archived and openly available on MSD-Live'.
 
 - **[MINOR/structure]** `drafts/04-data-records.md:12 (main_v3.tex line 229)`
   - Quote: > where \texttt{<Sector>} is one of \texttt{Domestic}, \texttt{Electricity}, \texttt{Irrigation}, \texttt{Livestock}, \texttt{Manufacturing}, \texttt{Mining}; \texttt{<demand\_type>} is \texttt{withdrawals} or \texttt{consumption}; and the \texttt{\_monthly} suffix distinguishes monthly files from their annual counterparts.
-  - Issue: Single sentence carries three separate semicolon-joined definitions plus a fourth clause ('For irrigation, an additional ...') in the next sentence. At ~55 words it is on the edge of the 40-word red flag and trades clarity for compactness — readers must parse three placeholder definitions in series.
+  - Issue: Single sentence carries three separate semicolon-joined definitions plus a fourth clause ('For irrigation, an additional ...') in the next sentence. At ~55 words it is on the edge of the 40-word red flag and trades clarity for compactness -- readers must parse three placeholder definitions in series.
   - Fix: Break into a short definition list rendered as two sentences, e.g., '\texttt{<Sector>} is one of {Domestic, Electricity, Irrigation, Livestock, Manufacturing, Mining}, and \texttt{<demand\_type>} is \texttt{withdrawals} or \texttt{consumption}. The \texttt{\_monthly} suffix marks monthly files; for irrigation, \texttt{\_with\_losses} marks files that include conveyance losses.'
 
 - **[MINOR/structure]** `drafts/04-data-records.md:14 (main_v3.tex line 231)`
@@ -389,7 +389,7 @@ _Counts_: 1 critical, 4 major, 4 minor
 
 ### Technical Validation
 
-*PRECIS claim*: At HUC6 the dataset reproduces the spatial pattern of USGS demand with Pearson r between 0.71 (Domestic) and 0.95 (Irrigation), with sector-level biases of -45% (Domestic) to +5% (Irrigation) that partially cancel at CONUS aggregate — implements CLAIM-04 and addresses counterargument #2 (statistical thinness).
+*PRECIS claim*: At HUC6 the dataset reproduces the spatial pattern of USGS demand with Pearson r between 0.71 (Domestic) and 0.95 (Irrigation), with sector-level biases of -45% (Domestic) to +5% (Irrigation) that partially cancel at CONUS aggregate -- implements CLAIM-04 and addresses counterargument #2 (statistical thinness).
 
 _Counts_: 0 critical, 10 major, 8 minor
 
@@ -405,7 +405,7 @@ _Counts_: 0 critical, 10 major, 8 minor
 
 - **[MAJOR/structure]** `drafts/05-technical-validation.md:32`
   - Quote: > Domestic and Irrigation show sizable sector-level biases in opposing directions at the HUC6 scale, which partially cancel at the CONUS total.
-  - Issue: Inconsistent with Table 1 (line 18-20 of draft): Irrigation MBE is +5% and Domestic is -45%. The +5% irrigation bias is not 'sizable' relative to the -45% domestic bias. Calling them both 'sizable' overstates the irrigation bias and obscures the asymmetry that actually drives the partial cancellation. The claim of 'opposing directions' is also weak — Electricity (-30%), Domestic (-45%), and Industrial (-10%) all share the same sign; only Irrigation (+5%) opposes them.
+  - Issue: Inconsistent with Table 1 (line 18-20 of draft): Irrigation MBE is +5% and Domestic is -45%. The +5% irrigation bias is not 'sizable' relative to the -45% domestic bias. Calling them both 'sizable' overstates the irrigation bias and obscures the asymmetry that actually drives the partial cancellation. The claim of 'opposing directions' is also weak -- Electricity (-30%), Domestic (-45%), and Industrial (-10%) all share the same sign; only Irrigation (+5%) opposes them.
   - Fix: Rephrase to identify Domestic (-45%) as the dominant negative bias and Irrigation (+5%) as the small opposing bias; note that magnitude differences (irrigation being the largest sector by volume) are what produce the partial cancellation at CONUS aggregate.
 
 - **[MAJOR/structure]** `drafts/05-technical-validation.md:43`
@@ -415,17 +415,17 @@ _Counts_: 0 critical, 10 major, 8 minor
 
 - **[MAJOR/structure]** `drafts/05-technical-validation.md:9`
   - Quote: > The goal is not to declare a ``true'' dataset, since neither USGS nor Tethys are direct observations at 1/8$^{\circ}$ resolution, but to establish that the downscaled record reproduces the dominant features of observed spatial and temporal demand patterns, with quantified bias where it departs.
-  - Issue: Topic sentence of the introductory paragraph buries the lead. The paragraph's main point — that we proceed coarse-to-fine, total-to-seasonal, comparing against USGS — is in the prior sentence; the closing sentence then introduces a hedge ('not to declare a true dataset'). Per the writing-general 'lead with the point' principle, the framing claim (what the section establishes) should appear earlier.
+  - Issue: Topic sentence of the introductory paragraph buries the lead. The paragraph's main point -- that we proceed coarse-to-fine, total-to-seasonal, comparing against USGS -- is in the prior sentence; the closing sentence then introduces a hedge ('not to declare a true dataset'). Per the writing-general 'lead with the point' principle, the framing claim (what the section establishes) should appear earlier.
   - Fix: Move the framing sentence ('The goal is...to establish that the downscaled record reproduces the dominant features of observed spatial and temporal demand patterns, with quantified bias where it departs') to the start of the paragraph, then describe the coarse-to-fine approach as the method for establishing it.
 
 - **[MAJOR/structure]** `drafts/05-technical-validation.md:32`
   - Quote: > Tethys reproduces both the magnitude and long-term trend of USGS totals, within 10\% at annual resolution.
-  - Issue: Ambiguous antecedent: 'within 10%' could refer to magnitude only, trend only, or both. Given Table 1 shows Total MBE of -10%, this is plausibly the magnitude bound only — the trend match has a different metric. A reader trying to verify the precis claim cannot tell which quantity is being constrained.
+  - Issue: Ambiguous antecedent: 'within 10%' could refer to magnitude only, trend only, or both. Given Table 1 shows Total MBE of -10%, this is plausibly the magnitude bound only -- the trend match has a different metric. A reader trying to verify the precis claim cannot tell which quantity is being constrained.
   - Fix: Specify: e.g., 'Tethys reproduces the magnitude of USGS CONUS totals within ~10% (Table~\ref{tab:validation-metrics}) and follows the long-term trend.'
 
 - **[MAJOR/structure]** `drafts/05-technical-validation.md:48`
   - Quote: > within the future period the scenarios evolve smoothly and consistently with their  drivers.
-  - Issue: Double space before 'drivers' (typo) and weak/vague closer to a load-bearing inter-scenario-consistency paragraph. 'Consistently with their drivers' restates rather than concludes — the paragraph already enumerated the SSP/RCP signatures, so the closer should cement what the inter-scenario comparison establishes (e.g., that the dataset's scenario differentiation is interpretable and free of artefacts beyond the documented 2020 discontinuity).
+  - Issue: Double space before 'drivers' (typo) and weak/vague closer to a load-bearing inter-scenario-consistency paragraph. 'Consistently with their drivers' restates rather than concludes -- the paragraph already enumerated the SSP/RCP signatures, so the closer should cement what the inter-scenario comparison establishes (e.g., that the dataset's scenario differentiation is interpretable and free of artefacts beyond the documented 2020 discontinuity).
   - Fix: Remove the double space; rewrite the clause to make a stronger closing claim, e.g., '...within the future period the scenarios evolve smoothly, with no artefacts beyond the documented 2020 reanalysis-to-TGW discontinuity, supporting use of the inter-scenario contrasts.'
 
 - **[MAJOR/structure]** `drafts/05-technical-validation.md:32`
@@ -440,7 +440,7 @@ _Counts_: 0 critical, 10 major, 8 minor
 
 - **[MAJOR/structure]** `drafts/05-technical-validation.md:41`
   - Quote: > The -45\% bias observed in domestic demand (Table \ref{tab:validation-metrics}) is likely attributable to the calibration of the Wada $R$ coefficient, which may not fully capture the U.S. public-supply sensitivity, or a mismatch in the GCAM-USA base-year socioeconomic data compared to USGS 2015 reporting.
-  - Issue: 'Bias diagnosis and uncertainty' subsection is a single short paragraph that diagnoses ONLY the Domestic bias. The outline's parent claim and the section abstract reference biases ranging from -45% to +5%, plus Electricity (-30%) which the spatial-agreement subsection flagged as an over-prediction in the eastern/southeastern U.S. The diagnosis subsection should at minimum touch the Electricity over-prediction (CERF siting vs. USGS aggregation) and the Irrigation under-prediction (GSI weighting in western basins) the section already raised — otherwise the subsection name 'Bias diagnosis' is broader than its content.
+  - Issue: 'Bias diagnosis and uncertainty' subsection is a single short paragraph that diagnoses ONLY the Domestic bias. The outline's parent claim and the section abstract reference biases ranging from -45% to +5%, plus Electricity (-30%) which the spatial-agreement subsection flagged as an over-prediction in the eastern/southeastern U.S. The diagnosis subsection should at minimum touch the Electricity over-prediction (CERF siting vs. USGS aggregation) and the Irrigation under-prediction (GSI weighting in western basins) the section already raised -- otherwise the subsection name 'Bias diagnosis' is broader than its content.
   - Fix: Expand the subsection to a paragraph (or two) that diagnoses Domestic, Electricity, and Irrigation biases in turn, drawing on the spatial-agreement findings already presented; or rename the subsection to 'Domestic bias diagnosis' to match its scope.
 
 - **[MINOR/structure]** `drafts/05-technical-validation.md:9`
@@ -460,7 +460,7 @@ _Counts_: 0 critical, 10 major, 8 minor
 
 - **[MINOR/structure]** `drafts/05-technical-validation.md:43`
   - Quote: > Electricity consumption shows a consistent offset in non-summer months, likely from the GCAM-USA representation of non-cooling electricity water use.
-  - Issue: 'Offset' is undirectional — does electricity consumption read high or low in non-summer months relative to USGS? Without a sign the reader cannot use this for diagnosis.
+  - Issue: 'Offset' is undirectional -- does electricity consumption read high or low in non-summer months relative to USGS? Without a sign the reader cannot use this for diagnosis.
   - Fix: State the sign of the offset (positive or negative) and the approximate magnitude if available.
 
 - **[MINOR/structure]** `drafts/05-technical-validation.md:39`
@@ -470,7 +470,7 @@ _Counts_: 0 critical, 10 major, 8 minor
 
 - **[MINOR/structure]** `drafts/05-technical-validation.md:9`
   - Quote: > We proceed from coarse to fine and from total to seasonal: first comparing CONUS annual totals, then moving to HUC6 spatial agreement, then to the HUC6 annual scatter and correlation, and finally the CONUS monthly cycle.
-  - Issue: Roadmap promises four stages (CONUS annual totals → HUC6 spatial agreement → HUC6 annual scatter/correlation → CONUS monthly cycle), but the actual subsection list is: CONUS annual totals → HUC6 spatial agreement (which itself contains the HUC6 correlation discussion) → Bias diagnosis → Seasonal cycle → Inter-scenario consistency → Limitations. The intro roadmap omits 'Bias diagnosis', 'Inter-scenario consistency', and 'Limitations' — three of the six subsections. Reader is set up to expect a 4-step structure and gets a 6-step one.
+  - Issue: Roadmap promises four stages (CONUS annual totals → HUC6 spatial agreement → HUC6 annual scatter/correlation → CONUS monthly cycle), but the actual subsection list is: CONUS annual totals → HUC6 spatial agreement (which itself contains the HUC6 correlation discussion) → Bias diagnosis → Seasonal cycle → Inter-scenario consistency → Limitations. The intro roadmap omits 'Bias diagnosis', 'Inter-scenario consistency', and 'Limitations' -- three of the six subsections. Reader is set up to expect a 4-step structure and gets a 6-step one.
   - Fix: Either expand the roadmap to enumerate all six subsections, or simplify to '...we proceed coarse-to-fine and total-to-seasonal' and drop the explicit list.
 
 - **[MINOR/structure]** `drafts/05-technical-validation.md:48`
@@ -492,7 +492,7 @@ _Counts_: 0 critical, 10 major, 8 minor
 
 ### Usage Notes
 
-*PRECIS claim*: Demonstrates xarray loading, unit conversions, and HUC aggregation so users can reproduce sectoral aggregates — supports the reusability dimension of CLAIM-03.
+*PRECIS claim*: Demonstrates xarray loading, unit conversions, and HUC aggregation so users can reproduce sectoral aggregates -- supports the reusability dimension of CLAIM-03.
 
 _1 quote(s) dropped by mechanical Verify (did not resolve to draft)._  
 _Counts_: 0 critical, 0 major, 6 minor
@@ -536,7 +536,7 @@ _Counts_: 0 critical, 0 major, 6 minor
 
 ### Improvements over previous version
 
-*PRECIS claim*: Itemizes the six advances over Khan 2023 (state-resolved GCAM-USA, CERF siting, SSP-population, GSI-based irrigation timing, USGS-anchored source shares, 1/2°→1/8° refinement) — implements CLAIM-05; closing paragraph re-states the partial-cancellation caveat.
+*PRECIS claim*: Itemizes the six advances over Khan 2023 (state-resolved GCAM-USA, CERF siting, SSP-population, GSI-based irrigation timing, USGS-anchored source shares, 1/2°→1/8° refinement) -- implements CLAIM-05; closing paragraph re-states the partial-cancellation caveat.
 
 _Counts_: 0 critical, 0 major, 6 minor
 
@@ -568,7 +568,7 @@ _Counts_: 0 critical, 0 major, 6 minor
 - **[MINOR/structure]** `drafts/07-improvements-over-previous-version.md:19 (main_v3.tex:412)`
   - Quote: > In regions with observable baseline data this reduces bias materially; outside those regions, the GCAM share is preserved transparently.
   - Issue: 'materially' and 'transparently' are abstract qualifiers without numbers. The earlier sections in the paper presumably quantify the bias reduction; this paragraph should cite or reference that magnitude rather than asserting it qualitatively.
-  - Fix: Replace 'materially' with a number or cross-reference to the validation section; 'transparently' is filler — delete.
+  - Fix: Replace 'materially' with a number or cross-reference to the validation section; 'transparently' is filler -- delete.
 
 **Boundary summary:**
 
@@ -579,7 +579,7 @@ _Counts_: 0 critical, 0 major, 6 minor
 
 ### Code availability
 
-*PRECIS claim*: Provides pointers to every code artifact required to reproduce the dataset (Tethys, integration meta-repository, Demeter, CERF, TGW-WRF) — supports the reproducibility dimension of CLAIM-03 and CLAIM-05.
+*PRECIS claim*: Provides pointers to every code artifact required to reproduce the dataset (Tethys, integration meta-repository, Demeter, CERF, TGW-WRF) -- supports the reproducibility dimension of CLAIM-03 and CLAIM-05.
 
 _1 quote(s) dropped by mechanical Verify (did not resolve to draft)._  
 _Counts_: 0 critical, 0 major, 5 minor
@@ -591,8 +591,8 @@ _Counts_: 0 critical, 0 major, 5 minor
 
 - **[MINOR/structure]** `drafts/08-code-availability.md:10-16`
   - Quote: > \begin{itemize}     \item \textbf{Tethys downscaling package}...
-  - Issue: The section is entirely a bulleted list with two short framing sentences. While bulleted enumeration is conventional and acceptable for Code/Data availability statements (where reviewers scan for URLs and install commands), the writing-general SKILL flags 'Avoid bullet points and lists unless explicitly requested.' For this section type the bullets are justified, but flag for awareness — no other prose carries the section's argument.
-  - Fix: Acceptable as-is for a Code availability statement. No change required, but if the journal style permits, the framing sentence and trailing PIPELINE.md sentence could be expanded into one short prose paragraph that names each artifact, with URLs in footnotes — only worth doing if the target journal disfavors bullet lists in availability statements.
+  - Issue: The section is entirely a bulleted list with two short framing sentences. While bulleted enumeration is conventional and acceptable for Code/Data availability statements (where reviewers scan for URLs and install commands), the writing-general SKILL flags 'Avoid bullet points and lists unless explicitly requested.' For this section type the bullets are justified, but flag for awareness -- no other prose carries the section's argument.
+  - Fix: Acceptable as-is for a Code availability statement. No change required, but if the journal style permits, the framing sentence and trailing PIPELINE.md sentence could be expanded into one short prose paragraph that names each artifact, with URLs in footnotes -- only worth doing if the target journal disfavors bullet lists in availability statements.
 
 - **[MINOR/structure]** `drafts/08-code-availability.md:17`
   - Quote: > To reproduce the published record for one scenario, follow the \texttt{PIPELINE.md} in the integration meta-repository, which documents required inputs, expected outputs, and the command sequence for each stage.

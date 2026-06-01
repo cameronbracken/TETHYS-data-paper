@@ -27,12 +27,12 @@
 - **Goal**: Specify, with equations and proxies, every step of the downscaling chain.
 - **Implements**: CLAIM-02.
 - **Subsections** (each is a draft file):
-  - `methods-gcam-usa.md` — GCAM-USA inputs.
-  - `methods-meteorological-forcing.md` — TGW-WRF preprocessing, monthly deficit, GSI (Eqs.~\ref{eq:gsi-components}–\ref{eq:gsi-monthly}).
-  - `methods-spatial-downscaling.md` — Eq.~\ref{eq:spatial} and per-sector proxies (Irrigation/Demeter, Electricity/CERF, Municipal/SSP-pop, Livestock/GLW-3, Manufacturing & Mining/population).
-  - `methods-temporal-downscaling.md` — Irrigation Eq.~\ref{eq:irr-weights}, Electricity Eqs.~\ref{eq:elec-cases}–\ref{eq:elec-demand}, Domestic Eq.~\ref{eq:dom-monthly}.
-  - `methods-source-shares.md` — Eq.~\ref{eq:source-shares} renewable vs non-renewable.
-  - `methods-future-projection.md` — frankenstein coupling rationale.
+  - `methods-gcam-usa.md` -- GCAM-USA inputs.
+  - `methods-meteorological-forcing.md` -- TGW-WRF preprocessing, monthly deficit, GSI (Eqs.~\ref{eq:gsi-components}–\ref{eq:gsi-monthly}).
+  - `methods-spatial-downscaling.md` -- Eq.~\ref{eq:spatial} and per-sector proxies (Irrigation/Demeter, Electricity/CERF, Municipal/SSP-pop, Livestock/GLW-3, Manufacturing & Mining/population).
+  - `methods-temporal-downscaling.md` -- Irrigation Eq.~\ref{eq:irr-weights}, Electricity Eqs.~\ref{eq:elec-cases}–\ref{eq:elec-demand}, Domestic Eq.~\ref{eq:dom-monthly}.
+  - `methods-source-shares.md` -- Eq.~\ref{eq:source-shares} renewable vs non-renewable.
+  - `methods-future-projection.md` -- frankenstein coupling rationale.
 - **Transition to next**: methods produce the published record described in Data Records.
 
 ### IV. Data Records
@@ -49,13 +49,13 @@
 - **Goal**: Quantify agreement with USGS at HUC6 for the three dominant sectors and characterize biases.
 - **Implements**: CLAIM-04.
 - **Subsections** (each is a draft file):
-  - `validation-overview.md` — coarse-to-fine, total-to-seasonal validation frame; Table~\ref{tab:validation-metrics}.
-  - `validation-conus-annual.md` — Figs.~\ref{fig:annual-total-timeseries}–\ref{fig:annual-total-boxplot}.
-  - `validation-huc6-spatial.md` — Figs.~\ref{fig:map-pbias}–\ref{fig:huc-correlation}.
-  - `validation-bias-diagnosis.md` — explanation for sector biases; uncertainty in USGS reference.
-  - `validation-seasonal.md` — Fig.~\ref{fig:monthly}.
-  - `validation-inter-scenario.md` — Fig.~\ref{fig:scenarios}.
-  - `validation-limitations.md` — 6 named limitations.
+  - `validation-overview.md` -- coarse-to-fine, total-to-seasonal validation frame; Table~\ref{tab:validation-metrics}.
+  - `validation-conus-annual.md` -- Figs.~\ref{fig:annual-total-timeseries}–\ref{fig:annual-total-boxplot}.
+  - `validation-huc6-spatial.md` -- Figs.~\ref{fig:map-pbias}–\ref{fig:huc-correlation}.
+  - `validation-bias-diagnosis.md` -- explanation for sector biases; uncertainty in USGS reference.
+  - `validation-seasonal.md` -- Fig.~\ref{fig:monthly}.
+  - `validation-inter-scenario.md` -- Fig.~\ref{fig:scenarios}.
+  - `validation-limitations.md` -- 6 named limitations.
 - **Transition to next**: usage notes describe how the validated record is meant to be consumed.
 
 ### VI. Usage Notes
@@ -84,22 +84,22 @@
 - **Goal**: Required journal sections.
 
 ## Key Sources
-- Huang 2018 (`hess-22-2117-2018`) — historical gridded benchmark.
-- Khan 2023 — immediate predecessor.
-- Wada 2017 — global gridded.
-- van Vliet 2021 — country/basin SSP.
-- Vernon 2021 — CERF.
-- Vernon 2018 — Demeter.
-- Jones 2016 — SSP gridded population.
-- Jones 2023 — TGW-WRF.
-- Jolly 2005 — GSI formulation.
-- Moore 2015 — irrigation deficit-and-growing-season approach.
-- Roy 2005 — irrigation timing.
-- Wada 2011 — domestic temperature-anomaly formula.
-- Calvin 2019, Binsted 2022, Zhao (×2) — GCAM-USA.
-- Gilbert 2018 — GLW-3.
-- Skinner 2025, Stets 2025 — refreshed USGS uncertainty.
-- WWDR 2019, Niazi 2024, Awais 2024, Graham 2020, Kyle 2023, Hadjimichael 2023 — scarcity context.
+- Huang 2018 (`hess-22-2117-2018`) -- historical gridded benchmark.
+- Khan 2023 -- immediate predecessor.
+- Wada 2017 -- global gridded.
+- van Vliet 2021 -- country/basin SSP.
+- Vernon 2021 -- CERF.
+- Vernon 2018 -- Demeter.
+- Jones 2016 -- SSP gridded population.
+- Jones 2023 -- TGW-WRF.
+- Jolly 2005 -- GSI formulation.
+- Moore 2015 -- irrigation deficit-and-growing-season approach.
+- Roy 2005 -- irrigation timing.
+- Wada 2011 -- domestic temperature-anomaly formula.
+- Calvin 2019, Binsted 2022, Zhao (×2) -- GCAM-USA.
+- Gilbert 2018 -- GLW-3.
+- Skinner 2025, Stets 2025 -- refreshed USGS uncertainty.
+- WWDR 2019, Niazi 2024, Awais 2024, Graham 2020, Kyle 2023, Hadjimichael 2023 -- scarcity context.
 
 ## Open Questions
 - How often does the Eq.~\ref{eq:source-shares} clip bind, and what is the basin-level mass-balance violation?

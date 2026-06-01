@@ -13,7 +13,7 @@
 
 This is a well-scoped data descriptor presenting a genuinely useful CONUS-resolution multi-sector water-demand dataset that materially advances on its predecessors (Khan et al. 2023, Huang et al. 2018, Wada et al., van Vliet et al.). Table 1 establishes the contribution clearly: 4× spatial resolution refinement, GW/SW split, scenario-consistent inputs, and 8-scenario ensemble together justify a separate descriptor. Methodology is sound, the workflow well-documented, and FAIR compliance is strong (MSD-Live archive, scenario YAMLs included, GitHub repos linked).
 
-The main weaknesses are (a) the technical validation is statistically thin for a Scientific Data descriptor — Pearson correlations and a single CONUS-scale percent agreement number are not enough — and (b) the abstract framing oversells aggregate agreement that is partly an artifact of compensating sector-level biases. Both are addressable with the existing outputs.
+The main weaknesses are (a) the technical validation is statistically thin for a Scientific Data descriptor -- Pearson correlations and a single CONUS-scale percent agreement number are not enough -- and (b) the abstract framing oversells aggregate agreement that is partly an artifact of compensating sector-level biases. Both are addressable with the existing outputs.
 
 The honest treatment of method limitations (the "frankenstein-design" caveat, the explicit min(·,1) clip in Eq. 8, the conveyance-loss variant) is exemplary for the genre.
 
@@ -26,7 +26,7 @@ The honest treatment of method limitations (the "frankenstein-design" caveat, th
 #### 1. Sector-level bias framing in abstract and validation summary
 **Where:** Abstract (lines 9–10); "Improvements" summary (line 268–269); contradicts Fig. 4 and line 179–180.
 
-The abstract states the dataset "validates well against USGS at HUC6 (annual correlations of 0.71–0.95)" and is "within 10% at CONUS scale." Figure 4 shows Domestic withdrawals biased ~−45% and Electricity withdrawals ~−30% at HUC6, with sign-opposing biases that partially cancel at the CONUS total. The CONUS-scale agreement is therefore partly an artifact of compensating errors. Line 179–180 acknowledges this; the abstract does not. A naive reader will infer 10% accuracy applies at the sector level — it does not.
+The abstract states the dataset "validates well against USGS at HUC6 (annual correlations of 0.71–0.95)" and is "within 10% at CONUS scale." Figure 4 shows Domestic withdrawals biased ~−45% and Electricity withdrawals ~−30% at HUC6, with sign-opposing biases that partially cancel at the CONUS total. The CONUS-scale agreement is therefore partly an artifact of compensating errors. Line 179–180 acknowledges this; the abstract does not. A naive reader will infer 10% accuracy applies at the sector level -- it does not.
 
 **Recommendation:** Revise the abstract to lead with sector-level findings, e.g.: "annual CONUS totals agree within 10%; sector-level HUC6 biases range from approximately −45% (Domestic) to +5% (Irrigation withdrawals), with HUC6 spatial-pattern correlations of 0.71–0.95." Add a sentence to the validation summary explicitly noting that aggregate agreement reflects partial cancellation of opposing sector biases. **This is the single most important framing change.**
 
@@ -47,7 +47,7 @@ Pearson r values in Fig. 6 are reported to three significant figures with no con
 #### 4. Domestic −45% bias is large and under-explained
 **Where:** Fig. 4; lines 192–194.
 
-The Domestic consumption bias of ~−45% is striking and is attributed only briefly to the Wada et al. R amplitude coefficient. The magnitude warrants a clearer diagnosis: is this a units issue (consumption vs. withdrawal accounting), a GCAM-USA municipal demand magnitude issue, or a downscaling artifact? Users planning Domestic-sector scarcity analysis need to know whether the bias is a known offset (correctable) or a structural limitation. The line 192–194 attribution is asserted, not demonstrated — no diagnostic plot or fit statistic supports it.
+The Domestic consumption bias of ~−45% is striking and is attributed only briefly to the Wada et al. R amplitude coefficient. The magnitude warrants a clearer diagnosis: is this a units issue (consumption vs. withdrawal accounting), a GCAM-USA municipal demand magnitude issue, or a downscaling artifact? Users planning Domestic-sector scarcity analysis need to know whether the bias is a known offset (correctable) or a structural limitation. The line 192–194 attribution is asserted, not demonstrated -- no diagnostic plot or fit statistic supports it.
 
 **Recommendation:** Add 2–3 sentences in Technical Validation or Limitations diagnosing the source. If GCAM-USA municipal totals are the source, say so. If a consumption-fraction assumption, document it. Consider providing a per-HUC6 bias-correction factor as an ancillary file, or guide users on how to apply USGS-anchored scaling for domestic scarcity. Either show a diagnostic (e.g., scatter of monthly Tethys/USGS ratio vs R) or soften the language to "consistent with."
 
@@ -55,7 +55,7 @@ The Domestic consumption bias of ~−45% is striking and is attributed only brie
 **Where:** Eq. 8 (line 138–140).
 
 Eq. 8 clips the adjusted renewable share at 1 only for cells in 𝓜 (where both s^GCAM_2015 > 0 and s^USGS exists) and leaves cells outside 𝓜 untouched. Three problems:
-- **Mass not conserved:** when min(·,1) binds, the implicit non-renewable share at that cell is set to 0, but the basin total is not re-normalized — basin renewable/non-renewable totals can drift from GCAM.
+- **Mass not conserved:** when min(·,1) binds, the implicit non-renewable share at that cell is set to 0, but the basin total is not re-normalized -- basin renewable/non-renewable totals can drift from GCAM.
 - **One-sided clip:** ratios that *shrink* the renewable share (s^GCAM_y/s^GCAM_2015 < 1) apply without floor; ratios that *grow* it are capped. This systematically biases historical-anchored cells toward lower renewable shares relative to un-anchored cells.
 - The fraction of cells in 𝓜, the fraction where the clip binds, and basin-level mass-balance error are never reported.
 
@@ -64,14 +64,14 @@ Eq. 8 clips the adjusted renewable share at 1 only for cells in 𝓜 (where both
 #### 6. Eq. 5 thresholds (HDD ≥ 650, CDD ≥ 450) lack sensitivity analysis
 **Where:** Eq. 5 (line ~119); line 124.
 
-The piecewise definition introduces hard discontinuities at H_y = 650 and C_y = 450. Cells near either threshold can flip between case 1 (climate-weighted) and case 4 (uniform 1/12) from year to year as climate evolves over 2020–2100, producing artificial step changes unrelated to physical demand. The threshold convention is attributed to Huang et al. but no sensitivity test is shown, and the spatial extent of cells near the threshold is not mapped. Under warming, many historically case-1 cells will cross into case-3 (CDD only) — this transition is uncharacterized.
+The piecewise definition introduces hard discontinuities at H_y = 650 and C_y = 450. Cells near either threshold can flip between case 1 (climate-weighted) and case 4 (uniform 1/12) from year to year as climate evolves over 2020–2100, producing artificial step changes unrelated to physical demand. The threshold convention is attributed to Huang et al. but no sensitivity test is shown, and the spatial extent of cells near the threshold is not mapped. Under warming, many historically case-1 cells will cross into case-3 (CDD only) -- this transition is uncharacterized.
 
 **Recommendation:** (i) Map the fraction of CONUS cells within ±20% of either threshold under historical baseline and rcp85hotter 2100. (ii) Run a sensitivity test perturbing thresholds to (550, 350) and (750, 550); report resulting CONUS monthly Electricity demand spread. (iii) Consider replacing the hard switch with a smooth blend (e.g., logistic weighting of the four cases).
 
 #### 7. Box-plot statistics underspecified (Figs 4, 7)
 **Where:** Fig. 4, Fig. 7 captions.
 
-Central evidence figures with missing statistical anatomy: (a) n underlying each box (HUC6 count for CONUS, presumably ~200, never stated; Fig. 7 monthly box presumably across years 2000–2020, n=21, never stated); (b) whisker definition (Tukey 1.5×IQR? min/max?); (c) outlier-inclusion rule; (d) the exact denominator for "percent difference (USGS−Tethys)" — (USGS−Tethys)/USGS, /Tethys, or /mean? With small n, percent-difference distributions are highly skewed; median ± IQR can mislead. Fig. 4 Domestic shows visible outliers near −75% — not discussed.
+Central evidence figures with missing statistical anatomy: (a) n underlying each box (HUC6 count for CONUS, presumably ~200, never stated; Fig. 7 monthly box presumably across years 2000–2020, n=21, never stated); (b) whisker definition (Tukey 1.5×IQR? min/max?); (c) outlier-inclusion rule; (d) the exact denominator for "percent difference (USGS−Tethys)" -- (USGS−Tethys)/USGS, /Tethys, or /mean? With small n, percent-difference distributions are highly skewed; median ± IQR can mislead. Fig. 4 Domestic shows visible outliers near −75% -- not discussed.
 
 **Recommendation:** State n, whisker rule, and percent-difference formula in each caption. Where percent differences are skewed, also report the symmetric percent difference 2(A−B)/(A+B) or use log-ratios. Discuss the outlier basins explicitly.
 
@@ -85,7 +85,7 @@ Lines 199–202 acknowledge a visible discontinuity in Fig. 8 between the histor
 #### 9. GCAM-USA 5-year linear interpolation artifact not addressed as a Limitation
 **Where:** Lines 105, 252; line 175 acknowledges reduced interannual variability for irrigation.
 
-Linear interpolation between 5-year GCAM steps suppresses interannual variability and creates artificial smoothness in trend metrics. The trend lines in Fig. 3 are visibly straighter than USGS — a likely consequence. This is a structural feature downstream users (especially scarcity-event statistics) need to understand explicitly.
+Linear interpolation between 5-year GCAM steps suppresses interannual variability and creates artificial smoothness in trend metrics. The trend lines in Fig. 3 are visibly straighter than USGS -- a likely consequence. This is a structural feature downstream users (especially scarcity-event statistics) need to understand explicitly.
 
 **Recommendation:** Add a Limitations bullet "Interannual smoothing from 5-year GCAM steps." Quantify (e.g., ratio of Tethys to USGS interannual standard deviation at HUC6 for at least Irrigation withdrawals). Explicitly state that this dataset is appropriate for scenario-level and climatological-mean analyses but not for replicating observed year-to-year demand variability.
 
@@ -124,8 +124,8 @@ Line 148–149. Colloquial; while candor is welcome, reads as informal. **Recomm
 #### 18. Audience and use cases not explicitly stated
 Implies users (water managers, IAM modelers, mosartwmpy users) but never names them. **Recommendation:** Add 3–4 sentences to Usage Notes naming primary user communities and 2–3 cautionary use cases (e.g., not for plant-specific cooling-water permitting).
 
-#### 19. Reproducibility — version pinning unclear for non-Tethys components
-Tethys versions pinned in YAMLs. Demeter, CERF, GCAM-USA (ref 23 has DOI — good), TGW-WRF, Jones-O'Neill, GLW3, GPPD versions/commits not consistently pinned. **Recommendation:** State specific version/commit/DOI for each upstream component.
+#### 19. Reproducibility -- version pinning unclear for non-Tethys components
+Tethys versions pinned in YAMLs. Demeter, CERF, GCAM-USA (ref 23 has DOI -- good), TGW-WRF, Jones-O'Neill, GLW3, GPPD versions/commits not consistently pinned. **Recommendation:** State specific version/commit/DOI for each upstream component.
 
 #### 20. Conveyance-loss variant under-documented
 Lines 220–221. The `_with_losses` files exist but loss assumption (rate, source, spatial variation) is not documented. **Recommendation:** 2 sentences specifying formulation, source, spatial variation.

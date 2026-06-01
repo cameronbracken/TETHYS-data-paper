@@ -30,6 +30,6 @@ Each PRECIS claim maps to a section of the LaTeX draft:
 
 ## Verdict
 
-`validated` — every PRECIS claim has a backing section in the draft. The
+`validated` -- every PRECIS claim has a backing section in the draft. The
 purpose of this run is review of *how well* each section advances its claim,
 not whether the claim is covered at all.

@@ -26,7 +26,7 @@ workflow's discovery requirements.
 
 ## Phase
 
-`phase: review` — review-only run. No drafting, no revision in this workspace.
+`phase: review` -- review-only run. No drafting, no revision in this workspace.
 Findings will be rendered to `.planning/REVIEW.md` and propagated back to the
 Overleaf project as a markdown review artifact.
 
