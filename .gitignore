@@ -1,0 +1,9 @@
+# latex junk
+*.aux
+*.bbl
+*.blg
+*.flg_latexmk
+*.fdb_latexmk
+*.fls
+*.log
+*.out
