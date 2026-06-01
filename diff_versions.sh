@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 # Build a latexdiff between two versions of the manuscript and compile to PDF.
 # Usage: ./build_diff.sh <old.tex> <new.tex> [output_basename]
-# Example: ./build_diff.sh previous_versions/main_v2.tex main_v3.tex diff_v2_v3
+# Example: ./build_diff.sh previous_versions/main_v3.tex main_v4.tex diff_v3_v4
 
 set -euo pipefail
 
-OLD="${1:-previous_versions/main_v2.tex}"
-NEW="${2:-main_v3.tex}"
-OUT="${3:-diff_v2_v3}"
+OLD=$1
+NEW=$2
+OUT=$3
+
+# echo $OLD
+# echo $NEW
+# echo $OUT
 
 cd "$(dirname "$0")"
 
@@ -21,6 +25,7 @@ cd "$(dirname "$0")"
 #                             arguments and breaks TikZ parsing)
 latexdiff \
     --disable-citation-markup \
+    --append-context2cmd="author,affil,abstract,keywords" \
     --math-markup=whole \
     --config "PICTUREENV=(?:picture|tikzpicture|DIFnomarkup)[\w\d*@]*" \
     "$OLD" "$NEW" > "${OUT}.tex"
@@ -29,10 +34,11 @@ latexdiff \
 rm -f "${OUT}.aux" "${OUT}.log" "${OUT}.out" "${OUT}.bbl" "${OUT}.blg" "${OUT}.pdf"
 
 # Standard pdflatex -> bibtex -> pdflatex x2 cycle
-pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
-bibtex "${OUT}" || true
-pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
-pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
+#latexmk -lualatex -bibtex 
+#pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
+#bibtex "${OUT}" || true
+#pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
+#pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
 
 echo
 echo "Built ${OUT}.pdf"
