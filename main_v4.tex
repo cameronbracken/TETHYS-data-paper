@@ -211,7 +211,7 @@ where $T_m$ is the monthly mean temperature at the cell, $\bar{T}$ is the annual
 
 \subsection*{Groundwater vs.\ surface water source-share post-processing}
 
-GCAM-USA (Superwell) solves for the share of each basin's withdrawals met from surface versus groundwater supply using by cost-based allocation. Mapping that basin-scale split onto the 1/8$^{\circ}$ grid requires two steps. First, we apply the basin-level share uniformly to all end-use sectors in the basin, except that thermoelectric demand is assumed to use surface water only and the remaining sectoral shares are renormalized accordingly. Second, we anchor the historical spatial pattern of the gw/sw split to USGS data by rescaling each cell's GCAM share against its USGS-2020 value while preserving the spatial pattern of a static USGS baseline derived from the 2009-2020 mean gw/sw share distribution\cite{Stets2025USGS}. Let $s^{\mathrm{GCAM}}_{c,y}$ denote the GCAM-derived renewable share at cell $c$ in year $y$, and $s^{\mathrm{USGS}}_c$ the static USGS-derived baseline share at cell $c$. For the subset of cells $\mathcal{M}$ for which both $s^{\mathrm{GCAM}}_{c,\,2015}>0$ and $s^{\mathrm{USGS}}_c$ is available, the adjusted share is
+GCAM-USA (Superwell) solves for the share of each basin's withdrawals met from surface versus groundwater supply using cost-based allocation. Mapping that basin-scale split onto the 1/8$^{\circ}$ grid requires two steps. First, we apply the basin-level share uniformly to all water-use sectors in the basin, except that thermoelectric demand is assumed to use surface water only and the remaining sectoral shares are renormalized accordingly. Second, we anchor the historical spatial pattern of the gw/sw split to USGS data by rescaling each cell's GCAM share against its 2015 value while preserving the spatial pattern of a static USGS baseline derived from the 2009-2020 mean gw/sw share distribution\cite{Stets2025USGS}. Let $s^{\mathrm{GCAM}}_{c,y}$ denote the GCAM-derived renewable share at cell $c$ in year $y$, and $s^{\mathrm{USGS}}_c$ the static USGS-derived baseline share at cell $c$. For the subset of cells $\mathcal{M}$ for which both $s^{\mathrm{GCAM}}_{c,\,2015}>0$ and $s^{\mathrm{USGS}}_c$ are available, the adjusted share is
 \begin{equation}
 s^{\mathrm{adj}}_{c,y} =
 \begin{cases}
@@ -220,7 +220,7 @@ s^{\mathrm{GCAM}}_{c,y}                                                         
 \end{cases}
 \label{eq:source-shares}
 \end{equation}
-The $\min(\cdot,1)$ clip prevents amplifications when the 2015 GCAM baseline is small. In groundwater-dominated regions the clip can mask trajectory increases, but it preserves the physical bound that a share cannot exceed one. This approach is a compromise that captures GCAMs global dynamics and more closely mimics the USGS split which is computed based on the number of surface water and groundwater intakes in each HUC12 region \cite{Stets2025USGS}.
+The expression $\min(\cdot,1)$, limits shares to a maximum value of 1, preventing unrealistically large values when the 2015 GCAM baseline is small. In groundwater-dominated regions, the limit can suppress increases in projected trajectories; however, it preserves the physical limit that a share cannot use more water than is available in a grid cell. This approach represents a compromise that captures GCAM's large-scale temporal dynamics while more closely reproducing the USGS gw/sw split, which is derived from the relative distribution of surface-water and groundwater intakes within each HUC12 region \cite{Stets2025USGS}.
 
 \subsection*{Modular earth system model coupling}
 
@@ -413,7 +413,7 @@ Compared with the prior Tethys global product\cite{Khan2023}, the dataset presen
 
 \paragraph{GSI-based irrigation temporal downscaling.} Prior irrigation monthly weights used a simpler temperature-driven scheme. This dataset computes per-cell monthly weights (Eq.~\ref{eq:irr-weights}) from the TGW-WRF monthly deficit and growing-season index, so the monthly distribution of irrigation demand responds to climate-consistent drought and growing-condition signals rather than to a static seasonal template. The monthly irrigation distribution thus varies from year to year and across scenarios, tracking interannual drought variability that a static template cannot reproduce.
 
-\paragraph{Representation of Groundwater/Surface water split.} Prior work applied GCAM's basin-level gw/sw split uniformly across cells within each basin. This dataset uses Eq.~(\ref{eq:source-shares}) to blend the temporal evolution of GCAM-USA with USGS's latest data based on the number of surface and groundwater. 
+\paragraph{Representation of Groundwater/Surface water split.} Prior work applied GCAM's basin-level gw/sw split uniformly across all cells within a basin. This dataset uses Eq.~(\ref{eq:source-shares}) to combine the temporal evolution of GCAM-USA with the finer-scale spatial distribution inferred from USGS groundwater and surface-water intake distributions at the HUC12 level. 
 
 Together, these six advances produce a much improved representation of CONUS water demands supporting detailed scenario analysis. As discussed in Technical Validation, the annual totals are in close agreement with the latest USGS water-use data (January~2025) although the two datasets differ substantially in their spatial distribution. Users computing per-sector scarcity at individual basins should consult Table~\ref{tab:validation-metrics} and the HUC6 maps to get a sense of the differences between the datasets before using the projected data.
 
@@ -431,16 +431,16 @@ The TGW-WRF climate forcing\cite{Jones2023TGW} that drives the Tethys runs is av
 % -----------------------------------------------------------------------------
 \section*{Acknowledgments}
 
-This research was supported by the U.S.~Department of Energy, Office of Science, as part of research in MultiSector Dynamics, Earth and Environmental System Modeling Program. We thank the TGW-WRF team for the downscaled climate product, the GCAM-USA team for the scenario simulations, and the USGS water-use program for the reference observations used in validation.
+This research was supported by the U.S.~Department of Energy, Office of Science, as part of research in MultiSector Dynamics, Earth and Environmental System Modeling Program. We thank the TGW-WRF team for the downscaled climate product, the GCAM-USA team for the scenario simulations, and the USGS water-use program for the high quality data used for comparison.
 
 \section*{Author contributions statement}
 
 % TODO: coauthors to fill in per CRediT roles. Illustrative template:
-C.B.~Coordinated the downscaling runs, conducted the HUC-scale validation, and drafted this version of the manuscript based on an earlier draft by I.T.
+C.B.~Coordinated the downscaling runs, conducted the HUC-scale comparison against USGS data, and drafted this version of the manuscript based on an earlier draft by I.T.
 H.N.~Developed and maintained the Tethys model, conducted the runs, and helped with the interpretation of GCAM-USA and Tethys outputs.
 T.T.~Extended the Tethys package to support GCAM-USA inputs, developed the first version of the Tethys metarepo, and carried out the initial scenario runs.
 I.T.~Wrote initial draft of this manuscript, contributed to the CERF--Tethys integration and power-plant proxy construction.
-K.T.~Developed the USGS-anchored source-share attribution as a postprocessing to Tethys and conducted runs.
+K.T.~Developed the USGS-anchored gw/sw source-share attribution postprocessing framework for Tethys and conducted the associated runs and analyses.
 H.E.~Produced the TGW-WRF preprocessing pipeline for PET, HDD/CDD, and GSI.
 K.M.~Developed CERF--Tethys integration and power-plant proxy construction.
 N.V.~Contributed to scenario design and interpretation.
