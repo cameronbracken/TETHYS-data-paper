@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Build a latexdiff between two versions of the manuscript and compile to PDF.
-# Usage: ./build_diff.sh <old.tex> <new.tex> [output_basename]
-# Example: ./build_diff.sh previous_versions/main_v3.tex main_v4.tex diff_v3_v4
+# Usage: ./diff_versions.sh <old.tex> <new.tex> [output_basename]
+# Example: ./diff_versions.sh previous_versions/main_v3.tex main_v4.tex diff_v3_v4
 
 set -euo pipefail
 
@@ -35,12 +35,8 @@ latexdiff \
 # Clean stale aux files from any prior run with different content
 rm -f "${OUT}.aux" "${OUT}.log" "${OUT}.out" "${OUT}.bbl" "${OUT}.blg" "${OUT}.pdf"
 
-# Standard pdflatex -> bibtex -> pdflatex x2 cycle
-#latexmk -lualatex -bibtex 
-#pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
-#bibtex "${OUT}" || true
-#pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
-#pdflatex -interaction=nonstopmode -halt-on-error "${OUT}.tex"
+# latexmk using lualatex
+latexmk -lualatex -bibtex "${OUT}.tex"
 
 echo
 echo "Built ${OUT}.pdf"
