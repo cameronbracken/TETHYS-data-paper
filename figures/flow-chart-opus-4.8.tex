@@ -1,7 +1,6 @@
 \documentclass[tikz,border=2mm]{standalone}
 \usepackage{tikz}
 \usetikzlibrary{positioning,calc}
-%\usepackage{times}
 
 % ------------------------------------------------------------------
 % Named colors
@@ -118,8 +117,8 @@
 \node[
     dashedbox,
     minimum width=2.82cm,
-    minimum height=2.72cm,
-    below=0.62cm of tgw
+    minimum height=2.75cm,
+    below=1.15cm of tgw
 ] (monthly) {};
 
 \node[
@@ -154,7 +153,7 @@
     below=0.62cm of gcam
 ] (spatial) {%
     \textbf{Spatial Downscaling}\\[2pt]
-    Regional to 1/8$^{\circ}$ degree
+    Regional to 1/8$^{\mathrm{th}}$ degree
 };
 
 \node[
@@ -189,7 +188,7 @@
 \node[
     dashedbox,
     minimum width=2.82cm,
-    minimum height=3.27cm,
+    minimum height=3.3cm,
     below=0.57cm of demeter
 ] (proxies) {};
 
@@ -268,7 +267,7 @@
 % Legend
 % ------------------------------------------------------------------
 
-\coordinate (legendbase) at ($(tethys.south)+(-2.4cm,-0.5cm)$);
+\coordinate (legendbase) at ($(tethys.south)+(0.75,-0.75cm)$);
 
 \node[
     draw=darkoutline,
@@ -276,11 +275,11 @@
     fill=opgreen,
     minimum width=0.40cm,
     minimum height=0.40cm
-] (legopbox) at ($(legendbase)+(-2.80cm,0)$) {};
+] (legopbox) at ($(legendbase)+(-2.60cm,0)$) {};
 
 \node[
     anchor=west
-] at ($(legopbox.east)+(0.10cm,0)$) {Tethys Operation};
+] at ($(legopbox.east)+(0.00cm,0)$) {Tethys Operation};
 
 \node[
     draw=darkoutline,
@@ -288,11 +287,11 @@
     fill=modelblue,
     minimum width=0.40cm,
     minimum height=0.40cm
-] (legmodelbox) at ($(legendbase)+(0.00cm,0)$) {};
+] (legmodelbox) at ($(legendbase)+(0.1cm,0)$) {};
 
 \node[
     anchor=west
-] at ($(legmodelbox.east)+(0.10cm,0)$) {Model};
+] at ($(legmodelbox.east)+(0.00cm,0)$) {Model};
 
 \node[
     draw=black,
@@ -301,11 +300,11 @@
     rounded corners=1mm,
     minimum width=0.40cm,
     minimum height=0.40cm
-] (legdatabox) at ($(legendbase)+(1.6cm,0)$) {};
+] (legdatabox) at ($(legendbase)+(1.45cm,0)$) {};
 
 \node[
     anchor=west
-] at ($(legdatabox.east)+(0.10cm,0)$) {Dataset/Variable};
+] at ($(legdatabox.east)+(0.20cm,0)$) {Dataset/Variable};
 
 \end{tikzpicture}
 
