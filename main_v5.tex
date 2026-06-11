@@ -119,7 +119,7 @@ The dataset's historical period spans 1980--2019 and future scenarios span 2020-
 
 \subsection*{Meteorological forcing (TGW)}
 
-Historical and projected meteorological data are from perturbed thermodynamics experiments \cite{Jones2023TGW} (\href{https://tgw-data.msdlive.org/}{tgw-data.msdlive.org/}) which provides hourly atmospheric variables at 1/8$^{\circ}$ over CONUS, dynamically downscaled with WRF from a 30-km ERA5 historical baseline (1980--2019) and from CMIP6-derived monthly thermodynamic perturbations (2020--2100). The TGW approach replays historical weather sequences with added thermodynamic signals, retaining the synoptic structure of observed weather while shifting its mean state to match each future scenario. For each TGW scenario we compute daily potential evapotranspiration (PET), precipitation ($P$), mean temperature, heating degree days (HDD), cooling degree days (CDD), and a growing-season index (GSI). These are aggregated to monthly totals or means and reprojected to the Tethys 1/8$^{\circ}$ CONUS grid.
+Historical and projected meteorological data are from perturbed thermodynamics experiments \cite{Jones2023TGW} (\href{https://tgw-data.msdlive.org/}{tgw-data.msdlive.org}) which provides hourly atmospheric variables at 1/8$^{\circ}$ over CONUS, dynamically downscaled with WRF from a 30-km ERA5 historical baseline (1980--2019) and from CMIP6-derived monthly thermodynamic perturbations (2020--2100). The TGW approach replays historical weather sequences with added thermodynamic signals, retaining the synoptic structure of observed weather while shifting its mean state to match each future scenario. For each TGW scenario we compute daily potential evapotranspiration (PET), precipitation ($P$), mean temperature, heating degree days (HDD), cooling degree days (CDD), and a growing-season index (GSI). These are aggregated to monthly totals or means and reprojected to the Tethys 1/8$^{\circ}$ CONUS grid.
 
 The monthly water deficit used in irrigation temporal downscaling is $\Delta_m = \max\!\big(\text{PET}_m - P_m,\, 0\big)$. The monthly GSI is derived from a simplified version of Jolly et al.\cite{Jolly_2005}, retaining the daily minimum-temperature ($iT_{\min}$) and daylength photoperiod indicators ($iPhoto$) but omitting the vapour-pressure-deficit term. For each day $d$,
 \begin{equation}
@@ -385,9 +385,9 @@ CONUS annual demand across the historical and eight future scenarios for the thr
 
 \subsection*{Limitations}
 
-Despite the advances presented above, several limitations should inform use of the dataset and motivate future work. Two limitations relate to spatial stationarity of proxy fields. The GLW~3 livestock distribution is held fixed at 2010 across all years and scenarios; livestock is \textasciitilde2\% of CONUS demand, but within individual basins --- particularly in states with rapidly shifting livestock composition --- the static map may obscure local patterns worth resolving further. Population serves as the spatial proxy for manufacturing and mining, which captures the average pattern of labor-associated demand but misses site-specific industrial or mining facilities whose withdrawals can be locally large.
+Despite the advances presented above, several limitations should inform use of the dataset and motivate future work. Two limitations relate to the spatial stationarity of proxy fields. First, due to data limitations, the GLW~3 livestock distribution is held fixed at 2010 across all years and scenarios. This is reasonable as livestock represents a small share (only \textasciitilde2\%) of CONUS demand, but we recognize that within individual basins, particularly in states with rapidly shifting livestock composition, the static map may obscure local patterns worth resolving further in follow-up work upon new data availability. Secondly, population serves as the spatial proxy for manufacturing and mining, which captures the average pattern of labor-associated demand but misses site-specific industrial or mining facilities whose withdrawals can be large locally in a grid cell.
 
-Three further limitations are methodological. The simplified GSI used for irrigation temporal downscaling (Eqs.~\ref{eq:gsi-components}--\ref{eq:gsi-monthly}) drops the vapour-pressure-deficit (VPD) component of the original Jolly et al.\cite{Jolly_2005} formulation; this simplification is consistent with Moore et al.\cite{Moore_2015} but may underweight drought months in humid climates where VPD is the binding constraint. Irrigation files are released both with and without conveyance losses applied (\texttt{\_with\_losses} suffix), and users coupling the dataset to hydrologic routing should select the appropriate variant for their application. Finally, the 5-year GCAM-USA time step is linearly interpolated to annual resolution, which suppresses interannual variability --- most visible as smoother trend lines in irrigation --- so the dataset is appropriate for scenario-level and climatological-mean analyses rather than for replicating year-to-year demand variability.
+Three further limitations are methodological. The simplified GSI used for irrigation temporal downscaling (Eqs.~\ref{eq:gsi-components}--\ref{eq:gsi-monthly}) drops the vapour-pressure-deficit (VPD) component of the original Jolly et al.\cite{Jolly_2005} formulation; this simplification is consistent with Moore et al.\cite{Moore_2015} but may underweight drought months in humid climates where VPD is the binding constraint. Irrigation files are released both with and without conveyance losses applied (\texttt{\_with\_losses} suffix), and users coupling the dataset to hydrologic routing should select the appropriate variant for their application. Finally, the 5-year GCAM-USA time step is linearly interpolated to annual resolution, which suppresses interannual variability. This is most visible as smoother trend lines in irrigation and could be improved for using the dataset for replicating year-to-year demand variability beyond scenario-level and climatological-mean analyses.
 
 % -----------------------------------------------------------------------------
 \section*{Usage Notes}
@@ -412,7 +412,7 @@ Future demand trajectories in integrated assessment models or regional impacts a
 
 Decision-Support &
 Supports planning, policy, resource management, and human decision making &
-Input to optimization, reservoir operations, agent-based, and drought planning models for infrastructure investment analysis and water-allocation planning, e.g., GEB\cite{geb}. \\
+Input to optimization, reservoir operations, agent-based, and drought planning models for infrastructure investment analysis and water allocation planning, e.g., GEB\cite{geb}. \\
 
 Feature Dataset &
 Predictor variable for statistical and machine learning models &
@@ -437,7 +437,7 @@ Compared with the prior Tethys global product\cite{Khan2023}, the dataset presen
 
 \paragraph{Resolution refinement.} Spatial resolution is refined from 1/2$^{\circ}$ to 1/8$^{\circ}$, a factor-of-4 improvement per dimension and a factor-of-16 improvement in areal resolution. Combined with finer proxy data (CERF plants at \textasciitilde1~km, Demeter LULC at 1/8$^{\circ}$, and SSP-compliant population at 1/8$^{\circ}$), the 1/8$^{\circ}$ resolution captures sub-state demand variation and is directly relevant to river routing, reservoir management, and local planning applications.
 
-\paragraph{GCAM-USA integration.} The prior Tethys dataset used the global GCAM configuration, which disaggregated U.S.~demand from a single national total. This dataset uses GCAM-USA, which resolves U.S.~electricity generation, manufacturing, and municipal demand at the state level and crop irrigation demand at state/basin intersections. State-level inputs eliminate the artifact of national-average demand being pushed uniformly into states with very different sectoral mixes, and they allow the subsequent spatial downscaling to respect state-level regulatory boundaries — a distinction particularly important for regions such as the western U.S., where water law varies signficantly across state lines.
+\paragraph{GCAM-USA integration.} The prior Tethys dataset used the global GCAM configuration, which disaggregated U.S.~demand from a single national total. This dataset uses GCAM-USA, which resolves U.S.~electricity generation, manufacturing, and municipal demand at the state level and crop irrigation demand at state/basin intersections. State-level inputs eliminate the artifact of national-average demand being pushed uniformly into states with very different sectoral mixes, and they allow the subsequent spatial downscaling to respect state-level regulatory boundaries — a distinction particularly important for regions such as the western U.S., where water law varies significantly across state lines.
 
 \paragraph{CERF-based power-plant siting.} Prior electricity demand used population as the spatial proxy, which approximates the location of electricity load rather than the location of cooling water demand. This dataset uses explicit power-plant siting from the CERF model\cite{Vernon2021,Mongird2025CERF}, which places thermoelectric plants at $\approx$1-km resolution based on siting feasibility and then aggregates installed capacity to the 1/8$^{\circ}$ grid as the proxy. The result places thermoelectric demand at actual and projected generation sites rather than population centroids. For regions where thermoelectric demand dominates withdrawals, this correction substantially changes both the spatial pattern and the basin-scale water stress signal.
 
@@ -469,16 +469,16 @@ This research was supported by the U.S.~Department of Energy, Office of Science,
 \section*{Author contributions statement}
 
 % TODO: coauthors to fill in per CRediT roles. Illustrative template:
-C.B.~Coordinated the downscaling runs, conducted the HUC-scale comparison against USGS data, and drafted this version of the manuscript based on an earlier draft by I.T.
-H.N.~Developed and maintained the Tethys model, conducted the runs, and helped with the interpretation of GCAM-USA and Tethys outputs.
-T.T.~Extended the Tethys package to support GCAM-USA inputs, developed the first version of the Tethys metarepo, and carried out the initial scenario runs.
-I.T.~Wrote initial draft of this manuscript, contributed to the CERF--Tethys integration and power-plant proxy construction.
-K.T.~Developed the USGS-anchored groundwater-to-surface source-share attribution postprocessing framework for Tethys and conducted the associated runs and analyses.
-H.E.~Produced the TGW preprocessing pipeline for PET, HDD/CDD, and GSI.
-K.M.~Developed CERF--Tethys integration and power-plant proxy construction.
-N.V.~Contributed to scenario design and interpretation.
-N.S.~Project management, scenario design and interpretation.
-J.R.~Provided overall project guidance and scientific review.
+C.B.~Coordinated the downscaling runs, conducted the HUC-scale comparison against USGS data, and drafted this version of the manuscript based on an earlier draft by I.T. 
+H.N.~Developed and maintained the Tethys model, conducted the runs, and helped with the interpretation of GCAM-USA and Tethys outputs. 
+T.T.~Extended the Tethys package to support GCAM-USA inputs, developed the first version of the Tethys metarepo, and carried out the initial scenario runs. 
+I.T.~Wrote initial draft of this manuscript, contributed to the CERF--Tethys integration and power-plant proxy construction. 
+K.T.~Developed the USGS-anchored groundwater-to-surface source-share attribution postprocessing framework for Tethys and conducted the associated runs and analyses. 
+H.E.~Produced the TGW preprocessing pipeline for PET, HDD/CDD, and GSI. 
+K.M.~Developed CERF--Tethys integration and power-plant proxy construction. 
+N.V.~Contributed to scenario design and interpretation. 
+N.S.~Scientific review, scenario design and interpretation. 
+J.R.~Provided overall project guidance and scientific review. 
 
 \section*{Competing interests}
 
