@@ -21,15 +21,18 @@ cd "$(dirname "$0")"
 #                                            internals, which can break soul/ulem)
 # --append-context2cmd="abstract,keywords" : treat the abstract and keywords environments 
 #                                            as ones that can be diffed
-# PICTUREENV                               : treat tikzpicture as an atomic block (the default
-#                                            only covers picture/DIFnomarkup; without this,
-#                                            latexdiff inserts \DIFaddFL inside \node[...]
-#                                            arguments and breaks TikZ parsing)
+# PICTUREENV                               : treat tikzpicture and tabular as atomic blocks
+#                                            (the default only covers picture/DIFnomarkup;
+#                                            without tikzpicture, latexdiff inserts \DIFaddFL
+#                                            inside \node[...] and breaks TikZ; without tabular,
+#                                            inserted \DIFaddbeginFL/\DIFaddendFL can land
+#                                            between \\ and \bottomrule, triggering a
+#                                            "Misplaced \noalign" error from booktabs).
 latexdiff \
     --disable-citation-markup \
     --append-context2cmd="abstract,keywords" \
     --math-markup=whole \
-    --config "PICTUREENV=(?:picture|tikzpicture|DIFnomarkup)[\w\d*@]*" \
+    --config "PICTUREENV=(?:picture|tikzpicture|tabular|DIFnomarkup)[\w\d*@]*" \
     "$OLD" "$NEW" > "${OUT}.tex"
 
 # Clean stale aux files from any prior run with different content
