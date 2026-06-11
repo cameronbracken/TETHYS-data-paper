@@ -1,0 +1,11 @@
+\documentclass[a4paper]{article}
+\usepackage[margin=1cm]{geometry}
+\usepackage{verbatim,shellesc}
+\ShellEscape{cp /usr/local/share/latexmk/LatexMk ./LatexMk}
+\begin{document}
+\section*{About this project}
+This project provides access to the system \texttt{LatexMk} initialization (configuration) file used by Overleaf.  \texttt{LatexMk} is a Perl script which may vary slightly according to the \TeX{} Live version and compiler chosen for the project. If you need to be 100\% certain which  \texttt{LatexMk} is being used, add code from this project to your project and compile to typeset a listing of \texttt{LatexMk} and make it available for download as one of the output files.
+\section*{Listing the \texttt{LatexMk} file}
+\verbatiminput{./LatexMk}
+\verbatiminput{/usr/local/share/latexmk/LatexMk}
+\end{document}
