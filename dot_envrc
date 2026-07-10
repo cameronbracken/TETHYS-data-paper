@@ -1,0 +1,5 @@
+source_up
+
+export TEXINPUTS=.:./styles/:$TEXINPUTS
+export BIBINPUTS=.:./bib/:$BIBINPUTS
+export BSTINPUTS=.:./bib/:$BIBINPUTS
