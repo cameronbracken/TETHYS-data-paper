@@ -652,7 +652,7 @@ FUNCTION {format.url}
 FUNCTION {format.doi}
 { doi empty$
     { "" }
-    { "\url{" doi * "}" * }
+    { "\href{https://doi.org/" doi * "}{" * doi * "}" * }
   if$
 }
 FUNCTION {format.doi.withsemicolon}
