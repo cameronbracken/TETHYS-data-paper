@@ -1,0 +1,439 @@
+% -----------------------------------------------------------------------------
+% main_v6.tex - revised manuscript for the Tethys CONUS sectoral water demand
+% Data Descriptor in Scientific Data (Submission 8d19b29c-d61a-4dbe-b3c4-0e38748a5261).
+% -----------------------------------------------------------------------------
+
+\documentclass[fleqn,10pt]{wlscirep}
+%\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{lineno}
+\usepackage{booktabs}
+\usepackage{xurl}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, fit, backgrounds, shapes.geometric}
+
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+%\usepackage{biblatex}
+%\addbibresource{bib/Tethys.bib} 
+
+\linenumbers
+
+\title{A high-resolution monthly sectoral water demand dataset for the contiguous United States from 1980--2100}
+
+\author[1*]{Cameron Bracken}
+\author[2*]{Hassan Niazi}
+\author[1]{Travis Thurber}
+\author[2]{Isaac Thompson}
+\author[1]{Kazi Tamaddun}
+\author[3]{Hisham Eldardiry}
+\author[1]{Kendall Mongird}
+\author[1,3]{Nathalie Voisin}
+\author[1]{Ning Sun}
+\author[1]{Jennie Rice}
+
+\affil[1]{Pacific Northwest National Laboratory, Richland, WA, USA}
+\affil[2]{Joint Global Change Research Institute, Pacific Northwest National Laboratory, College Park, MD, USA}
+\affil[3]{University of Washington, Seattle, WA, USA}
+
+\affil[*]{corresponding author(s): Cameron Bracken (cameron.bracken@pnnl.gov), Hassan Niazi (hassan.niazi@pnnl.gov)}
+
+\begin{abstract}
+U.S. water demand varies sharply by sector and region as land use, population, weather patterns, and economic activity co-evolve. High-resolution water demand data are required to capture these dynamics and to support integrated energy-water-land modeling and local-to-regional water scarcity assessments. We present a gridded (1/8$^{\circ}$), monthly, multi-sector water demand dataset for the contiguous United States (CONUS) covering 1980--2100 across one historical period and eight future scenarios spanning a wide but plausible range of atmospheric conditions, emissions constraints, and economic, technological, and population growth assumptions. The dataset covers six demand sectors (irrigation, thermoelectric, municipal covering public supply and self-supplied domestic, livestock, manufacturing, and mining) aggregated from 25 underlying subsectors, separately for withdrawals and consumption, and includes per-cell groundwater-to-surface-water source shares. The historical record is validated over 2010--2019 against the United States Geological Survey (USGS) water-use reanalysis for the three largest sectors at the Hydrologic Unit Code 6 (HUC6) scale, with Pearson correlations from 0.72 to 0.95. The dataset advances prior global products through state-resolved sectoral demands, future power-plant siting projections, scenario-consistent population and land-use forcing, and a spatial-resolution refinement from 1/2$^{\circ}$ to 1/8$^{\circ}$ (approximately 10--14~km at CONUS midlatitudes).
+\end{abstract}
+\begin{document}
+
+\flushbottom
+\maketitle
+% Click the title above to edit the author information and abstract
+
+\thispagestyle{empty}
+
+% -----------------------------------------------------------------------------
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{usage1-dominant-sector-tethys-grid.png}
+\caption{Dominant water-use sector at each 1/8$^{\circ}$ cell across CONUS, by annual-average consumption in the historical Tethys dataset\cite{bracken2026TethysDataSet} (1980--2019), overlaid with U.S.\ state boundaries. Spatial patterns reflect the multi-sector and heterogeneous nature of U.S.\ water demand, including irrigation across the Great Plains, Mississippi Embayment, Snake River Plain, and California Central Valley, livestock across western rangelands, thermoelectric demand at power-generation sites, municipal (\texttt{Domestic}) demand surrounding metropolitan areas, and manufacturing and mining adding regional structure.}
+\label{fig:dominant-sector}
+\end{figure}
+
+\section*{Background \& Summary}
+
+Humans depend on water for irrigation, thermoelectric cooling, municipal, manufacturing (equivalent to industrial manufacturing, and referred to as manufacturing throughout), mining, and livestock purposes. The relative contribution of these sectors varies sharply across regions and over time. Global water demand is projected to rise through the 21st century under combined socioeconomic pressures and evolving weather patterns\cite{WWDR2019, Niazi2024PeakWater, Awais2024Preprint}. Demand-side drivers, not supply-side limits, dominate most projected shifts in water scarcity\cite{Graham_2020, Awais2024Preprint, Kyle2023Sustainability}. Even where regional supply appears ample, scarcity can manifest locally when demand and availability are mismatched in space or time\cite{HADJIMICHAEL23}. Modeling water scarcity under complex and dynamic future conditions requires demands resolved at the spatial and temporal scales relevant to management decisions.
+
+High-resolution, multi-sector water-demand projections remain scarce, constraining integrated modeling of energy-water-land systems and local-to-regional water scarcity. Reconstructed historical datasets, such as Huang et al.\ (2018)\cite{Huang2018}, provide gridded benchmarks for past decades but do not extend to future scenarios. Historical U.S.\ water-use records are also challenging to harmonize directly at watershed scales because state reporting requirements and measurement practices vary widely, compiled totals often follow county or state boundaries rather than hydrologic units, and withdrawals recorded at points of diversion (including interbasin transfers) can differ from locations of use\cite{naseri2025united,Luukkonen2025JAWRA}. Projecting water demand into the future requires an integrated assessment model that links global energy, land, and water systems, yet its outputs typically lack the spatial detail required for river routing or local management modeling\cite{Wada_2017, van_Vliet_2021}. While aggregate U.S.\ water demands at coarse resolutions are generally consistent in the literature\cite{Zhao_gcamusa_water, naseri2025united, Stets2025USGS}, translating them to finer scales requires spatial and temporal downscaling\cite{hess-17-4555-2013, van_Vliet_2021, Jones_2024}. The fidelity of downscaling depends strongly on the choice of proxy variables and the consistency of driving scenarios. Khan et al.\ (2023)\cite{Khan2023} produced the first global Tethys-downscaled multi-sector water demand product at 1/2$^{\circ}$ monthly resolution, yet resolving CONUS-scale management decisions and local-scale impacts requires finer spatial resolution and internally consistent scenario forcings of weather, land use, and population.
+
+We present such a dataset with multi-sector, multi-scenario coverage, refined to 1/8$^{\circ}$ monthly resolution across CONUS (Table~\ref{tab:prior-datasets}). The published record contains gridded monthly water withdrawals and consumption for six sectors (irrigation, thermoelectric, municipal covering public supply and self-supplied domestic, livestock, manufacturing, and mining) aggregating 25 underlying subsectors from the Global Change Analysis Model with subnational detail for the U.S.\ (GCAM-USA\cite{Calvin2019GCAM,Binsted_2022,Zhao_gcamusa_water,Zhao2024}): 11 crop and land-use types, 7 thermoelectric generation types, 5 livestock species, plus municipal, manufacturing, and mining. Dataset extent covers CONUS for the historical period (1980--2019) and eight future scenarios (2020--2100) sampling future atmospheric and socioeconomic conditions, along with per-cell groundwater-to-surface-water source shares.
+
+Compared with the prior global Tethys product\cite{Khan2023}, this dataset advances U.S.\ water-demand representation in six ways. First, spatial resolution is refined from 1/2$^{\circ}$ to 1/8$^{\circ}$ (a $16\times$ increase in grid-cell density), capturing finer HUC-level demand variation relevant to river routing, reservoir operations, and regional planning. Second, whereas Khan et al.\cite{Khan2023} disaggregated a single national U.S.\ total from global GCAM, this dataset uses GCAM-USA\cite{Zhao_gcamusa_water,Zhao2024,Calvin2019GCAM,Binsted_2022}, which resolves electricity, manufacturing, mining, and municipal (\texttt{Domestic}) demands by state and crop irrigation demands at state-basin intersections, preserving state-specific sectoral mixes and regulatory differences. Third, in place of population centroids as a proxy for retail electricity load\cite{Khan2023}, thermoelectric water demand is sited at power-generation facilities using Capacity Expansion Regional Feasibility (CERF)\cite{Vernon2021,Mongird2025CERF} projections at $\approx$1-km resolution (and 2015 Global Power Plant Database v1.3 locations\cite{globalpowerplantdb} historically). Fourth, in place of a static base-year population map\cite{Khan2023}, municipal, manufacturing, and mining demands use Shared Socioeconomic Pathway (SSP) gridded population projections\cite{Jones_2016,Jones2020SEDAC} harmonized with state SSP trajectories\cite{Zoraghein2020Zenodo}, capturing demographic divergence between SSP3 and SSP5. Fifth, monthly irrigation weights combine water deficit with a growing-season index (GSI) rather than a temperature-only seasonal profile\cite{Khan2023}. Sixth, while prior U.S.\ studies have delineated groundwater and surface-water use for historical benchmark periods\cite{Marston2018WRR,Dieter2018USGS,Stets2025USGS}, the prior Tethys product\cite{Khan2023} lacked water-source attribution. Here we extend per-cell groundwater-to-surface-water source shares across multi-scenario projections through 2100 by anchoring GCAM-USA basin trajectories to the USGS HUC12 reanalysis\cite{Stets2025USGS}.
+
+A representative view of the historical record (1980--2019) appears in Figure~\ref{fig:dominant-sector}, showing the dominant consumptive demand sector at each 1/8$^{\circ}$ cell across CONUS. In the western and central U.S., spatial transitions follow continuous cropland, rangeland, and resource proxies across state borders. In several humid eastern states (such as along the Alabama--Mississippi and Tennessee--Georgia borders), transitions between manufacturing and municipal (\texttt{Domestic}) dominance align with state boundaries. This pattern arises directly from the downscaling structure: GCAM-USA resolves municipal, manufacturing, and mining demands at the state level, and Tethys allocates all three sectors within each state using gridded population, so the normalized cell population weight cancels in their cell-by-cell ratios within a state (see Limitations). Overall, the dataset supports hydrologic, energy-water-land, and integrated multisector dynamics modeling, including assessments of bulk-power-system resilience, regional water scarcity, and conjunctive groundwater and surface-water management across consistent scenarios.
+
+
+\begin{table}[!ht]
+\centering
+\small
+\begin{tabular}{lllll}
+\toprule
+\textbf{Dataset} & \textbf{Spatial res.} & \textbf{Temporal res.} & \textbf{Scenarios} & \textbf{Sectors} \\
+\midrule
+Huang et al.\cite{Huang2018}                   & 0.5$^{\circ}$ global & monthly & historical (1971--2010) & 6 sectors \\
+Khan et al.\cite{Khan2023}                     & 0.5$^{\circ}$ global & monthly & historical + SSP/RCP futures & 6 sectors \\
+Medalie et al.\cite{Stets2025USGS}             & HUC12 CONUS & monthly & historical (2010--2020) & 3 sectors \\
+Naseri \& Marston\cite{naseri2025united}       & facility/user-level, & annual & historical & multi-sector  \\
+                                               & 42 U.S. states & (state-dependent) &  &   \\
+van Vliet et al.\cite{van_Vliet_2021}          & country/basin & annual & historical + SSP & 6 sectors \\
+Wada et al.\cite{Wada_2017}                    & 0.5$^{\circ}$ global & monthly & historical + projections & 4 sectors \\
+\textbf{This work}                             & \textbf{0.125$^{\circ}$ CONUS} & \textbf{monthly} & \textbf{hist.\ + 2 RCPs $\times$ 2 GCMs $\times$ 2 SSPs} & \textbf{6 sectors} \\
+                                               &                                &                  & \textbf{(8 future scenarios)}                                & \textbf{(25 subsectors)} \\
+                                               &                                &                  &                                                              & \textbf{+ gw/sw source share} \\
+\bottomrule
+\end{tabular}
+\caption{Gridded multi-sector water-demand datasets that overlap in scope with the dataset presented here. The current dataset increases spatial resolution by a factor of four (16$\times$ the number of grid cells) over its immediate Tethys predecessor\cite{Khan2023}, adds per-cell groundwater-to-surface-water source shares, and uses internally consistent scenarios of population, land use, and climate forcing. The six sectors aggregate 25 underlying GCAM-USA subsectors: 11 crop and land-use types (irrigation), 7 thermoelectric generation types (electricity), 5 livestock species, plus municipal, manufacturing, and mining. Abbreviations: res., resolution; CONUS, contiguous United States; HUC12, 12-digit Hydrologic Unit Code; hist., historical (1980--2019); RCPs, Representative Concentration Pathways; GCMs, General Circulation Models; SSPs, Shared Socioeconomic Pathways; gw/sw, groundwater-to-surface-water.}
+\label{tab:prior-datasets}
+\end{table}
+
+% -----------------------------------------------------------------------------
+\section*{Methods}
+We produce the dataset by applying Tethys\cite{niazi_2026_20552731} (\href{https://github.com/JGCRI/tethys}{github.com/JGCRI/tethys}), a mass-conserving spatiotemporal downscaling framework, to GCAM-USA outputs\cite{Zhao2024} (\href{https://doi.org/10.57931/2428940}{doi.org/10.57931/2428940}) together with sector-specific spatial proxies and intra-annual temporal downscaling weights derived from meteorology. Preprocessed model inputs and region masks used to execute the workflow are archived on MSD-Live\cite{brackenDataTethys_integration_metarepo} (\href{https://doi.org/10.57931/3366010}{doi.org/10.57931/3366010}). GCAM-USA computes water withdrawals and water consumption separately prior to Tethys downscaling using sector-, fuel-, and technology-specific water-intensity coefficients\cite{Calvin2019GCAM,Binsted_2022}. Tethys then downscales withdrawals and consumption in separate runs using identical spatial proxies and monthly temporal weights, without performing a withdrawal-to-consumption conversion internally. The result is a 1/8$^{\circ}$ monthly water-demand record for 6 sectors and 25 GCAM-USA subsectors, for one historical period (1980--2019) and eight future scenarios (2020--2100). The Tethys downscaling chain (Figure~\ref{fig:schematic}) converts state- and basin-scale water-demand outputs from GCAM-USA\cite{Zhao_gcamusa_water,Zhao2024,Calvin2019GCAM,Binsted_2022} into 1/8$^{\circ}$ monthly gridded fields by applying sector-specific spatial proxies from Demeter land use\cite{Vernon-2018} (\href{https://github.com/IMMM-SFA/demeter}{github.com/IMMM-SFA/demeter}), CERF power-plant siting\cite{Vernon2021,Mongird2025CERF} (\href{https://github.com/IMMM-SFA/cerf}{github.com/IMMM-SFA/cerf}) and historical Global Power Plant Database (GPPD) v1.3 records\cite{globalpowerplantdb} (\href{https://datasets.wri.org/dataset/globalpowerplantdatabase}{datasets.wri.org/dataset/globalpowerplantdatabase}), SSP population projections\cite{Jones_2016,Jones2020SEDAC,Zoraghein2020Zenodo}, and Gridded Livestock of the World v3 (GLW~3)\cite{Gilbert2018} (\href{https://dataverse.harvard.edu/dataverse/glw_3}{dataverse.harvard.edu/dataverse/glw\_3}), and distributing annual values into months using meteorological indicators derived from the Thermodynamic Global Warming (TGW)\cite{Jones2023TGW} (\href{https://tgw-data.msdlive.org/}{tgw-data.msdlive.org}) dataset (deficit, growing-season index, and heating and cooling degree days). A post-processing step assigns each cell's groundwater-to-surface-water source share by anchoring basin-level GCAM-USA trajectories to the USGS HUC12 baseline\cite{Stets2025USGS,Luukkonen2023USGS}. The downscaling process is executed for the historical period and each of the eight future scenarios.
+
+The remainder of this section is organized in two parts. The first part describes the exogenous scenarios and inputs to Tethys: GCAM-USA state- and basin-scale water demands, the TGW meteorological forcing, the Demeter land-use projections, and the CERF power-plant projections. The second part describes the Tethys mechanics: the spatial-downscaling step (Eq.~\ref{eq:spatial}) with sector-specific proxies, the temporal-downscaling step with sector-specific monthly weights, and the groundwater-to-surface-water source-share post-processing (Eq.~\ref{eq:source-shares}). The closing subsection documents the modular one-way coupling design.
+
+\begin{figure}[!ht]
+\centering
+% Workflow figure is built natively in TikZ and compiled separately as a
+% standalone PDF. Source: flow-chart.tex; rebuild with `pdflatex flow-chart.tex`.
+\includegraphics[width=0.9\textwidth]{figures/flow-chart.pdf}
+\caption{Workflow for producing the Tethys CONUS multi-sector water-demand dataset across the historical period (1980--2019) and eight future scenarios (2020--2100; Table~\ref{tab:scenarios}). The eight future scenarios combine two Representative Concentration Pathway (RCP) radiative-forcing levels (4.5 and 8.5~W/m$^2$), two General Circulation Model (GCM) temperature-sensitivity groups (hotter and cooler), and two Shared Socioeconomic Pathways (SSP3 and SSP5). For both the historical run and each future scenario, Tethys (green boxes) performs two downscaling operations: spatial downscaling of 5-year regional demands to the 1/8$^{\circ}$ CONUS grid, followed by linear interpolation from 5-year steps to annual values and temporal downscaling of annual demands to monthly resolution. Spatial downscaling uses gridded proxies derived from Demeter\cite{Vernon-2018} (land use), CERF\cite{Vernon2021,Mongird2025CERF} (projected power-plant siting, with 2015 GPPD v1.3\cite{globalpowerplantdb} substituted in the historical period), Jones and O'Neill\cite{Jones_2016,Jones2020SEDAC} and Zoraghein and O'Neill\cite{Zoraghein2020Zenodo} (SSP-consistent population), and GLW~3\cite{Gilbert2018} (livestock). Temporal downscaling uses monthly meteorological variables derived from the Thermodynamic Global Warming (TGW) dataset\cite{Jones2023TGW} (ERA5-driven historical baseline and perturbed future runs), including potential evapotranspiration (PET), precipitation, mean temperature, heating degree days (HDD), cooling degree days (CDD), and growing-season index (GSI).} 
+\label{fig:schematic}
+\end{figure}
+
+\subsection*{GCAM-USA state/basin-level water demand}
+
+Region-scale water-demand inputs come from GCAM-USA (IM3 Phase~2 official simulations\cite{Zhao2024}, publicly archived at \href{https://doi.org/10.57931/2428940}{doi.org/10.57931/2428940})\cite{Zhao_gcamusa_water,Calvin2019GCAM,Binsted_2022}. GCAM is a market-equilibrium integrated assessment model that allocates supply and demand across coupled energy, water, land, and economic sectors under scenario-specific assumptions on population, productivity, technology, and policy. GCAM-USA resolves U.S.\ electricity generation, manufacturing, mining, and municipal demands at the state level, livestock demands at the national/regional level, and crop-level irrigation demands at state-basin intersections, at 5-year intervals. Within Tethys, 5-year regional demands are first spatially downscaled to the 1/8$^{\circ}$ grid and then linearly interpolated to annual values before monthly temporal downscaling is applied. Separate GCAM-USA runs drive the historical baseline and each of the eight future scenarios. We refer readers to Mongird et al.\cite{Mongird2025CERF}, Zhao et al.\cite{Zhao_gcamusa_water}, and Binsted et al.\cite{Binsted_2022} for the full energy-water-land coupling description of GCAM-USA and limit our scope here to how GCAM-USA outputs feed the Tethys workflow shown in Figure~\ref{fig:schematic}.
+
+The dataset's historical period spans 1980--2019 and future scenarios span 2020--2100 across eight scenarios\cite{Zhao_gcamusa_water,Zhao2024,Mongird2025CERF}. The future scenarios sample three dimensions: radiative-forcing target (\texttt{rcp45} representing moderate emissions constraints and moderately hotter conditions, versus \texttt{rcp85} representing unmitigated emissions and severely hotter conditions), GCM temperature sensitivity over CONUS (cooler versus hotter CMIP6 model groups), and socioeconomic narrative\cite{ONeill2017SSP}. Following O'Neill et al.\cite{ONeill2017SSP}, SSP3 (\textit{Regional Rivalry}) represents a world of resurgent nationalism, regionalized policies, slower economic development and technological change, and declining U.S.\ population under low international migration, whereas SSP5 (\textit{Fossil-Fueled Development}) represents rapid globalized economic growth, energy- and resource-intensive lifestyles, rapid technological progress, and substantial U.S.\ population growth driven largely by higher net immigration. We retain the prefix ``rcp'' in scenario directory names for consistency with upstream IM3 datasets, although the underlying perturbed-thermodynamics climate simulations are derived from CMIP6 rather than CMIP5\cite{Jones2023TGW,Mongird2025CERF}. The historical and eight future scenario directory names (for example, \texttt{rcp45cooler\_ssp3}) appear in Table~\ref{tab:scenarios}, and the inter-scenario behavior of CONUS demand is shown in Figure~\ref{fig:scenarios}.
+
+\subsection*{Meteorological forcing (TGW)}
+
+Historical and projected meteorological data come from the Thermodynamic Global Warming (TGW) experiments\cite{Jones2023TGW} (\href{https://tgw-data.msdlive.org/}{tgw-data.msdlive.org}), which provide hourly atmospheric variables at 12-km resolution over CONUS, dynamically downscaled with the Weather Research and Forecasting (WRF) model from a 30-km ERA5 historical baseline (1980--2019) and from CMIP6-derived monthly thermodynamic perturbations (2020--2100). The TGW approach replays historical weather sequences with added thermodynamic signals, retaining the synoptic structure of observed weather while shifting its mean state and humidity-temperature relationships to match each future scenario. For each TGW simulation we compute daily potential evapotranspiration (PET), precipitation ($P$), mean temperature, heating degree days (HDD), cooling degree days (CDD), and a growing-season index (GSI). These variables are aggregated to monthly totals or means, reprojected to the Tethys 1/8$^{\circ}$ CONUS grid, and archived in the companion input dataset\cite{brackenDataTethys_integration_metarepo}.
+
+The monthly water deficit used in irrigation temporal downscaling is $\Delta_m = \max\!\big(\text{PET}_m - P_m,\, 0\big)$ (with small residual weighting when $P_m > \text{PET}_m$ following Moore et al.\cite{Moore_2015}). The monthly GSI is derived from a simplified version of Jolly et al.\cite{Jolly_2005}, retaining the daily minimum-temperature ($iT_{\min}$) and daylength photoperiod indicators ($iPhoto$) while omitting the vapour-pressure-deficit term. For each day $d$,
+\begin{equation}
+iT_{\min,d}(T_{\min,d}) = \min\!\left(\max\!\left(\frac{T_{\min,d}+2}{7},\,0\right),\,1\right), \qquad
+iPhoto_d(L_d) = \min\!\left(\max\!\left(L_d - 10,\,0\right),\,1\right),
+\label{eq:gsi-components}
+\end{equation}
+where $T_{\min,d}$ is the daily minimum air temperature (\textdegree C) and $L_d$ is the daylength (hours). Monthly GSI is the daily-mean product over the month $m$,
+\begin{equation}
+GSI_m = \big\langle iT_{\min,d} \cdot iPhoto_d \big\rangle_{d \in m}.
+\label{eq:gsi-monthly}
+\end{equation}
+Preprocessing code is archived in the integration meta-repository (see Code availability).
+
+\subsection*{Downscaled land-use projections (Demeter)}
+
+Spatially explicit, scenario-consistent per-crop irrigated-area maps at 1/8$^{\circ}$ come from Demeter\cite{Vernon-2018} (\href{https://github.com/IMMM-SFA/demeter}{github.com/IMMM-SFA/demeter}), a land-use spatial disaggregation model that reconciles a high-resolution land-use baseline with GCAM-USA's regional land-use and land-cover change (LULCC) projections using transition-priority rules that distinguish intensification (increase of a land type within a cell) from extensification (spread from an adjacent cell). For irrigation, Demeter outputs cover the crop classes reported by GCAM-USA (Corn, Wheat, Rice, RootTuber, OilCrop, SugarCrop, OtherGrain, FiberCrop, FodderGrass, FodderHerb, biomass, MiscCrop, and PalmFruit, aggregated with other arable land into 11 irrigated subsectors in Tethys) and are archived in the companion workflow input dataset\cite{brackenDataTethys_integration_metarepo}. The per-crop irrigated-area fields serve as the spatial proxy for irrigation in the Tethys spatial-downscaling step.
+
+\subsection*{Power-plant siting projections (CERF)\label{sec:cerf}}
+
+The Capacity Expansion Regional Feasibility (CERF) model\cite{Vernon2021,Mongird2025CERF} (\href{https://github.com/IMMM-SFA/cerf}{github.com/IMMM-SFA/cerf}) sites future thermoelectric capacity at approximately ($\approx$, used to denote ``approximately'' throughout) 1-km resolution based on siting feasibility (exclusion layers, transmission proximity, cooling-water access) and locational economics, conditional on the GCAM-USA state-level capacity trajectory for each scenario. The sited facilities represent seven thermoelectric fuel categories (coal, natural gas, refined liquids/oil, nuclear, biomass, geothermal, and concentrated solar thermal), excluding hydropower. CERF-sited plants are aggregated to 1/8$^{\circ}$ grid cells, and the cell-level installed capacity in megawatts (MW) serves as the spatial proxy for thermoelectric demand. For the historical period (1980--2019), we use a 2015 plant inventory derived from the Global Power Plant Database v1.3 (GPPD)\cite{globalpowerplantdb} (\href{https://datasets.wri.org/dataset/globalpowerplantdatabase}{datasets.wri.org/dataset/globalpowerplantdatabase}) harmonized with IM3 historical plant attributes\cite{brackenDataTethys_integration_metarepo} in place of CERF projections. Plant-level U.S.\ Energy Information Administration (EIA) water-withdrawal and consumption reports are not ingested directly by Tethys, although EIA generator capacities inform GPPD v1.3 and EIA cooling-water records inform the USGS thermoelectric reanalysis\cite{Harris2025,skinnerWaterWithdrawalConsumption2025} used for validation. While upstream GCAM-USA\cite{Binsted_2022} and CERF\cite{Mongird2025CERF} differentiate plant cooling technologies (once-through, recirculating, cooling pond, and dry cooling) when computing state-level water demands and siting feasibility, the Tethys spatial-proxy preprocessing sums plant capacity into the seven fuel subsectors without cooling-system sub-splits, allocating state fuel-level demand in proportion to installed MW\cite{Peer2016ERL,Sjostedt2025EST} (see Limitations).
+
+\subsection*{Spatial downscaling}
+
+Using the sector-specific proxies described above, Tethys distributes 5-year regional demands to the 1/8$^{\circ}$ grid. Spatial downscaling in Tethys assumes that demand within a GCAM-USA region is distributed proportionally to a sector-appropriate gridded proxy. For any sector with regional demand $D_{\mathrm{region}}$ and proxy field $P_{\mathrm{cell}}$,
+\begin{equation}
+D_{\mathrm{cell}} = D_{\mathrm{region}} \times \frac{P_{\mathrm{cell}}}{\sum_{c \in \mathrm{region}} P_{c}},
+\label{eq:spatial}
+\end{equation}
+evaluated on U.S.\ state masks for electricity, municipal, manufacturing, and mining, on state-basin intersection masks for irrigation, and on the national mask for livestock (region rasters archived in Bracken\cite{brackenDataTethys_integration_metarepo}). For irrigation, the proxy is per-crop irrigated area from Demeter. For thermoelectric, the proxy is cell-level installed capacity (MW) per fuel subsector from GPPD/IM3 (historical) or CERF (future scenarios). For municipal demand, we combine 1/8$^{\circ}$ SSP gridded population projections from Jones and O'Neill\cite{Jones_2016,Jones2020SEDAC} (\href{https://doi.org/10.7927/m30p-j498}{doi.org/10.7927/m30p-j498}) with U.S.\ state-level SSP population trajectories from Zoraghein and O'Neill\cite{Zoraghein2020Zenodo} (\href{https://doi.org/10.5281/zenodo.3756179}{doi.org/10.5281/zenodo.3756179}) at 10-year intervals (preprocessing scripts in the integration meta-repository and gridded inputs in Bracken\cite{brackenDataTethys_integration_metarepo}), linearly interpolating between bracketing maps to allocate state-level GCAM-USA municipal demand in proportion to cell population. For livestock, the proxy is the GLW~3 gridded head-count map\cite{Gilbert2018} (\href{https://dataverse.harvard.edu/dataverse/glw_3}{dataverse.harvard.edu/dataverse/glw\_3}) at 1/12$^{\circ}$ for reference year 2010, re-gridded to 1/8$^{\circ}$ using area-weighted overlap allocation and held fixed across all years and scenarios. Livestock represents $\approx$1--2\% of CONUS water demand, limiting the national effect of this static-distribution assumption (see Limitations). The mapping from GCAM livestock sectors to GLW animals follows Table~\ref{tab:livestock}. For manufacturing and mining, we use population as the spatial proxy, following prior Tethys work\cite{Khan2023}.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{GCAM livestock sector} & \textbf{GLW proxy animal(s)} \\
+\midrule
+Beef      & Buffalo + Cattle \\
+Dairy     & Buffalo + Cattle \\
+Pork      & Pig \\
+Poultry   & Chicken + Duck \\
+SheepGoat & Sheep + Goat \\
+\bottomrule
+\end{tabular}
+\caption{Mapping from GCAM livestock sectors to animal species in the GLW~3 dataset\cite{Gilbert2018}.}
+\label{tab:livestock}
+\end{table}
+
+\subsection*{Temporal downscaling}
+
+For temporal downscaling, Tethys linearly interpolates the 5-year spatially downscaled fields to annual resolution and then distributes the annual demand at each cell into 12 monthly values using sector-specific formulas. For livestock, manufacturing, and mining, monthly demand is held uniform at $1/12$ of the annual total as a simplifying assumption because subsector-resolved industrial output schedules and herd thermal-stress drivers are not projected consistently across 1980--2100 scenarios\cite{Hou2024ESSD,Grogan2022GMD,LeRiche2017Water} (see Limitations). Irrigation, electricity, and municipal follow the meteorological formulations described next.
+
+\subsubsection*{Irrigation}
+
+For each cell and year, we compute a monthly weight field from the growing-season index $GSI_m$ (Eq.~\ref{eq:gsi-monthly}), the monthly deficit $\Delta_m$, and month length $N_m$ (in days):
+\begin{equation}
+\tilde{w}_m = \frac{\Delta_m \, GSI_m}{N_m}\quad, \qquad w_m = \frac{\tilde{w}_m}{\sum_{k=1}^{12}\tilde{w}_k},
+\label{eq:irr-weights}
+\end{equation}
+so $\sum_m w_m = 1$ and monthly irrigation demand is $D_{Irrigation,m} = w_m \, D_{Irrigation,\mathrm{year}}$. Equation~(\ref{eq:irr-weights}) combines the deficit and growing-season approaches of Moore et al.\cite{Moore_2015} and Roy et al.\cite{Roy_2005}. Using this approach, water demand concentrates in months that are simultaneously water-limited ($\Delta_m > 0$) and vegetatively active ($GSI_m > 0$). The weights are computed per cell and vary across years.
+
+\subsubsection*{Electricity}
+
+We distribute monthly thermoelectric cooling water demand by splitting annual use into heating, cooling, and other shares, each weighted by an HDD/CDD-driven monthly profile. Region-level shares of annual electricity consumption for heating $p_{\mathrm{heat}}$, cooling $p_{\mathrm{cool}}$, and other $p_{\mathrm{other}}$ come from GCAM-USA. At each cell we define annual sums $H_y = \sum_m \text{HDD}_m$ and $C_y = \sum_m \text{CDD}_m$ and monthly distribution fields $\hat{h}_m$ and $\hat{c}_m$ with
+\begin{equation}
+(\hat{h}_m,\,\hat{c}_m) =
+\begin{cases}
+\big(\text{HDD}_m / H_y,\ \text{CDD}_m / C_y\big)      & H_y \ge 650 \text{ and } C_y \ge 450 \\[2pt]
+\big(\text{HDD}_m / H_y,\ \text{HDD}_m / H_y\big)      & H_y \ge 650 \text{ and } C_y < 450 \\[2pt]
+\big(\text{CDD}_m / C_y,\ \text{CDD}_m / C_y\big)      & H_y < 650 \text{ and } C_y \ge 450 \\[2pt]
+(\hat{o},\ \hat{o})                                          & H_y < 650 \text{ and } C_y < 450,
+\end{cases}
+\label{eq:elec-cases}
+\end{equation}
+with $\hat{o} = 1/12$. 
+The first case applies to cells with both a substantial heating season (annual HDD $\ge 650$) and a substantial cooling season (annual CDD $\ge 450$). The second and third cases collapse onto whichever signal is non-trivial, preventing division by near-zero annual sums in climates dominated by one extreme. The fourth case reverts to a uniform distribution where neither threshold is exceeded. The threshold convention follows Huang et al.\cite{Huang2018}. Once $\hat{h}_m$ and $\hat{c}_m$ are computed, monthly demand ($D_{Electricity,m}$) is downscaled from annual demand ($D_{Electricity,\mathrm{year}}$) via
+\begin{equation}
+D_{Electricity,m} = D_{Electricity,\mathrm{year}} \times \big(p_{\mathrm{heat}}\,\hat{h}_m + p_{\mathrm{cool}}\,\hat{c}_m + p_{\mathrm{other}}\,\hat{o}\big).
+\label{eq:elec-demand}
+\end{equation}
+
+
+\subsubsection*{Municipal}
+
+For the municipal sector (labeled \texttt{Domestic} in the published NetCDF files), we use the temperature-anomaly formula of Wada et al.\cite{Wada2011}:
+\begin{equation}
+D_{Municipal,m} = \frac{D_{Municipal,\mathrm{year}}}{12} \times \left(\frac{T_m - \bar{T}}{T_{\max} - T_{\min}}\,R + 1\right),
+\label{eq:dom-monthly}
+\end{equation}
+where $T_m$ is the monthly mean temperature at the cell, $\bar{T}$ is the annual mean temperature, $T_{\max}$ and $T_{\min}$ are the annual monthly extremes, and $R$ is a region-scale amplitude coefficient drawn from the static Wada et al.\cite{Wada2011} regional map bundled with Tethys\cite{niazi_2026_20552731,brackenDataTethys_integration_metarepo}, where larger $R$ produces stronger seasonal amplification. We clip negative values to zero so that $D_{Municipal,m} \ge 0$ in every cell. In GCAM-USA and Tethys, the municipal (\texttt{Domestic}) sector combines public-supply water use with self-supplied domestic withdrawals (such as private residential wells or cisterns, corresponding to USGS category DO-SS). By contrast, USGS defines Public Supply as water withdrawn by public or private water suppliers that provide water to at least 25 people or a minimum of 15 service connections, which includes deliveries to domestic, commercial, industrial, and public-use customers while excluding self-supplied domestic withdrawals.
+
+\subsection*{Groundwater-to-surface-water source-share post-processing}
+
+GCAM-USA solves for the share of each basin's withdrawals met from renewable surface-water and basin-runoff supplies versus nonrenewable groundwater depletion using graded basin-level groundwater cost-supply curves parameterized from aquifer area, porosity, thickness, depth to water, and extraction costs\cite{Binsted_2022,Niazi2024PeakWater,superwell}. As cumulative pumping progresses over 2020--2100 in heavily depleted basins, rising marginal extraction costs endogenously curtail unprofitable groundwater expansion and shift basin source shares toward surface water, although Tethys does not enforce a physical aquifer-storage exhaustion cap within individual 1/8$^{\circ}$ grid cells (see Limitations). Mapping GCAM-USA's basin-scale groundwater-to-surface-water source share onto the 1/8$^{\circ}$ grid requires two steps. First, we apply the basin-level share uniformly to all water-use sectors in the basin, except that thermoelectric demand is assumed to use surface water only, and the remaining sectoral shares are renormalized accordingly. Second, we anchor the historical spatial pattern of the groundwater-to-surface-water source share to USGS data by rescaling each cell's GCAM-USA share against its 2015 value while preserving the spatial pattern of a static USGS baseline derived from the 2010--2020 HUC12 water-use reanalysis\cite{Stets2025USGS,Luukkonen2023USGS} (\href{https://water.usgs.gov/nwaa-data/}{water.usgs.gov/nwaa-data/}) and USGS Watershed Boundary Dataset polygons (\href{https://www.usgs.gov/national-hydrography/watershed-boundary-dataset}{usgs.gov/national-hydrography/watershed-boundary-dataset}). Let $s^{\mathrm{GCAM}}_{c,y}$ denote the GCAM-derived surface-water (runoff) share at cell $c$ in year $y$, and $s^{\mathrm{USGS}}_c$ the static USGS-derived baseline share at cell $c$. For the subset of cells $\mathcal{M}$ for which both $s^{\mathrm{GCAM}}_{c,\,2015}>0$ and $s^{\mathrm{USGS}}_c$ are available, the adjusted share is
+\begin{equation}
+s^{\mathrm{adj}}_{c,y} =
+\begin{cases}
+\displaystyle \min\!\left(1,\; s^{\mathrm{USGS}}_c \times \frac{s^{\mathrm{GCAM}}_{c,y}}{s^{\mathrm{GCAM}}_{c,\,2015}}\right) & c \in \mathcal{M} \\[10pt]
+s^{\mathrm{GCAM}}_{c,y}                                                                                        & c \notin \mathcal{M}.
+\end{cases}
+\label{eq:source-shares}
+\end{equation}
+The expression $\min(\cdot,1)$ bounds the share at 1, preventing unphysical values above unity when the 2015 GCAM-USA baseline is small. In groundwater-dominated regions, the upper bound can cap projected increases in surface-water share, preserving the physical constraint that the source fraction cannot exceed unity. This formulation retains GCAM-USA's multi-decadal source-share trajectories while reproducing the finer spatial structure of the USGS groundwater-to-surface-water source share inferred from HUC12 surface-water and groundwater withdrawals\cite{Stets2025USGS}.
+
+\subsection*{Inter-model scenario consistency and coupling design}
+
+The dataset combines simulations driven by consistent scenario assumptions. GCAM-USA is run for each scenario, Demeter produces per-crop irrigated-area maps consistent with the corresponding GCAM-USA LULCC outputs, CERF sites power plants using GCAM-USA state-level capacity trajectories, population maps follow the scenario's SSP, and TGW meteorological forcing reflects the scenario's radiative-forcing and GCM sensitivity group. Rather than recursive two-way dynamic coupling among models, which would be computationally prohibitive across 121 years and nine runs, we enforce driver consistency across models through one-way soft coupling and archive the exact model versions and inputs used (see Data availability and Code availability). This modular ``Frankenstein'' coupling is an established approach in multi-sector dynamics modeling\cite{Khan2023, hess-17-4555-2013, hejazi2014, superwell, glory} and suits a dataset designed for exploratory modeling, sensitivity analysis, and adaptation studies. The combined modeling chain (TGW forcing $\to$ GCAM-USA $\to$ spatial downscaling with proxies $\to$ annual interpolation and temporal downscaling with weather-dependent weights $\to$ USGS-anchored groundwater-to-surface-water source share) produces the 1/8$^{\circ}$ monthly gridded record described next.
+
+% -----------------------------------------------------------------------------
+\section*{Data Records}
+
+The dataset is permanently archived and openly available on MSD-Live\cite{bracken2026TethysDataSet} (\href{https://doi.org/10.57931/3366643}{doi.org/10.57931/3366643}), and the Tethys model\cite{niazi_2026_20552731} source code is hosted at \href{https://github.com/JGCRI/tethys}{github.com/JGCRI/tethys}.
+
+\begin{sloppypar}
+Scenario directories (Table~\ref{tab:scenarios}) each contain per-sector NetCDF-4 files named \texttt{<Sector>\_\allowbreak<demand\_\allowbreak type>\allowbreak[\_monthly].nc}, where \texttt{<Sector>} is \texttt{Domestic} (municipal, combining public supply and self-supplied domestic), \texttt{Electricity}, \texttt{Irrigation}, \texttt{Livestock}, \texttt{Manufacturing}, or \texttt{Mining}, and where \texttt{<demand\_\allowbreak type>} is \texttt{withdrawals} or \texttt{consumption}. The \texttt{\_monthly} suffix marks monthly files, and for irrigation the \texttt{\_with\_losses} suffix marks files that include conveyance losses. Each sector file stores its constituent GCAM-USA subsectors as NetCDF variables.
+\end{sloppypar}
+
+Each scenario directory also contains \texttt{gridded\_runoff\_shares.nc} (per-year, per-cell surface-water source share $s^{\mathrm{adj}}_{c,y}$ from Eq.~\ref{eq:source-shares}, with groundwater share recovered as $1 - s^{\mathrm{adj}}_{c,y}$) and two YAML configuration files (\texttt{config\_withdrawals.yaml}, \texttt{config\_consumption.yaml}) that record the exact Tethys run configuration used to produce the files. All NetCDF files share the dimensions \texttt{(year, lat, lon)} for annual data or \texttt{(year, lat, lon, month)} for monthly data, with sector-specific subsector variables. Table~\ref{tab:scenarios} lists the historical baseline and eight future scenario directories.
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Scenario directory} & \textbf{Time span} & \textbf{Description} \\
+\midrule
+\texttt{historical}         & 1980--2019 & Observed-period baseline using historical climate and population. \\
+\texttt{rcp45cooler\_ssp3}  & 2020--2100 & Lower-emissions, cooler GCM group, SSP3 socioeconomics. \\
+\texttt{rcp45cooler\_ssp5}  & 2020--2100 & Lower-emissions, cooler GCM group, SSP5 socioeconomics. \\
+\texttt{rcp45hotter\_ssp3}  & 2020--2100 & Lower-emissions, hotter GCM group, SSP3 socioeconomics. \\
+\texttt{rcp45hotter\_ssp5}  & 2020--2100 & Lower-emissions, hotter GCM group, SSP5 socioeconomics. \\
+\texttt{rcp85cooler\_ssp3}  & 2020--2100 & Higher-emissions, cooler GCM group, SSP3 socioeconomics. \\
+\texttt{rcp85cooler\_ssp5}  & 2020--2100 & Higher-emissions, cooler GCM group, SSP5 socioeconomics. \\
+\texttt{rcp85hotter\_ssp3}  & 2020--2100 & Higher-emissions, hotter GCM group, SSP3 socioeconomics. \\
+\texttt{rcp85hotter\_ssp5}  & 2020--2100 & Higher-emissions, hotter GCM group, SSP5 socioeconomics. \\
+\bottomrule
+\end{tabular}
+\caption{Scenario directories in the published dataset\cite{bracken2026TethysDataSet}. Each directory contains per-sector withdrawal and consumption NetCDF files, a gridded runoff-share file, and the two Tethys YAML configurations used to generate them.}
+\label{tab:scenarios}
+\end{table}
+
+% -----------------------------------------------------------------------------
+\section*{Technical Validation}
+
+We validate the historical water demand dataset against the USGS water-use reanalysis released in January~2025\cite{Stets2025USGS}, distributed via the USGS National Water Availability Assessment Data Companion (\href{https://water.usgs.gov/nwaa-data/}{water.usgs.gov/nwaa-data/}), for the three sectors with HUC12 monthly modeled estimates that together account for over 90\% of CONUS water withdrawals: irrigation, thermoelectric power\cite{skinnerWaterWithdrawalConsumption2025,Harris2025}, and public supply\cite{Luukkonen2023USGS}. Although individual USGS reanalysis releases span 2000--2020 for irrigation, 2008--2020 for thermoelectric power, and 2009--2020 for public supply, all comparisons in Table~\ref{tab:validation-metrics} and Figures~\ref{fig:annual-total-timeseries}--\ref{fig:monthly} are harmonized strictly to 2010--2019, the 10-year overlap between the Tethys historical period (1980--2019) and all three USGS sectors. Tethys \texttt{Domestic} (municipal) combines public supply with self-supplied domestic withdrawals, whereas the USGS Public Supply model excludes self-supplied domestic withdrawals (for which a separate USGS HUC12 categorical model is under development). Because self-supplied domestic withdrawals represent $\approx$1\% of total U.S.\ water withdrawals\cite{Dieter2018USGS}, their omission from USGS Public Supply has a small effect on national totals, although USGS Public Supply also includes commercial and industrial deliveries from public water systems. Livestock, manufacturing, and mining are not validated at the HUC6 scale because USGS has not yet released HUC-scale monthly modeled datasets for those categories. Historical USGS 5-year compilations reported them at the county level using state records and sector proxies\cite{Dieter2018USGS}, with HUC-based categorical models planned under ongoing USGS water-availability efforts toward 2030.
+
+Both USGS and Tethys are model-derived datasets with distinct spatial and temporal assumptions. In GCAM-USA\cite{Binsted_2022}, state- and basin-level base years through 2015 draw on legacy USGS 5-year state compilations and EIA power-plant records, contributing to close national and state magnitude agreement, whereas sub-state spatial allocation to 1/8$^{\circ}$ cells and monthly weather-driven profiles (Eqs.~\ref{eq:spatial}--\ref{eq:dom-monthly}) are independent of the 2025 USGS HUC12 demand models. Earlier USGS county compilations (such as 1985--1995) are excluded from watershed validation because heterogeneous historical county protocols are methodologically discontinuous with the harmonized 2025 HUC12 reanalysis\cite{Luukkonen2025JAWRA} and directly informed GCAM-USA's historical state calibrations\cite{Binsted_2022}. USGS HUC12 estimates and Tethys 1/8$^{\circ}$ grid cells are aggregated to HUC basins using area-weighted spatial intersection. We focus primary evaluation on HUC6 accounting units ($329$ active CONUS basins, median area $\approx 20{,}000\text{ km}^2$ or $\approx 100$--$150$ grid cells), which resolve sub-state river-basin management units without sub-grid polygon splitting of 1/8$^{\circ}$ ($\approx 10$--$14\text{ km}$) cells. Across spatial scales over 2010--2019, annual-mean withdrawal correlations remain high from HUC2 ($n=18$; $r=0.98$ for Domestic, $0.92$ for Electricity, $0.94$ for Irrigation) and HUC4 ($n=168$--$203$; $r=0.96, 0.75, 0.88$) through HUC6 ($n=227$--$329$; $r=0.95, 0.72, 0.89$) and HUC8 subbasins ($n=528$--$1{,}931$; $r=0.94, 0.64, 0.85$), with Electricity declining fastest at HUC8 where individual power plants localize to single subbasins.
+
+
+\begin{table}[!ht]
+\centering
+\small
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Sector} & \textbf{Pearson $r$} & \textbf{MBE (\%)} & \textbf{MAE (km$^3$~yr$^{-1}$)} & \textbf{RMSE (km$^3$~yr$^{-1}$)} & \textbf{MdAPE (\%)} \\
+\midrule
+Domestic (vs.\ $1.12\times$ USGS Public Supply) & 0.95 & $+7$  & 0.04 & 0.09 & 25 \\
+Domestic (vs.\ unscaled USGS Public Supply)     & 0.95 & $+20$ & 0.04 & 0.10 & 36 \\
+Electricity                                     & 0.72 & $-2$  & 0.44 & 0.84 & 82 \\
+Irrigation                                      & 0.89 & $-4$  & 0.21 & 0.53 & 76 \\
+\bottomrule
+\end{tabular}
+\caption{Metrics comparing Tethys to USGS over 2010--2019 for annual-mean water withdrawals at the HUC6 scale ($n=329$ HUC6 basins for Domestic, $n=227$ for Electricity, and $n=316$ for Irrigation, excluding basins where USGS reports zero use for that sector). Monthly demands are summed to annual totals per HUC6 and averaged over 2010--2019. Tethys \texttt{Domestic} represents municipal demand (public supply plus self-supplied domestic). Metrics are reported both with USGS Public Supply scaled by 1.12 to approximate self-supplied domestic withdrawals excluded from the HUC12 Public Supply reanalysis\cite{Stets2025USGS,Luukkonen2023USGS} (reflecting the post-2015 USGS transition from 5-year county compilations to categorical HUC12 models) and against unscaled USGS Public Supply. Reported metrics are Pearson correlation ($r$), Mean Bias Error ($\mathrm{MBE} = 100 \times \overline{\text{Tethys}-\text{USGS}} / \overline{\text{USGS}}$), Mean Absolute Error (MAE), Root Mean Square Error (RMSE), and Median Absolute Percentage Error ($\mathrm{MdAPE} = 100 \times \mathrm{median}(|\text{Tethys}-\text{USGS}|/\text{USGS})$).}
+\label{tab:validation-metrics}
+\end{table}
+
+\subsection*{CONUS annual totals}
+
+CONUS-aggregated annual demand for each of the three sectors and their three-sector sum over 2010--2019 is compared in Figure~\ref{fig:annual-total-timeseries}. Tethys reproduces 2010--2019 mean CONUS annual withdrawals within $+1.3\%$ for the three-sector total ($346.5$ versus $342.0\text{ km}^3\text{ yr}^{-1}$) and within $4$--$7\%$ per sector ($+7.3\%$ for Domestic against $1.12\times$ USGS Public Supply, or $+20.2\%$ unscaled; $+4.2\%$ for Electricity; and $-3.7\%$ for Irrigation). Magnitudes differ sharply across sectors: irrigation dominates consumptive use, while thermoelectric and irrigation withdrawals are of comparable magnitude. Temporal correspondence in CONUS annual withdrawals over 2010--2019 is strong for Electricity ($r=0.99$) and the three-sector total ($r=0.94$), where national variance is governed by a structural multi-year decline driven by coal-plant retirements, fuel switching toward natural gas and renewables, and cooling-system transitions from once-through to recirculating technologies\cite{skinnerWaterWithdrawalConsumption2025}. By contrast, CONUS interannual correlation is near zero for Domestic ($r=0.06$, where both series vary weakly around a gradual trend) and negative for Irrigation ($r=-0.59$). Because GCAM-USA solves regional demand at 5-year intervals that are linearly interpolated between 2010, 2015, and 2020 while TGW weather enters Eqs.~(\ref{eq:irr-weights})--(\ref{eq:dom-monthly}) through normalized monthly weights ($\sum_m w_m = 1$), Tethys preserves annual regional totals and smooths single-year weather anomalies such as the 2012 drought surge and 2019 wet-year dip resolved by USGS.
+
+Figure~\ref{fig:annual-total-boxplot} summarizes the HUC6 basin distribution of symmetric percent differences ($\text{USGS} - \text{Tethys}$) over 2010--2019 by sector and water-use type. Pairing Table~\ref{tab:validation-metrics} with Figure~\ref{fig:annual-total-boxplot} shows how local positive and negative basin departures partially cancel in national totals. Across HUC6 basins, Domestic withdrawals have the narrowest interquartile range ($\mathrm{IQR}=46\%$, median $-18\%$), whereas Electricity ($\mathrm{IQR}=191\%$) and Irrigation ($\mathrm{IQR}=185\%$) exhibit substantially wider basin-by-basin spread. For Domestic consumption, Tethys exceeds USGS Public Supply across most basins (median symmetric difference $-64\%$, $\mathrm{IQR}=75\%$) because GCAM-USA applies a higher municipal consumptive-loss fraction than the consumptive-use fraction estimated in the USGS Public Supply reanalysis, compounded by self-supplied domestic use included in Tethys.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{val1-huc06-usgs-tethys-annual-total.png}
+\caption{CONUS annual water use by sector and three-sector sum from Tethys (black solid line) and USGS (orange dashed line) over the harmonized 2010--2019 comparison period (with $1.12\times$ municipal scope adjustment applied to USGS Public Supply in the Domestic and Total panels).}
+\label{fig:annual-total-timeseries}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{val2-huc06-usgs-tethys-annual-total-pdiff.png}
+\caption{Symmetric percent difference, $100 \times (\text{USGS} - \text{Tethys}) / [(\text{USGS} + \text{Tethys})/2]$, between 2010--2019 annual-average USGS and Tethys water use across HUC6 basins ($n=329$ basins for Domestic and Total, $n=227$ for Electricity withdrawals and $223$ for Electricity consumption, and $n=316$ for Irrigation, excluding basins where USGS reports zero use), by sector and water-use type. Boxplot whiskers extend to 1.5 times the interquartile range (IQR), and the dashed line marks zero difference.}
+\label{fig:annual-total-boxplot}
+\end{figure}
+
+\subsection*{HUC6 spatial agreement}
+
+The symmetric percent difference in 2010--2019 annual-average use at the HUC6 scale is mapped in Figure~\ref{fig:map-pbias}. Each sector's spatial disagreement pattern reflects an identifiable feature of the downscaling chain. Tethys exceeds USGS in the Electricity sector across much of the eastern and interior U.S.: GCAM-USA represents thermoelectric water use at state aggregates that lag observed plant-by-plant cooling-water reductions, and the static 2015 GPPD/IM3 plant-capacity proxy allocates fuel-level demand by installed MW without differentiating plant-level cooling technologies, contributing to basin-by-basin scatter. Tethys and USGS disagree most strongly in western and Plains Irrigation basins, where crop-area proxies and GSI-weighted distributions depart from USGS HUC12 estimates under local water-management practices. Domestic (municipal) demand tracks USGS Public Supply closely in space ($r=0.95$) while exhibiting a systematic offset linked to scope differences between GCAM-USA municipal demand (which includes self-supplied domestic use) and USGS Public Supply, as well as differences between GCAM-USA base-year state calibrations and the 2025 USGS HUC12 reanalysis (whereas the Wada\cite{Wada2011} $R$ parameter in Eq.~\ref{eq:dom-monthly} governs monthly seasonal amplitude rather than annual totals). Basin-wise withdrawal correlations over 2010--2019 (Figure~\ref{fig:huc-correlation}) are strong for annual averages, led by Domestic ($r=0.95$), followed by Irrigation ($r=0.89$) and Electricity ($r=0.72$), with corresponding consumption correlations of $0.71$, $0.91$, and $0.87$. Points in Figure~\ref{fig:huc-correlation} are colored by basin drainage area and show no systematic dependence on basin size.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{val3-huc06-pdiff-usgs-tethys.png}
+\caption{Symmetric percent difference in annual-average HUC6 water use over 2010--2019, computed as $100 \times (\text{USGS} - \text{Tethys}) / [(\text{USGS} + \text{Tethys})/2]$, for the Domestic (vs.\ $1.12\times$ USGS Public Supply), Electricity, and Irrigation sectors. Colors show USGS minus Tethys: dark blue and green shades indicate Tethys $>$ USGS, and yellow and pink shades indicate USGS $>$ Tethys.}
+\label{fig:map-pbias}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.92\linewidth]{val4-huc06-scatter-usgs-tethys.png}
+\caption{HUC6 annual-average water demand over 2010--2019, Tethys versus USGS, by sector and water-use type ($n=329$ basins for Domestic, $227$ for Electricity withdrawals and $223$ for Electricity consumption, and $316$ for Irrigation). Solid lines denote the 1:1 relationship, and points are colored by basin drainage area in km$^2$.}
+\label{fig:huc-correlation}
+\end{figure}
+
+\subsection*{Seasonal cycle}
+
+Monthly CONUS demands over 2010--2019 are compared in Figure~\ref{fig:monthly}. Irrigation and Domestic withdrawals match the USGS seasonal phase closely, although Tethys Irrigation peaks slightly less sharply in July--August and Domestic reflects the municipal versus public-supply level offset. In addition, whereas Eq.~(\ref{eq:dom-monthly}) parameterizes municipal seasonality from temperature alone using a coarse regional amplitude $R$\cite{Wada2011}, USGS Public Supply analyses show that precipitation alongside temperature strongly shapes summer outdoor water use across U.S.\ climate zones\cite{Luukkonen2023USGS,Luukkonen2025JAWRA}. Electricity consumption exhibits a persistent positive offset in non-summer months, reflecting differences in how GCAM-USA and USGS parameterize non-cooling and baseload thermoelectric water consumption.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{val5-huc06-usgs-tethys-monthly-total.png}
+\caption{Distribution of monthly CONUS water use by sector over 2010--2019 from Tethys (grey) and USGS (orange, with $1.12\times$ scaling applied to Public Supply in the Domestic panels). Boxplot whiskers extend to 1.5 times the IQR across the 10-year comparison window.}
+\label{fig:monthly}
+\end{figure}
+
+\subsection*{Inter-scenario consistency}
+
+CONUS annual withdrawals across the historical baseline and eight future scenarios for the three largest sectors and their sum are shown in Figure~\ref{fig:scenarios} (reported for \texttt{<Sector>\_withdrawals.nc}, excluding irrigation conveyance losses). The step change at 2020 reflects the transition from the ERA5-driven historical baseline to the TGW-driven future simulations and is a documented feature of the TGW thermodynamic-perturbation design\cite{Jones2023TGW} rather than a physical jump. From 2015 historical CONUS withdrawals of $350.3\text{ km}^3\text{ yr}^{-1}$ across all six sectors ($150.7$ Electricity, $116.2$ Irrigation, $56.7$ Domestic, $19.3$ Manufacturing, $4.9$ Mining, and $2.6\text{ km}^3\text{ yr}^{-1}$ Livestock), projected 2100 totals bifurcate sharply by socioeconomic pathway: across the four SSP3 scenarios, CONUS withdrawals decline by $23$--$29\%$ to $249.7$--$268.1\text{ km}^3\text{ yr}^{-1}$, whereas across the four SSP5 scenarios total withdrawals rise by $3$--$22\%$ above 2015 to $359.5$--$428.4\text{ km}^3\text{ yr}^{-1}$.
+
+Distinct sectoral mechanisms govern these trajectories. Electricity withdrawals contract steeply in every future scenario (falling to $8.6$--$20.8\text{ km}^3\text{ yr}^{-1}$ in 2100 under SSP3 and $19.6$--$52.7\text{ km}^3\text{ yr}^{-1}$ under SSP5) as legacy once-through steam plants retire in favor of recirculating cooling and non-thermal renewable generation, reducing surface-water withdrawal pressure across eastern river basins. With thermoelectric withdrawals declining, Irrigation becomes the largest withdrawal sector in all eight futures ($178.1$--$199.4\text{ km}^3\text{ yr}^{-1}$ in 2100 under SSP3 and $158.5$--$220.6\text{ km}^3\text{ yr}^{-1}$ under SSP5), with radiative forcing (\texttt{rcp45} versus \texttt{rcp85}) and GCM sensitivity (\texttt{cooler} versus \texttt{hotter}) generating up to $62\text{ km}^3\text{ yr}^{-1}$ of late-century spread concentrated in western and Great Plains agricultural basins. Meanwhile, SSP5 population and industrial growth roughly double Domestic ($100.7$--$121.1\text{ km}^3\text{ yr}^{-1}$) and Manufacturing ($48.5$--$53.6\text{ km}^3\text{ yr}^{-1}$) withdrawals by 2100 along expanding metropolitan corridors, whereas under SSP3 Domestic declines to $29.4$--$40.4\text{ km}^3\text{ yr}^{-1}$ and Manufacturing to $15.9$--$18.2\text{ km}^3\text{ yr}^{-1}$.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{usage2-projections-annual-conus-timeseries.png}
+\caption{Annual CONUS water withdrawals by sector and three-sector sum across historical and future scenarios (excluding irrigation conveyance losses). The historical simulation (black, plotted from the 1975 GCAM-USA anchor through 2020) connects to each of the eight future scenarios in 2020. Future scenarios vary by RCP radiative forcing (color: blue-teal for \texttt{rcp45}, rust-orange for \texttt{rcp85}), SSP socioeconomic pathway (line style: solid for SSP3, dashed for SSP5), and GCM sensitivity group (line width: thin for cooler, thick for hotter). Note that each panel has an independent $y$-axis scale.}
+\label{fig:scenarios}
+\end{figure}
+
+\subsection*{HDD/CDD threshold sensitivity}
+
+To test sensitivity to the piecewise degree-day regime thresholds in Eq.~(\ref{eq:elec-cases}) ($H_{\mathrm{thr}}=650$, $C_{\mathrm{thr}}=450$ from Huang et al.\cite{Huang2018}), we perturbed both thresholds by $\pm 50\%$ across CONUS over 2010--2019 while holding $(p_{\mathrm{heat}}, p_{\mathrm{cool}}, p_{\mathrm{other}})$ fixed at $(0.20, 0.40, 0.40)$. Under default thresholds, $32\%$ of CONUS cell-years fall in case~1 (both seasons active), $46\%$ in case~2 (heating only), $19\%$ in case~3 (cooling only), and $3\%$ in case~4 (uniform); halving thresholds to $(325, 225)$ shifts partition shares toward case~1 ($49\%, 35\%, 16\%, 0\%$), while raising them by $50\%$ to $(975, 675)$ shifts shares toward case~2 ($20\%, 54\%, 22\%, 5\%$). Despite these regime shifts, CONUS-mean monthly Electricity weights change by at most $+1.8$ and $-1.1$ percentage points in any month (Figure~\ref{fig:eq5-sensitivity}), indicating that monthly profiles are insensitive to threshold selection compared with first-order multi-scenario spread (Figure~\ref{fig:scenarios}) and spatial-proxy structural uncertainty (Table~\ref{tab:validation-metrics}).
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=0.58\linewidth]{eq5-hdd-cdd-sensitivity.png}
+\caption{Sensitivity of CONUS-mean monthly Electricity downscaling weights in Eq.~(\ref{eq:elec-cases}) to $\pm 50\%$ perturbations of the annual HDD and CDD regime thresholds over the 2010--2019 reference decade.}
+\label{fig:eq5-sensitivity}
+\end{figure}
+
+\subsection*{Limitations}
+
+Several spatial-proxy and physical-constraint limitations should guide downstream use of the dataset. First, the GLW~3 livestock head-count map\cite{Gilbert2018} is held fixed at its 2010 reference year across all scenarios. Although livestock accounts for $\approx$1--2\% of CONUS water demand, static spatial weights miss regional herd shifts. Newer FAO GLW~4 grids (2015 and 2020 reference years) can update contemporary baselines in future releases, though combining multi-epoch GLW versions requires harmonizing underlying subnational census predictors to avoid methodological artifacts. Second, state population serves as the spatial proxy for manufacturing and mining, which misses localized industrial or extraction facilities and produces the rural eastern state-border transitions seen in Figure~\ref{fig:dominant-sector}. Incorporating county sectoral gross domestic product (GDP) or facility permit registries offers a direct path to refine industrial allocation. Third, while GCAM-USA and CERF model cooling technologies, the Tethys capacity proxy aggregates thermoelectric plants into seven fuel subsectors without cooling-system differentiation, which can over-allocate withdrawals to recirculating plants and under-allocate withdrawals to once-through plants of the same fuel within a state\cite{Peer2016ERL,Sjostedt2025EST}. Fourth, although GCAM-USA constrains basin-wide nonrenewable groundwater extraction through depletion cost-supply curves\cite{Binsted_2022,Niazi2024PeakWater}, Tethys does not enforce cell-level physical aquifer-storage caps at 1/8$^{\circ}$. In sub-regions experiencing acute depletion such as the southern High Plains Aquifer\cite{Steward2016AWM} and alluvial basins of the Lower Colorado River Basin\cite{Abdelmohsen2025GRL}, late-century groundwater demand projections represent potential demand conditional on basin-scale economics and may exceed locally extractable storage.
+
+Four additional limitations concern temporal downscaling and conveyance losses. First, the simplified GSI in Eqs.~(\ref{eq:gsi-components})--(\ref{eq:gsi-monthly}) omits the vapour-pressure-deficit (VPD) term of Jolly et al.\cite{Jolly_2005} following Moore et al.\cite{Moore_2015}, which may underweight drought months in humid regions where VPD limits stomatal conductance. Second, Eq.~(\ref{eq:dom-monthly}) drives municipal seasonality from temperature alone\cite{Wada2011} without precipitation controls on outdoor landscape irrigation\cite{Luukkonen2023USGS,Luukkonen2025JAWRA}, while livestock, manufacturing, and mining use a uniform $1/12$ monthly split that understates summer demand peaks in cells where grazing, dairy, industrial cooling, or warm-season mining dominate locally\cite{Hou2024ESSD,Grogan2022GMD,LeRiche2017Water}. Third, irrigation files are released both with and without conveyance losses (\texttt{\_with\_losses} suffix), so users coupling to hydrologic models should select the variant matching their routing loss formulation. Fourth, linear interpolation of 5-year GCAM-USA outputs smooths single-year drought anomalies relative to observed interannual variability.
+
+% -----------------------------------------------------------------------------
+\section*{Usage Notes}
+
+This dataset provides a high-resolution spatiotemporal representation of water demand and source dependence, enabling coupling of sectoral water use with climate, hydrologic, energy, agricultural, and socioeconomic models across historical and future scenarios through the end of the 21st century. Curated modeling roles and representative applications are summarized in Table~\ref{tab:water_demand_roles}. Beyond traditional hydrologic and integrated-assessment coupling, the gridded thermoelectric withdrawal and consumption fields can provide baseline cooling-water context for emerging electricity-load studies, including regional water-resource assessments around hyperscale data centers and artificial-intelligence (AI) compute expansion, as well as evaluations of state and local water-management policies. When evaluating local scarcity or century-scale groundwater sustainability in heavily pumped aquifers, users should consult the basin-level validation metrics (Table~\ref{tab:validation-metrics}, Figure~\ref{fig:map-pbias}) and couple the gridded demand and source-share fields with physically based groundwater or conjunctive-use models (Table~\ref{tab:water_demand_roles}).
+
+\begin{table}[!ht]
+\centering
+\small
+\begin{tabular}{p{3.2cm} p{4.5cm} p{8.4cm}}
+\hline
+\textbf{Role} & \textbf{Description} & \textbf{Mechanism / Model Integration Use Cases} \\
+\hline
+
+Hydrologic and Earth System Forcing Variable &
+Input to hydrologic, groundwater, and Earth system models as anthropogenic water demand across sectors &
+Exogenous water use input as a demand component in water balance and scarcity calculations (e.g., demand/renewable supply), or as a model input in river routing, groundwater, or land-surface models such as MOSART-WM\cite{hess-17-4555-2013}, MODFLOW\cite{modflow6}, Superwell\cite{superwell}, ParFlow\cite{parflow}, VIC\cite{vic}, CLM\cite{clm5}, PCR-GLOBWB\cite{pcrglobwb}, and CWatM\cite{cwatm}. \\
+
+Scenario and Coupling Driver &
+Encodes future socioeconomic and climate pathways and connects water, energy, agriculture, land, and climate systems &
+Future demand trajectories in integrated assessment models or regional impacts and adaptation studies as an information exchange mechanism linking hydrology, energy, and crop models, e.g., GCAM\cite{Calvin2019GCAM}, MESSAGEix\cite{messageix}, GLOBIOM\cite{globiom}, and CLIMADA\cite{climada}. \\
+
+Decision-Support &
+Supports planning, policy, resource management, and human decision making &
+Input to optimization, reservoir operations, agent-based, state and local water-policy evaluation, and electricity/data-center siting and drought planning models for infrastructure investment and water allocation planning, e.g., GEB\cite{geb} and CERF\cite{Vernon2021}. \\
+
+Feature Dataset &
+Predictor variable for statistical and machine learning models &
+Feature set for Random Forest, XGBoost, LSTM, GNN, and other predictive models for drought impacts, crop yields, groundwater depletion, water scarcity, and infrastructure risk. \\
+
+\hline
+\end{tabular}
+\caption{Roles of the Tethys gridded water-demand dataset with representative model integrations and potential use cases for modeling communities and decision makers.}
+\label{tab:water_demand_roles}
+\end{table}
+
+We distribute the dataset as NetCDF-4 files containing \texttt{year} and (for monthly files) \texttt{month} dimensions. Each file reports either withdrawals or consumption in km$^3$~yr$^{-1}$ (annual files) or km$^3$~month$^{-1}$ (monthly files) as documented in file metadata. Users may convert annual rates from km$^3$~yr$^{-1}$ to million gallons per day (MGD) by multiplying by $264{,}172.05124/365$, so $1\text{ km}^3\text{ yr}^{-1} \approx 723.76$~MGD.
+
+The companion integration meta-repository (see Code availability) provides spatial aggregation utilities to map the 1/8$^{\circ}$ grid onto HUC2, HUC4, HUC6, HUC8, or HUC12 watershed polygons; see the meta-repository README for usage examples.
+
+% -----------------------------------------------------------------------------
+\section*{Data availability}
+
+The Tethys 1/8$^{\circ}$ monthly CONUS sectoral water-demand dataset described in this paper is openly available under a Creative Commons Attribution 4.0 International (CC~BY~4.0) license on MSD-Live (\url{https://doi.org/10.57931/3366643}). All preprocessed input datasets, region masks, and configuration files needed to reproduce the Tethys scenario runs are openly archived under CC~BY~4.0 on MSD-Live (\url{https://doi.org/10.57931/3366010}). Upstream third-party input and validation datasets are publicly available from their respective repositories: GCAM-USA IM3 Phase~2 simulation outputs on MSD-Live (\url{https://doi.org/10.57931/2428940}), Thermodynamic Global Warming (TGW) meteorological forcing on MSD-Live (\url{https://tgw-data.msdlive.org/}), NASA SEDAC 1/8$^{\circ}$ global SSP population grids (\url{https://doi.org/10.7927/m30p-j498}) and Zenodo U.S.\ state-level SSP population projections (\url{https://doi.org/10.5281/zenodo.3756179}), Gridded Livestock of the World v3 (GLW~3) on Harvard Dataverse (\url{https://doi.org/10.1038/sdata.2018.227}, \url{https://dataverse.harvard.edu/dataverse/glw_3}), the World Resources Institute Global Power Plant Database v1.3 (\url{https://datasets.wri.org/dataset/globalpowerplantdatabase}), and the USGS 2010--2020 HUC12 water-use reanalysis and National Water Availability Assessment Data Companion (\url{https://doi.org/10.3133/pp1894D}, \url{https://doi.org/10.5066/P9FUL880}, and \url{https://water.usgs.gov/nwaa-data/}).
+
+\section*{Code availability}
+
+The Tethys spatiotemporal downscaling package\cite{niazi_2026_20552731} (v2.2, BSD 2-Clause license) is openly available on GitHub (\url{https://github.com/JGCRI/tethys}) and archived on Zenodo (\url{https://doi.org/10.5281/zenodo.1300872}). The integration meta-repository\cite{cambrackenIMMMSFATethys_integration_metarepoV1002026} containing all preprocessing, scenario execution, groundwater-to-surface-water post-processing, HUC aggregation, and validation/figure scripts is openly available on GitHub (\url{https://github.com/IMMM-SFA/tethys_integration_metarepo}) and archived on Zenodo (\url{https://doi.org/10.5281/zenodo.20518118}). Upstream open-source spatial proxy models are available on GitHub for Demeter\cite{Vernon-2018} (\url{https://github.com/IMMM-SFA/demeter}) and CERF\cite{Vernon2021} (\url{https://github.com/IMMM-SFA/cerf}).
+
+% -----------------------------------------------------------------------------
+\section*{Acknowledgments}
+
+This research was supported by the U.S.~Department of Energy, Office of Science, as part of research in the Earth and Environmental System Modeling Program. We thank the TGW team for the downscaled climate product, the GCAM-USA team for the scenario simulations, and the USGS water-use program for the datasets used for evaluation in this paper.
+
+\section*{Author contributions statement}
+
+C.B.~coordinated the downscaling runs, conducted the HUC-scale comparison against USGS data, and drafted this version of the manuscript based on an earlier draft by I.T. 
+H.N.~developed and maintained the Tethys model, conducted the runs, and helped with the interpretation of GCAM-USA and Tethys outputs. 
+T.T.~extended the Tethys package to support GCAM-USA inputs, developed the first version of the Tethys meta-repository, and carried out the initial scenario runs. 
+I.T.~wrote the initial draft of this manuscript and contributed to the CERF--Tethys integration and power-plant proxy construction. 
+K.T.~developed the USGS-anchored groundwater-to-surface-water source-share attribution post-processing framework for Tethys and conducted the associated runs and analyses. 
+H.E.~produced the TGW preprocessing pipeline for PET, HDD/CDD, and GSI. 
+K.M.~developed the CERF--Tethys integration and power-plant proxy construction. 
+N.V.~contributed to scenario design and interpretation. 
+N.S.~contributed to scientific review, scenario design, and interpretation. 
+J.R.~provided overall project guidance and scientific review. 
+
+\section*{Competing interests}
+
+The authors declare no competing interests.
+
+\bibliography{bib/Tethys}
+
+\end{document}

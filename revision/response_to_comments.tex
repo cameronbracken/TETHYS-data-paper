@@ -1,0 +1,895 @@
+% =============================================================================
+% Compilation of Editor and Reviewer Comments with Point-by-Point Author Responses
+% Manuscript: A high-resolution monthly sectoral water demand dataset for the
+%             contiguous United States from 1980--2100
+% Venue: Scientific Data (Springer Nature) --- Submission ID: 8d19b29c-d61a-4dbe-b3c4-0e38748a5261
+% =============================================================================
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+\fi
+
+\usepackage[margin=1in]{geometry}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\PassOptionsToPackage{obeyspaces,spaces}{url}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=NavyBlue,urlcolor=RoyalBlue,citecolor=NavyBlue]{hyperref}
+
+% -----------------------------------------------------------------------------
+% Configuration toggles
+% -----------------------------------------------------------------------------
+\newif\ifshowemptyresponses
+\showemptyresponsesfalse
+
+\newif\ifshoweditorialchecklist
+\showeditorialchecklistfalse % Portal note states responses to General Comments are not required
+
+\newif\ifshowpendingnotes
+\showpendingnotesfalse
+
+% -----------------------------------------------------------------------------
+% Palette
+% -----------------------------------------------------------------------------
+\definecolor{NavyBlue}{HTML}{1B365D}
+\definecolor{RoyalBlue}{HTML}{005A9C}
+\definecolor{CommentBorder}{HTML}{4A6FA5}
+\definecolor{CommentBg}{HTML}{F7F9FC}
+\definecolor{AnnotBorder}{HTML}{7B5EA7}
+\definecolor{AnnotBg}{HTML}{FAF8FC}
+\definecolor{ResponseColor}{HTML}{1B5E20}
+\definecolor{PendingColor}{HTML}{8A4B08}
+\definecolor{MutedGray}{HTML}{555555}
+\definecolor{ChecklistBg}{HTML}{F5F5F5}
+
+% -----------------------------------------------------------------------------
+% Custom environments and macros
+% -----------------------------------------------------------------------------
+\newtcolorbox{commentbox}[2][]{%
+  enhanced,
+  breakable,
+  lines before break=3,
+  colback=CommentBg,
+  colframe=CommentBorder,
+  boxrule=0.5pt,
+  leftrule=3pt,
+  arc=1.5pt,
+  left=8pt,
+  right=8pt,
+  top=5pt,
+  bottom=5pt,
+  before skip=8pt,
+  after skip=5pt,
+  fonttitle=\bfseries\small,
+  coltitle=NavyBlue,
+  colbacktitle=CommentBg,
+  attach title to upper={\par\smallskip},
+  title={#2},
+  #1
+}
+
+\newtcolorbox{annotcontext}{%
+  enhanced,
+  breakable,
+  colback=AnnotBg,
+  colframe=AnnotBorder,
+  boxrule=0.4pt,
+  leftrule=2.2pt,
+  arc=1pt,
+  left=6pt,
+  right=6pt,
+  top=4pt,
+  bottom=4pt,
+  before skip=4pt,
+  after skip=6pt,
+  fontupper=\footnotesize\color{black!85}
+}
+
+\newtcolorbox{generalbox}[1]{%
+  enhanced,
+  breakable,
+  colback=ChecklistBg,
+  colframe=black!35,
+  boxrule=0.5pt,
+  arc=1.5pt,
+  left=8pt,
+  right=8pt,
+  top=6pt,
+  bottom=6pt,
+  before skip=10pt,
+  after skip=8pt,
+  fonttitle=\bfseries\small,
+  coltitle=black!80,
+  colbacktitle=ChecklistBg,
+  attach title to upper={\par\smallskip},
+  title={#1}
+}
+
+% Highlighted span styling matching PDF markup
+\newcommand{\hlspan}[1]{\texttt{\detokenize{#1}}}
+\newcommand{\hlquote}[1]{``\textit{#1}''}
+\newcommand{\fname}[1]{{\ttfamily #1}}
+
+% Author response macro
+\newcommand{\response}[1]{%
+  \if\relax\detokenize{#1}\relax
+    \ifshowemptyresponses
+      \par\noindent{\color{ResponseColor}\textbf{Response:}} {\color{MutedGray}\textit{[To be drafted.]}}\par\medskip
+    \fi
+  \else
+    \par\noindent{\color{ResponseColor}\textbf{Response:}} #1\par\medskip
+  \fi
+}
+
+% Cross-reference note for remarks moved by Reviewer 1 to Major Comments
+\newcommand{\movedtomajor}[2]{%
+  \par\smallskip\noindent{\footnotesize\color{MutedGray}\textit{[Note: #1 placed under Major Comments by Reviewer~1; see #2 above.]}}\par\smallskip
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlength{\emergencystretch}{2em}
+
+\begin{document}
+
+% =============================================================================
+% DOCUMENT HEADER
+% =============================================================================
+{\LARGE\bfseries\color{NavyBlue} Point-by-Point Response to Editor and Reviewer Comments}\\[4pt]
+{\large A high-resolution monthly sectoral water demand dataset for the contiguous United States from 1980--2100}\\[2pt]
+{\small\color{MutedGray} (Original submission title: \textit{High-resolution monthly sectoral water demands for the U.S.\ over 1980--2100})}
+
+\medskip
+\begin{tabular}{@{}lp{4.4in}@{}}
+\toprule
+\textbf{Journal / Article Type:} & \textit{Scientific Data} (Springer Nature) --- Data Descriptor \\
+\textbf{Submission ID:}          & \texttt{8d19b29c-d61a-4dbe-b3c4-0e38748a5261} (Version v.2.0) \\
+\textbf{Authors:}                & C.~Bracken, H.~Niazi, T.~Thurber, I.~Thompson, K.~Tamaddun, H.~Eldardiry, K.~Mongird, N.~Voisin, N.~Sun, and J.~Rice \\
+\textbf{Handling Editor:}        & Alireza Foroozani \\
+\bottomrule
+\end{tabular}
+
+\medskip
+\tableofcontents
+\bigskip
+\hrule
+\bigskip
+
+% =============================================================================
+% SECTION 1: EDITOR COMMENTS
+% =============================================================================
+\section{Editor Comments (Alireza Foroozani)}
+
+\subsection{Specific Editor Comments That Require Action}
+
+{\small\color{MutedGray}\textit{Portal instruction:} ``These are specific editorial or data checks for your paper that all require a written response in the `response to comments' file to pass peer review. Please make sure all comments have an answer: Please address the following before we can send the mansucript out for peer review, apologies these points weree missed in previous rounds:''}
+
+\begin{commentbox}[label={ed:e1}]{Editor Comment E1 --- Third-Party Input Data Provenance, Methods Locations, and Reuse Rights}
+Because at least some of your data looks to originate from third party datasets, either shared directly or used as input data to compute or train a new output, this policy applies, we ask some general questions:
+
+\begin{enumerate}[label=\arabic*), leftmargin=1.8em, topsep=4pt, itemsep=4pt]
+  \item \textbf{(Q1)} Please tell us how you obtained the input data and where from, sharing enough detail to allow someone to find the same records. This could include sharing any input data DOIs, URLs, accession numbers, or specific search queries for third party platforms. If data were not previously available for public download we need to know the manual process for how you obtained it, such as the name of the organization, contact details, and method of the collaboration, to allow someone else to obtain this via the same route.
+  \item \textbf{(Q2)} Please also confirm that information from Q1 is included in the Methods sections (e.g.\ state the line number).
+  \item \textbf{(Q3)} Please tell us how you ensured you could re-use the data. For data from private sources, please confirm the data owner has provided permission for you to re-share these data under CC0 or CC-BY licenses (or data usage agreement for identifiable human data). For data from public (open / downloadable) sources, please share a link to the license or terms that confirm this. Or, if data are not within the scope of copyright at all, confirm this applies and/or your re-distribution is acceptable use (note this is rarely possible for images, video, or sound unless you can find an explicit open license). Note this information does not need to be confirmed in the Methods, but please respond in your response file. Finally, if you are tertiary user of a secondary dataset that is itself sourced from elsewhere, we still request some basic validation is performed to ensure the primary source was open and legitimated re-distributed.
+\end{enumerate}
+\end{commentbox}
+\response{We thank the Editor for checking input data provenance and reuse terms. All third-party datasets used to generate and validate our dataset were obtained from publicly accessible open repositories, and no private, restricted, or non-public data were used. We address Q1--Q3 below.
+
+\smallskip
+\textbf{(Q1) Input datasets, repositories, and persistent identifiers:}
+In addition to citing each primary source, we archived the complete bundle of preprocessed model inputs, region masks, and YAML configuration files on MSD-Live (\url{https://doi.org/10.57931/3366010}) so users can reproduce the workflow directly or obtain each upstream input from its originating archive:
+\begin{enumerate}[label=\alph*), leftmargin=1.6em, topsep=2pt, itemsep=2pt]
+  \item \textbf{GCAM-USA regional water-demand outputs (IM3 Phase~2 official simulations):} Downloaded from the open MSD-Live archive of Zhao et al.\ (2024) at \url{https://doi.org/10.57931/2428940}.
+  \item \textbf{Thermodynamic Global Warming (TGW) meteorological forcing (1980--2100):} Obtained from the TGW open data portal on MSD-Live (\url{https://tgw-data.msdlive.org/}), documented in Jones et al.\ (2023, \url{https://doi.org/10.1038/s41597-023-02485-5}).
+  \item \textbf{Demeter $1/8^{\circ}$ per-crop irrigated land-use projections:} Generated with the open-source Demeter disaggregation model (\url{https://github.com/IMMM-SFA/demeter}, Vernon et al., 2018, \url{https://doi.org/10.5334/jors.208}) driven by the IM3 Phase~2 GCAM-USA land-allocation outputs above, with processed CONUS inputs archived in \url{https://doi.org/10.57931/3366010}.
+  \item \textbf{Power-plant siting proxies (historical GPPD v1.3 and future CERF projections):} Historical 2015 plant locations and capacities were obtained from the World Resources Institute Global Power Plant Database v1.3.0 (Byers et al., 2021, \url{https://datasets.wri.org/dataset/globalpowerplantdatabase}). Future scenario plant siting was generated using the open-source CERF package (\url{https://github.com/IMMM-SFA/cerf}, Vernon et al., 2021, \url{https://doi.org/10.21105/joss.03601}), with gridded capacity NetCDFs archived in \url{https://doi.org/10.57931/3366010}.
+  \item \textbf{SSP gridded and state-level population projections:} Global $1/8^{\circ}$ SSP base-year and decadal projection grids were obtained from NASA SEDAC (Jones and O'Neill, 2016, \url{https://doi.org/10.1088/1748-9326/11/8/084003}, and 2020 Revision~01 release at \url{https://doi.org/10.7927/m30p-j498}) and scaled to U.S.\ state-level SSP population projections from Zenodo (Zoraghein and O'Neill, 2020, \url{https://doi.org/10.5281/zenodo.3756179}), with harmonized NetCDF files archived in \url{https://doi.org/10.57931/3366010}.
+  \item \textbf{Gridded Livestock of the World v3 (GLW~3, 2010 reference year):} Downloaded from the FAO GLW~3 collection on Harvard Dataverse (\url{https://dataverse.harvard.edu/dataverse/glw_3}), documented in Gilbert et al.\ (2018, \url{https://doi.org/10.1038/sdata.2018.227}).
+  \item \textbf{Municipal seasonal amplitude map (\texttt{DomesticR.nc}) and GCAM-USA region rasters:} Derived from Wada et al.\ (2011, \url{https://doi.org/10.1029/2010WR009792}) and distributed openly with the Tethys v2.2 software archive (\url{https://doi.org/10.5281/zenodo.1300872}) and in \url{https://doi.org/10.57931/3366010}.
+  \item \textbf{USGS 2010--2020 HUC12 water-use reanalysis and Watershed Boundary Dataset (WBD) polygons:} Used both for the static spatial source-share baseline in Eq.~(8) and for Technical Validation, obtained from the USGS National Water Availability Assessment Data Companion (\url{https://water.usgs.gov/nwaa-data/}), Medalie et al.\ (2025, \url{https://doi.org/10.3133/pp1894D}), Luukkonen et al.\ (2023, \url{https://doi.org/10.5066/P9FUL880}), and the USGS Watershed Boundary Dataset (\url{https://www.usgs.gov/national-hydrography/watershed-boundary-dataset}).
+\end{enumerate}
+
+\smallskip
+\textbf{(Q2) Locations in the \textit{Methods} section of the revised manuscript:}
+Every input source, repository URL, and persistent DOI from Q1 is explicitly included in \textit{Methods}:
+\begin{itemize}[leftmargin=1.5em, topsep=2pt, itemsep=2pt]
+  \item Overview of Tethys, preprocessed input bundle (\texttt{10.57931/3366010}), and all proxy/forcing sources: \textit{Methods} opening paragraph, lines~65--88 (page~3), and Figure~2 caption (page~4).
+  \item GCAM-USA IM3 Phase~2 archive (\texttt{10.57931/2428940}): \textit{GCAM-USA state/basin-level water demand}, lines~89--111 (pages~4--5).
+  \item TGW meteorological forcing (\texttt{tgw-data.msdlive.org}): \textit{Meteorological forcing (TGW)}, lines~112--128 (page~5).
+  \item Demeter land-use disaggregation (\texttt{github.com/IMMM-SFA/demeter}): \textit{Downscaled land-use projections (Demeter)}, lines~129--137 (page~5).
+  \item CERF and WRI GPPD v1.3 power-plant capacity proxies: \textit{Power-plant siting projections (CERF)}, lines~138--153 (page~5).
+  \item NASA SEDAC (\texttt{10.7927/m30p-j498}) and Zenodo (\texttt{10.5281/zenodo.3756179}) SSP population grids, GLW~3 livestock grids (\texttt{dataverse.harvard.edu/dataverse/glw\_3}), and region masks: \textit{Spatial downscaling}, lines~154--169 (page~6).
+  \item Wada regional amplitude map (\texttt{DomesticR.nc}): \textit{Temporal downscaling --- Municipal}, lines~193--203 (page~7).
+  \item USGS HUC12 reanalysis (\texttt{water.usgs.gov/\allowbreak nwaa-data/}, \texttt{10.3133/\allowbreak pp1894D}, \texttt{10.5066/\allowbreak P9FUL880}) and WBD polygons: \textit{Groundwater-to-surface-water source-share post-processing}, lines~204--223 (page~7).
+\end{itemize}
+
+\smallskip
+\textbf{(Q3) Verification of open licenses and reuse rights:}
+We verified the license terms of every upstream dataset and secondary source prior to reuse and redistribution of derived outputs under Creative Commons Attribution 4.0 International (CC~BY~4.0, \url{https://creativecommons.org/licenses/by/4.0/}):
+\begin{itemize}[leftmargin=1.5em, topsep=2pt, itemsep=2pt]
+  \item \textbf{MSD-Live datasets} (GCAM-USA \texttt{10.57931/2428940}, TGW \url{https://tgw-data.msdlive.org/}, workflow input archive \texttt{10.57931/3366010}, and our output dataset \texttt{10.57931/3366643}): All are openly licensed under \textbf{CC~BY~4.0} (\url{https://creativecommons.org/licenses/by/4.0/}; MSD-Live terms at \url{https://msdlive.org/about}). TGW itself is dynamically downscaled from ECMWF ERA5 reanalysis (openly licensed for redistribution and derivative works under the Copernicus Products License, \url{https://cds.climate.copernicus.eu/licences/copernicus-products}) and public CMIP6 outputs (CC~BY~4.0, \url{https://pcmdi.llnl.gov/CMIP6/TermsOfUse/}).
+  \item \textbf{NASA SEDAC SSP population (\texttt{10.7927/m30p-j498}) and Zenodo state SSP projections (\texttt{10.5281/zenodo.3756179}):} Both are distributed under \textbf{CC~BY~4.0} (\url{https://creativecommons.org/licenses/by/4.0/}), derived from public U.S.\ Census Bureau and IIASA SSP databases.
+  \item \textbf{FAO / Harvard Dataverse GLW~3 (\texttt{10.1038/sdata.2018.227}):} Published in \textit{Scientific Data} and hosted on Harvard Dataverse under \textbf{CC~BY~4.0} (\url{https://creativecommons.org/licenses/by/4.0/}).
+  \item \textbf{WRI Global Power Plant Database v1.3.0 (\url{https://datasets.wri.org/dataset/globalpowerplantdatabase}):} Released under \textbf{CC~BY~4.0} (\url{https://creativecommons.org/licenses/by/4.0/}). For U.S.\ power plants, WRI's primary upstream source is U.S.\ Energy Information Administration (EIA) Forms~860 and 923, which are U.S.\ Federal Government public-domain records (\url{https://www.eia.gov/about/copyrights_reuse.php}).
+  \item \textbf{Tethys (\texttt{10.5281/zenodo.1300872}), Demeter (\url{https://github.com/IMMM-SFA/demeter}), and CERF (\url{https://github.com/IMMM-SFA/cerf}):} All three packages and their bundled static ancillary rasters are released under the permissive \textbf{BSD 2-Clause License} (\url{https://opensource.org/license/bsd-2-clause}).
+  \item \textbf{USGS water-use reanalysis (\texttt{10.3133/pp1894D}, \texttt{10.5066/P9FUL880}, \url{https://water.usgs.gov/nwaa-data/}) and USGS WBD polygons:} As works prepared by employees of the U.S.\ Federal Government, all USGS datasets are in the \textbf{public domain} under 17~U.S.C.\ \S~105 without copyright restriction (CC0 equivalent; see USGS data licensing policy at \url{https://www.usgs.gov/products/data-and-tools/data-management/data-licensing}).
+\end{itemize}}
+
+\begin{commentbox}[label={ed:e2}]{Editor Comment E2 --- Manuscript Title}
+Please rework the manuscript title to include ``a dataset'' or similar.
+\end{commentbox}
+\response{We have revised the manuscript title to explicitly identify the work as a dataset within \textit{Scientific Data}'s 110-character title limit: \textit{``A high-resolution monthly sectoral water demand dataset for the contiguous United States from 1980--2100''} (104~characters including spaces).}
+
+\begin{commentbox}[label={ed:e3}]{Editor Comment E3 --- Manuscript Structure and Section Headings}
+Please see our guidelines (\url{https://www.nature.com/sdata/submission-guidelines#sec-3}) for how to structure the manuscript/title the headings, etc.
+\end{commentbox}
+\response{We reviewed the \textit{Scientific Data} Data Descriptor formatting guidelines and updated our top-level headings in the revised manuscript to match the required structure: \textit{Background \& Summary}, \textit{Methods} (revised from \textit{Methods and Data}), \textit{Data Records}, \textit{Technical Validation}, \textit{Usage Notes}, \textit{Data availability}, \textit{Code availability} (split from the former combined \textit{Code and external data availability} section), \textit{Acknowledgments}, \textit{Author contributions statement}, and \textit{Competing interests}. Subsection headings have also been standardized to sentence case.}
+
+\begin{commentbox}[label={ed:e4}]{Editor Comment E4 --- Placement of ``Improvements over previous data sets''}
+The `Improvements over previous data sets' should not be in the Usage Notes. You may include this in the Technical Validation if you wish, though my advice is to consense the material and merge it in with any justifications for the work in the introduction.
+\end{commentbox}
+\response{Following the Editor's recommendation, we removed the standalone \textit{Improvements over previous data sets} section from \textit{Usage Notes}, condensed its six points to avoid repeating methodological equations, and merged them directly into \textit{Background \& Summary} in the revised manuscript.}
+
+\begin{commentbox}[label={ed:e5}]{Editor Comment E5 --- Data Availability Statement Formatting}
+Please remove the data citations from the Data Availability statment -- this section will not be typeset with references. Please istead embed links in ()s.
+\end{commentbox}
+\response{Done. In the revised manuscript, we created a dedicated \textit{Data availability} section containing zero reference citations (\texttt{\textbackslash cite\{\}}) and embedded all persistent DOIs and repository URLs directly inside parentheses, separated from \textit{Code availability}.}
+
+\ifshoweditorialchecklist
+\subsection{General Editorial Comments (No Written Response Required)}
+
+\begin{generalbox}{General Submission Requirements (Reference Checklist Only)}
+{\footnotesize\textit{Portal note:} ``These are general notes communicated for all manuscripts. Please make sure you read and comply with these guidelines for revised manuscripts \url{https://www.nature.com/sdata/submission-guidelines#sec-6}, and supply these files. A response to these comments is not required.''}
+\end{generalbox}
+\fi
+
+% =============================================================================
+% SECTION 2: REVIEWER 1
+% =============================================================================
+\section{Reviewer 1}
+
+\textbf{Recommendation:} Approve with minor revisions.
+
+\begin{generalbox}{Reviewer 1 --- Comments to the Authors (Portal \& Report Summary)}
+This is an exciting and impactful article that provides a strong launch point for future research and applied water-resource modeling. Your approach offers a novel solution to the long-standing challenge of spatially discretizing categorical water-demand estimates across the United States. The advances in spatial resolution, along with the inclusion of per-cell groundwater-to-surface-water source fractions for each scenario, are especially valuable. I can see clear opportunities for future work that couples your dataset with ongoing USGS water-use modeling efforts under the National Water Availability Assessment, or with additional methodologies that incorporate well-construction data, land-surface characteristics, or industrial and housing indicators using machine-learning approaches. These possibilities make the work both reproducible and expandable. Overall, this is a genuinely useful and timely contribution for water-resource managers and the broader water-use science community.
+\end{generalbox}
+
+{\footnotesize\color{MutedGray}\raggedright
+\textbf{Note on Reviewer~1 attachments and PDF annotations:}
+Reviewer~1 provided two files: (1)~a structured report (\fname{Review response to Bracken et al Scientific Data 08072026.pdf}) that groups Remarks~1--32 into \textbf{Major Comments} (Remarks~9, 10, 18, and 23), \textbf{Minor Comments} (Remarks~1--8, 11--17, 19--22, and 24--32), and \textbf{Miscellaneous Checks} (1--4); and (2)~an annotated manuscript PDF (\fname{Tethys\_\allowbreak paper\_\allowbreak Bracken\_\allowbreak et\_\allowbreak al\_\allowbreak 2026\_\allowbreak Scientific\_\allowbreak Data - Reviewer markup 08072026.pdf}) containing \textbf{33~inline highlight annotations} --- one for each of Remarks~1--32 plus one additional highlight on P5~L118 (\texttt{\textasciitilde 2\%}) cross-referencing Remark~8. Below, comments follow Reviewer~1's Major/Minor ordering, and every remark includes the exact PDF annotation location, highlighted span, and manuscript context extracted from the marked-up PDF.\par}
+
+% -----------------------------------------------------------------------------
+\subsection{Major Comments (Remarks 9, 10, 18, 23)}
+
+\begin{commentbox}[label={r1:rem9}]{Reviewer 1 --- Remark 9 (Major) [P5 L124]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 5, Lines 123--124):} Highlighted \hlquote{For livestock, manufacturing, and mining we hold monthly demand uniform at $1/12$ of the annual total;}
+\end{annotcontext}
+P5L124. The manuscript applies a flat annual water-use rate for livestock, manufacturing, and mining, whereas other sectors use monthly curves. Could one have applied the cooling water demand for thermoelectric sector or monthly production/output data available (e.g., AIES, trade association reporting) as a surrogate for manufacturing? Please clarify whether this was a deliberate choice or a limitation due to data availability.
+
+Sector-specific studies (e.g., Hou et al., 2024) show that these sectors often exhibit seasonal patterns: livestock and manufacturing typically peak in summer, and mining activity commonly varies with daylight and temperature. While developing monthly curves may be beyond the scope of the present work, you may wish to add a brief statement noting that future refinements could incorporate sector-specific seasonal drivers or emerging USGS research. If retaining the flat rates, consider identifying them as simplifying assumptions so readers understand the implications for downstream monthly analyses.
+
+Ref (monthly industrial withdrawals): \url{https://essd.copernicus.org/articles/16/2449/2024/}
+\end{commentbox}
+\response{We thank Reviewer~1 for this constructive observation and the Hou et al.\ (2024, \url{https://doi.org/10.5194/essd-16-2449-2024}) reference. Using a uniform $1/12$ monthly allocation for livestock, manufacturing, and mining reflects both a data-availability constraint across 1980--2100 scenarios and a deliberate modeling simplification in Tethys:
+\begin{enumerate}[label=\arabic*), leftmargin=1.6em, topsep=2pt, itemsep=2pt]
+  \item \textbf{Scenario-consistent projection drivers:} GCAM-USA reports manufacturing, mining, and livestock demands as 5-year regional totals without subsector-disaggregated industrial NAICS shares or monthly output schedules. Historical industrial production surveys (such as the Annual Integrated Economic Survey or monthly manufacturing output indices) are neither spatially resolved at watershed scales nor projected consistently across SSP/RCP scenarios through 2100.
+  \item \textbf{Surrogate suitability:} Applying the thermoelectric HDD/CDD profile (Eqs.~5--6) directly to manufacturing would impose residential/commercial building electricity-load seasonality onto industrial withdrawals, where process water often dominates over space cooling and seasonal amplitude varies substantially by industry type (as Hou et al., 2024 demonstrate using enterprise-level monthly records).
+\end{enumerate}
+Together, manufacturing ($\approx 5.5\%$), mining ($\approx 1.4\%$), and livestock ($\approx 0.7\%$) account for $\approx 7.6\%$ of CONUS 2015 withdrawals, so the national seasonal cycle is governed primarily by irrigation, thermoelectric cooling, and municipal demand. However, in grid cells where manufacturing, mining, or livestock is the dominant local sector (Figure~1), a flat $1/12$ profile understates summer peaks driven by industrial cooling, outdoor animal thermal stress, and warm-season extraction activity. In the revised manuscript, we explicitly frame the $1/12$ allocation as a simplifying assumption in \textit{Temporal downscaling} and expanded \textit{Limitations} (citing Hou et al., 2024, Grogan et al., 2022, and Le Riche et al., 2017) to explain the implications for monthly local modeling.}
+
+\begin{commentbox}[label={r1:rem10}]{Reviewer 1 --- Remark 10 (Major) [P6 L148--149]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 6, Lines 147--148):} Highlighted \hlquote{Note that USGS refers to the municipal sector as Public Supply, which can encompass Domestic and Industrial water use that is supplied by publicly owned water rights.}
+\end{annotcontext}
+P6L148--149. I recommend revising this statement, as the current wording is inaccurate.
+\begin{quote}\itshape
+``Note that USGS refers to the municipal sector as Public Supply, which can encompass Domestic and Industrial water use that is supplied by publicly owned water rights.''
+\end{quote}
+The definition of Public Supply is not tied to water-rights ownership, and public-supply systems may be publicly or privately owned. According to USGS, public-supply water use refers to water withdrawn by public or private suppliers that provide water to at least 25 people or a minimum of 15 connections. Consider rewording the sentence to accurately reflect this definition. Ref: \url{https://www.usgs.gov/mission-areas/water-resources/science/water-use-terminology}
+\end{commentbox}
+\response{Thank you for catching this inaccurate statement. We have replaced those lines in the revised manuscript (\textit{Methods --- Temporal downscaling --- Municipal}, lines~199--203) with the exact USGS definition and an explicit scope comparison:
+\begin{quote}\small
+``In GCAM-USA and Tethys, the municipal (\texttt{Domestic}) sector combines public-supply water use with self-supplied domestic withdrawals (such as private residential wells or cisterns, corresponding to USGS category DO-SS). By contrast, USGS defines Public Supply as water withdrawn by public or private water suppliers that provide water to at least 25 people or a minimum of 15 service connections, which includes deliveries to domestic, commercial, industrial, and public-use customers while excluding self-supplied domestic withdrawals.''
+\end{quote}}
+
+\begin{commentbox}[label={r1:rem18}]{Reviewer 1 --- Remark 18 (Major) [P7, Table 4 Caption]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 7, Table 4 caption):} Highlighted \hlquote{Domestic USGS values are scaled by 1.12 to align with the public-supply-only definition introduced after 2015\textsuperscript{12}.}
+\end{annotcontext}
+Table 4 explanation. This statement ``Domestic USGS values are scaled by 1.12 to align with the public-supply-only definition introduced after 2015.'' appears to be incorrect. Neither the report nor USGS water-use documentation indicates that the definitions of domestic or public supply changed after 2015. The report describes a shift in methodology for producing water-use estimates beginning after 2015, not a redefinition of the categories themselves. I recommend revising the text to reflect that the change pertains to estimation methods rather than sector definitions.
+\end{commentbox}
+\response{Reviewer~1 is completely right: USGS did not alter the definitions of Public Supply or self-supplied Domestic after 2015. Rather, following the 2015 5-year Circular compilation (Dieter et al., 2018), USGS transitioned its estimation methodology toward HUC12 monthly categorical models, releasing the Public Supply reanalysis (Luukkonen et al., 2023; Medalie et al., 2025) while a separate HUC12 self-supplied domestic model remains in development. Because GCAM-USA's municipal (\texttt{Domestic}) sector combines public supply and self-supplied domestic withdrawals (calibrated historically against the sum of both USGS categories), the $1.12$ factor approximates the combined municipal scope rather than any post-2015 category redefinition. In the revised manuscript, we corrected the Table~4 caption to describe the post-2015 transition in USGS estimation methods from 5-year county compilations to categorical HUC12 models, harmonized the evaluation period strictly to 2010--2019, and added a second Domestic row in Table~4 reporting metrics against \textbf{unscaled} USGS Public Supply ($r = 0.95$, $\mathrm{MBE} = +20\%$, $\mathrm{MAE} = 0.04\text{ km}^3\text{ yr}^{-1}$, $\mathrm{RMSE} = 0.10\text{ km}^3\text{ yr}^{-1}$, $\mathrm{MdAPE} = 36\%$) alongside the $1.12\times$ scaled comparison ($\mathrm{MBE} = +7\%$, $\mathrm{MdAPE} = 25\%$).}
+
+\begin{commentbox}[label={r1:rem23}]{Reviewer 1 --- Remark 23 (Major) [P9 L213--215]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 9, Lines 213--215):} Highlighted \hlquote{Domestic demand tracks USGS most closely spatially but carries a bias that traces to the calibration of the Wada\textsuperscript{30} $R$ amplitude coefficient in Eq.~(7), which was fit to aggregate USGS demand and may not capture the post-2015 public-supply subset,} (sentence continues: \hlquote{and to a mismatch between the GCAM-USA base-year socioeconomic data and USGS 2015 reporting.})
+\end{annotcontext}
+P9L213--215. This explanation may be reasonable, but please ensure that what you classify as ``domestic'' aligns with the USGS Public Supply definition. More importantly, the seasonal behavior of domestic demand differs across models. Wada's monthly variation is driven solely by temperature, based on studies in Japan, Spain, Australia, Iran, and Nigeria. In contrast, USGS analyses show that precipitation---along with temperature---explains a substantial portion of domestic-use variability ($R^2 \approx 0.57$ nationally), with much stronger regional differences. Wada's approach also applies a single global 10\% amplitude, which does not capture the highly heterogeneous seasonal patterns across U.S.\ climate zones.
+
+Because Wada's function was designed as a global-average simplification constrained by limited data, it is best treated as a placeholder rather than a fully representative driver for U.S.\ domestic/public-supply seasonality, particularly in arid western regions where outdoor irrigation dominates. For U.S.-specific modeling, the USGS monthly public-supply datasets already available (Luukkonen et al., 2023; 2025) would provide a far more accurate, regionally differentiated seasonal signal than re-deriving one from the global Wada function.
+
+Refs:
+\begin{itemize}[leftmargin=1.5em, topsep=3pt, itemsep=3pt]
+  \item Luukkonen, C.~L., A.~H.~Alzraiee, D.~M.~Herbert, et al.\ 2025. ``Harmonization of a Water Withdrawal Dataset for the Conterminous United States.'' \textit{JAWRA Journal of the American Water Resources Association} 61, no.~6: e70054. \url{https://doi.org/10.1111/1752-1688.70054}.
+  \item Luukkonen, C.~L., Alzraiee, A.~H., Larsen, J.~D., Martin, D., Herbert, D.~M., Buchwald, C.~A., Houston, N.~A., Valseth, K.~J., Paulinski, S., Miller, L.~D., Niswonger, R., Stewart, J.~S., and Dieter, C.~A., 2023, Public supply water use reanalysis for the 2000-2020 period by HUC12, month, and year for the conterminous United States: U.S.\ Geological Survey data release (ver.~2.0, August 2024). \url{https://doi.org/10.5066/P9FUL880}.
+  \item Wada, Y., L.~P.~H.~van Beek, D.~Viviroli, H.~H.~D\"{u}rr, R.~Weingartner, and M.~F.~P.~Bierkens (2011), Global monthly water stress: 2.\ Water demand and severity of water stress, \textit{Water Resour.\ Res.}, 47, W07518, doi:\href{https://doi.org/10.1029/2010WR009792}{10.1029/2010WR009792}.
+\end{itemize}
+\end{commentbox}
+\response{We thank Reviewer~1 for this insightful critique and for the Luukkonen et al.\ (2023, 2025) references. Examining this passage also revealed an internal error in our original explanation on P9~L213--215: because $\sum_{m=1}^{12} (T_m - \bar{T}) = 0$ in Eq.~(7) (and zero-clipping does not bind over CONUS where $R \approx 0.1$), the Wada et al.\ (2011) $R$ parameter redistributes municipal water demand across months while preserving annual totals. Consequently, $R$ governs only the \textit{monthly seasonal amplitude}, whereas the \textit{annual HUC6 offset} arises from category scope differences between GCAM-USA municipal demand (public supply plus self-supplied domestic) and USGS Public Supply (which excludes self-supplied domestic while including public-supply deliveries to commercial and industrial users) and from differences between GCAM-USA state base-year calibrations and the 2025 USGS HUC12 reanalysis.
+
+In the revised manuscript, we corrected that annual-bias explanation in \textit{HUC6 spatial agreement} and expanded both \textit{Seasonal cycle} and \textit{Limitations} (citing Luukkonen et al., 2023, \url{https://doi.org/10.5066/P9FUL880}, and Luukkonen et al., 2025, \url{https://doi.org/10.1111/1752-1688.70054}) to state explicitly that Wada et al.'s (2011) temperature-only parameterization omits precipitation controls on outdoor landscape irrigation across heterogeneous U.S.\ climate zones.}
+
+% -----------------------------------------------------------------------------
+\subsection{Minor Comments (Remarks 1--8, 11--17, 19--22, 24--32)}
+
+\begin{commentbox}[label={r1:rem1}]{Reviewer 1 --- Remark 1 (Minor) [P1 L10, Abstract]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 1, Line 10, Abstract):} Highlighted \hlquote{manufacturing,} in \hlquote{The dataset covers six demand sectors --- irrigation, thermoelectric, municipal (public-supply and domestic), livestock, manufacturing, and mining --- aggregated from 25 underlying subsectors\dots}
+\end{annotcontext}
+P1L10. The paper uses industrial, manufacturing, and industrial manufacturing interchangeably. For clarity and consistency, define them as equivalent and state that the manuscript will use ``manufacturing'' throughout.
+\end{commentbox}
+\response{Done. At the first mention in \textit{Background \& Summary} of the revised manuscript, we define manufacturing as equivalent to industrial manufacturing, state that ``manufacturing'' is used throughout the manuscript, and standardize subsequent references (retaining ``industrial'' only when referring to USGS Public Supply customer classes or historical USGS county compilation category names).}
+
+\begin{commentbox}[label={r1:rem2}]{Reviewer 1 --- Remark 2 (Minor) [P1 L10, End of Abstract]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 1, Line 10, end of Abstract):} Highlighted \hlquote{$1/2^{\circ}$ to $1/8^{\circ}$.} in \hlquote{\dots and a spatial-resolution refinement from $1/2^{\circ}$ to $1/8^{\circ}$.}
+\end{annotcontext}
+P1L10 (end of abstract). This notation does not require a formal definition; however, adding brief context such as ``At midlatitudes, $1/8^{\circ}$ corresponds to approximately 10--14~km'' would help readers interpret the spatial scale of the HUC6 units.
+\end{commentbox}
+\response{Done. We added ``(approximately 10--14~km at CONUS midlatitudes)'' at the end of the Abstract in the revised manuscript.}
+
+\begin{commentbox}[label={r1:rem3}]{Reviewer 1 --- Remark 3 (Minor) [P2, Figure 1]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 2, Figure 1 caption):} Highlighted \hlquote{Figure 1.} in \hlquote{Figure 1. Dominant water-use sector at each $1/8^{\circ}$ cell across CONUS, by annual-average consumption in the historical Tethys output (1980--2019).\dots}
+\end{annotcontext}
+For Figure 1, consider adding subtle state boundary lines to improve geographic clarity. Some areas are difficult to distinguish as they blend regionally. Also, ensure the figure stands alone by citing the data source directly in the caption or legend, even if it's already referenced in the main text.
+\end{commentbox}
+\response{Done. We regenerated Figure~1 with thin U.S.\ state boundary overlays and a colorblind-safe palette, and we updated the Figure~1 caption in the revised manuscript to cite the published Tethys dataset archive directly so the figure stands alone.}
+
+\begin{commentbox}[label={r1:rem4}]{Reviewer 1 --- Remark 4 (Minor) [P3, Table 1]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 3, Table 1 caption):} Highlighted \hlquote{Table 1.} in \hlquote{Table 1. Gridded multi-sector water-demand datasets that overlap in scope with the dataset presented here.\dots}
+\end{annotcontext}
+For Table 1, all abbreviations should be defined in the table explanation (e.g., hist., RCPs, gw/sw).
+\end{commentbox}
+\response{Done. All abbreviations used in Table~1 (\texttt{res.}, \texttt{CONUS}, \texttt{HUC12}, \texttt{hist.}, \texttt{RCPs}, \texttt{GCMs}, \texttt{SSPs}, and \texttt{gw/sw}) are defined at the end of the Table~1 caption in the revised manuscript.}
+
+\begin{commentbox}[label={r1:rem5}]{Reviewer 1 --- Remark 5 (Minor) [P3 L63]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 3, Line 63):} Highlighted \hlquote{state/basin-Level Water demand} in subsection heading \hlquote{GCAM-USA state/basin-Level Water demand}.
+\end{annotcontext}
+P3L63. Please check your text case of your heading ``GCAM-USA state/basin-Level Water demand.'' The words ``level'' and ``water'' should be in lower case.
+\end{commentbox}
+\response{Fixed. The subsection heading in the revised manuscript now reads ``GCAM-USA state/basin-level water demand''.}
+
+\begin{commentbox}[label={r1:rem6}]{Reviewer 1 --- Remark 6 (Minor) [P4, Figure 2 Caption]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 4, Figure 2 caption):} Highlighted \hlquote{Figure 2. Workflow for producing the Tethys CONUS multi-sector water-demand dataset for eight scenarios (Table 3). The eight scenarios combine two RCP forcing levels (4.5 and 8.5 W/m\textsuperscript{2}), two GCM temperature-sensitivity groups (hotter and cooler), and two socioeconomic pathways (SSP3 and SSP5) FOr each scenario,}
+\end{annotcontext}
+P4. A few edits are needed within Figure 2's explanation:
+\begin{enumerate}[label=\arabic*., leftmargin=1.6em, topsep=3pt, itemsep=2pt]
+  \item Need a lower case ``O'' in ``For''
+  \item I think ``For'' begins a third sentence.
+  \item Consider briefly defining the abbreviations for TGW, SSP, RCP, and GCM so that figures can be standalone.
+\end{enumerate}
+\end{commentbox}
+\response{Done. In the Figure~2 caption of the revised manuscript, we added the missing period, corrected ``FOr'' to ``For'', and spelled out Representative Concentration Pathway (RCP), General Circulation Model (GCM), Shared Socioeconomic Pathway (SSP), and Thermodynamic Global Warming (TGW) alongside PET, HDD, CDD, and GSI so the figure caption stands alone.}
+
+\begin{commentbox}[label={r1:rem7}]{Reviewer 1 --- Remark 7 (Minor) [P4 L93]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 4, Line 93):} Highlighted \hlquote{Downscaled Land-use projections} in subsection heading \hlquote{Downscaled Land-use projections (Demeter)}.
+\end{annotcontext}
+P4L93. Check your text case of your heading ``Downscaled Land-use projections''. The word ``land'' should be in lower case.
+\end{commentbox}
+\response{Fixed. The subsection heading in the revised manuscript now reads ``Downscaled land-use projections (Demeter)''.}
+
+\begin{commentbox}[label={r1:rem8}]{Reviewer 1 --- Remark 8 (Minor) + Linked P5 L118 PDF Annotation [P4 L102; P5 L118]}
+\begin{annotcontext}
+\textbf{PDF Annotation 1 (Page 4, Line 102):} Highlighted \hlquote{$\approx$1-km} in \hlquote{The Capacity Expansion Regional Feasibility (CERF) model\textsuperscript{19,22} sites future thermoelectric capacity at $\approx$1-km resolution\dots}\\[2pt]
+\textbf{PDF Annotation 2 (Page 5, Line 118 --- unnumbered follow-up highlight):} Highlighted \hlquote{\textasciitilde 2\%} in \hlquote{\dots and held fixed across all years and scenarios; livestock is \textasciitilde 2\% of CONUS demand, so the static-distribution assumption has limited overall impact (see Limitations).} with popup note: \textit{``Here is an instance that ties to Remark 8.''}
+\end{annotcontext}
+P4L102 (and a few instances throughout manuscript). Please define the ``approximately equal to/about'' symbol at its first use. Springer Nature accepts this notation, and since the manuscript uses both ``\textasciitilde'' and ``$\approx$,'' I recommend standardizing on ``$\approx$'' for consistency.
+\end{commentbox}
+\response{Done. In the revised manuscript, we define $\approx$ upon its first appearance in \textit{Power-plant siting projections (CERF)} (``at approximately ($\approx$, used to denote `approximately' throughout) 1-km resolution'') and replaced every remaining instance of \texttt{\textasciitilde} with $\approx$.}
+
+\movedtomajor{Remarks 9 and 10 are}{\hyperref[r1:rem9]{Remark~9} and \hyperref[r1:rem10]{Remark~10}}
+
+\begin{commentbox}[label={r1:rem11}]{Reviewer 1 --- Remark 11 (Minor) [P6 L170]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 6, Line 170):} Highlighted \hlquote{``frankenstein''} in \hlquote{This modular ``frankenstein'' coupling is an established compromise in multi-sector dynamics modeling\textsuperscript{13,15,31--33}\dots}
+\end{annotcontext}
+P6L170. Capitalize the ``F'' as ``Frankenstein'' is a proper noun; it refers to a specific, well-known character.
+\end{commentbox}
+\response{Fixed. ``Frankenstein'' is capitalized in the revised manuscript.}
+
+\begin{commentbox}[label={r1:rem12}]{Reviewer 1 --- Remark 12 (Minor) [P6 L173]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 6, Line 173):} Highlighted \hlquote{groundwater-to-surface split ---} in \hlquote{The combined modeling chain: TGW forcing $\rightarrow$ GCAM-USA $\rightarrow$ spatial downscaling with proxies $\rightarrow$ temporal downscaling with weather-dependent weights $\rightarrow$ USGS-anchored groundwater-to-surface split --- produces the $1/8^{\circ}$ monthly gridded record described next.}
+\end{annotcontext}
+P6L173. Include ``water'' as in ``surface-water split''
+\end{commentbox}
+\response{Done. We revised this phrase and standardized all instances across the revised manuscript to ``groundwater-to-surface-water source share'' (addressing Reviewer~2 Minor Comment~5 simultaneously).}
+
+\begin{commentbox}[label={r1:rem13}]{Reviewer 1 --- Remark 13 (Minor) [P7 L188, Technical Validation]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 7, Line 188):} Highlighted section heading \hlquote{Technical Validation}.
+\end{annotcontext}
+Consider whether it may be helpful to include a brief clarification in the validation section noting that the absence of self-supplied domestic withdrawals should not meaningfully affect the results. Because self-supplied domestic use represents only about 1\% of total U.S.\ water withdrawals, its omission is unlikely to influence the comparison in a substantial way. REF: \url{https://pubs.usgs.gov/circ/1441/circ1441.pdf}
+\end{commentbox}
+\response{Done. In the opening paragraph of \textit{Technical Validation} in the revised manuscript, we added this clarification citing Dieter et al.\ (2018, USGS Circular~1441, \url{https://doi.org/10.3133/cir1441}), noting that self-supplied domestic withdrawals account for $\approx 1\%$ of total U.S.\ water withdrawals and therefore have a small effect on national totals.}
+
+\begin{commentbox}[label={r1:rem14}]{Reviewer 1 --- Remark 14 (Minor) [P7 L190--191]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 7, Lines 190--191):} Highlighted \hlquote{domestic (public supply)\textsuperscript{35}.} in \hlquote{We validate the historical water demand dataset against the latest USGS dataset\textsuperscript{12}, released in January 2025, for three major water-demanding sectors that together account for over 90\% of CONUS water demand: irrigation, thermoelectric, and domestic (public supply)\textsuperscript{35}.}
+\end{annotcontext}
+P7L190--191. I recommend revising this statement to avoid confusion. Using ``domestic'' here may be misleading, even with the parenthetical reference to public supply. To maintain clarity, refer to the sector as ``public supply,'' consistent with how USGS describes the model in the \href{https://water.usgs.gov/nwaa-data/subset-download/}{National Water Availability Assessment Data Companion} (\url{https://water.usgs.gov/nwaa-data/subset-download/}). USGS is developing categorical water-use models for all sectors, and the self-supplied domestic model will be released later. Be sure to note in the manuscript that the USGS public-supply model does not include self-supplied domestic use, whereas the Tethys dataset combines these two categories.
+\end{commentbox}
+\response{Done. In the opening paragraph of \textit{Technical Validation} in the revised manuscript, we refer to the three USGS validation categories explicitly as ``irrigation, thermoelectric power, and public supply'' (matching the USGS National Water Availability Assessment Data Companion) and state directly that Tethys \texttt{Domestic} (municipal) combines public supply with self-supplied domestic withdrawals whereas the USGS Public Supply reanalysis excludes self-supplied domestic withdrawals (for which a separate USGS HUC12 categorical model is under development).}
+
+\begin{commentbox}[label={r1:rem15}]{Reviewer 1 --- Remark 15 (Minor) [P7 L191]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 7, Line 191):} Highlighted \hlquote{supply)\textsuperscript{35}.} (citation~35 attached to \hlquote{domestic (public supply)\textsuperscript{35}}).
+\end{annotcontext}
+P7L191. It appears that the citation referenced is incorrect. You may want to cite the National Water Availability Assessment Data Companion at \url{https://www.usgs.gov/tools/national-water-availability-assessment-data-companion} instead as USGS is transitioning from its traditional 5-year compilation reports to operational, modeled water-use data across all categories by approximately 2030.
+\end{commentbox}
+\response{Thank you for spotting that misplaced reference (Skinner et al., 2025, which is thermoelectric-specific). In the revised manuscript, we moved Skinner et al.\ (2025) to ``thermoelectric power'', cited Luukkonen et al.\ (2023, \url{https://doi.org/10.5066/P9FUL880}) on ``public supply'', linked the USGS National Water Availability Assessment Data Companion (\url{https://water.usgs.gov/nwaa-data/}), and noted USGS's ongoing transition from 5-year county compilations to HUC-based categorical models across sectors toward 2030.}
+
+\begin{commentbox}[label={r1:rem16}]{Reviewer 1 --- Remark 16 (Minor) [P7 L194--195]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 7, Lines 194--195):} Highlighted \hlquote{Livestock, Manufacturing, and Mining are not validated against USGS at HUC6 because they rely on static or population-proxy spatial allocation (see Limitations).}
+\end{annotcontext}
+P7L 194--195. For water-use categories where USGS has not yet released modeled datasets or updated estimates (livestock, industrial, and mining), it is appropriate to state this directly. However, I recommend avoiding broad claims about ``spatial accuracy issues.'' The key limitation is that historical USGS water-use data were compiled at the county level rather than at hydrologic units (HUC-8 or HUC-12), which are used in current and future modeled datasets. Some categories (e.g., livestock, mining) relied on proxies such as population or livestock counts, while others (e.g., industrial withdrawals in many states) were informed by state-reported data. While population-based allocations can misalign with industrial activity, the data themselves were not tied to a single static reference year as the USGS typically updated underlying sources for each compilation cycle.
+
+I suggest maybe you clarify that the limitation stems from the spatial resolution and proxy methods historically used in USGS compilations, not from data inaccuracy per se, and briefly note that future USGS categorical models will address these issues by providing HUC-based, updated estimates.
+\end{commentbox}
+\response{We agree and revised that passage in \textit{Technical Validation} in the revised manuscript accordingly:
+\begin{quote}\small
+``Livestock, manufacturing, and mining are not validated at the HUC6 scale because USGS has not yet released HUC-scale monthly modeled datasets for those categories. Historical USGS 5-year compilations reported them at the county level using state records and sector proxies, with HUC-based categorical models planned under ongoing USGS water-availability efforts toward 2030.''
+\end{quote}}
+
+\begin{commentbox}[label={r1:rem17}]{Reviewer 1 --- Remark 17 (Minor) [P7, Table 4]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 7, Table 4):} Highlighted row label \hlquote{Domestic} in Table~4 (\hlquote{Domestic | 0.95 | +7 | 37}).
+\end{annotcontext}
+In table 4, the terms ``domestic,'' ``municipal,'' and ``public supply'' may create confusion among the readers. The USGS sector you are using is their Public Supply category. The Tethys publication refers to it as municipal (combining public supply and self-supplied domestic) and labels it as domestic in their dataset.
+
+I recommend adding a brief clarifying statement in the manuscript and in this table to unify these definitions so readers clearly understand what is being estimated and compared. According to the Tethys user guide, their ``Domestic/Municipal'' category combines public supply with self-supplied domestic water use. Ref: \href{https://jgcri.github.io/tethys/user_guide.html}{User Guide --- tethys 2.0.0 documentation} (\url{https://jgcri.github.io/tethys/user_guide.html})
+\end{commentbox}
+\response{Done. In the revised manuscript, we unified these definitions across \textit{Methods --- Municipal}, \textit{Data Records}, \textit{Technical Validation}, and Table~4: the Table~4 rows are now explicitly labeled ``Domestic (vs.\ $1.12\times$ USGS Public Supply)'' and ``Domestic (vs.\ unscaled USGS Public Supply)'', and the Table~4 caption states explicitly that ``Tethys \texttt{Domestic} represents municipal demand (public supply plus self-supplied domestic)''.}
+
+\movedtomajor{Remark 18 is}{\hyperref[r1:rem18]{Remark~18}}
+
+\begin{commentbox}[label={r1:rem19}]{Reviewer 1 --- Remark 19 (Minor) [P7, Table 4]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 7, Table 4 caption):} Highlighted \hlquote{Mean Bias (MB),} in \hlquote{Reported metrics include Pearson correlations, Mean Bias (MB), and Median Absolute Percent Difference (MAPD).}
+\end{annotcontext}
+Table 4. One limitation of just using the Mean Bias (MB) is that positive and negative errors can cancel out each other. MB is typically reported alongside a metric that reflects overall error magnitude such as Mean Absolute Error (MAE) or Root Mean Square Error (RMSE) to help distinguish true model accuracy from canceling effects. If feasible, including MAE or RMSE would provide a more complete assessment of model performance (to measure error direction bias).
+\end{commentbox}
+\response{We agree that pairing signed Mean Bias Error (MBE) with dimensional error-magnitude metrics clarifies how positive and negative basin errors compensate. We added both Mean Absolute Error (MAE) and Root Mean Square Error (RMSE) columns to Table~4 in the revised manuscript (computed on 2010--2019 HUC6 annual-mean withdrawals):
+\begin{itemize}[leftmargin=1.5em, topsep=2pt, itemsep=2pt]
+  \item \textbf{Domestic (vs.\ $1.12\times$ USGS Public Supply):} $\mathrm{MAE} = 0.04\text{ km}^3\text{ yr}^{-1}$, $\mathrm{RMSE} = 0.09\text{ km}^3\text{ yr}^{-1}$ ($\mathrm{NRMSE} = 55\%$; unscaled USGS Public Supply: $\mathrm{MAE} = 0.04\text{ km}^3\text{ yr}^{-1}$, $\mathrm{RMSE} = 0.10\text{ km}^3\text{ yr}^{-1}$, $\mathrm{NRMSE} = 65\%$).
+  \item \textbf{Electricity:} $\mathrm{MAE} = 0.44\text{ km}^3\text{ yr}^{-1}$, $\mathrm{RMSE} = 0.84\text{ km}^3\text{ yr}^{-1}$ ($\mathrm{NRMSE} = 133\%$).
+  \item \textbf{Irrigation:} $\mathrm{MAE} = 0.21\text{ km}^3\text{ yr}^{-1}$, $\mathrm{RMSE} = 0.53\text{ km}^3\text{ yr}^{-1}$ ($\mathrm{NRMSE} = 115\%$).
+\end{itemize}}
+
+\begin{commentbox}[label={r1:rem20}]{Reviewer 1 --- Remark 20 (Minor) [P7, Table 4]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 7, Table 4 caption):} Highlighted \hlquote{(MAPD).} in \hlquote{Reported metrics include Pearson correlations, Mean Bias (MB), and Median Absolute Percent Difference (MAPD).}
+\end{annotcontext}
+Table 4. I suggest using MdAPE or MdAPD, and not MAPD. The lowercase ``d'' convention exists specifically to visually distinguish it from MAPE (Mean Absolute Percentage Error).
+\end{commentbox}
+\response{Done. We adopted \texttt{MdAPE} (Median Absolute Percentage Error, $\mathrm{MdAPE} = 100 \times \mathrm{median}(|\text{Tethys}-\text{USGS}|/\text{USGS})$) in both the Table~4 header and caption in the revised manuscript to distinguish it visually from MAPE and from signed symmetric percent difference in Figures~4--5.}
+
+\begin{commentbox}[label={r1:rem21}]{Reviewer 1 --- Remark 21 (Minor) [P8 L201]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 8, Line 201):} Highlighted \hlquote{switch from coal-fired plants to other technologies\textsuperscript{35}.} in \hlquote{The decline in Electricity withdrawals reflects a known trend driven largely by the switch from coal-fired plants to other technologies\textsuperscript{35}.}
+\end{annotcontext}
+P8L201. I suggest making a minor addition to your statement such as ``from fuel-technology switching and cooling-system type changes''. This helps make the distinction that it isn't just a fuel-based change at the power plants. It really is a compounded reason of combination of plant retirements, fuel-switching, and cooling technology transitions.
+\end{commentbox}
+\response{Done. In \textit{CONUS annual totals} in the revised manuscript, this explanation now attributes the national decline to ``coal-plant retirements, fuel switching toward natural gas and renewables, and cooling-system transitions from once-through to recirculating technologies.''}
+
+\begin{commentbox}[label={r1:rem22}]{Reviewer 1 --- Remark 22 (Minor) [P8, Figure 4]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 8, Figure 4 caption):} Highlighted \hlquote{Figure 4. Percent difference} in \hlquote{Figure 4. Percent difference between Tethys and USGS annual water use across HUC6 regions ($n = 329$ basins for Domestic, 230 for Electricity, 297 for Irrigation), by sector and demand type.\dots}
+\end{annotcontext}
+For Figure 4, the consumptive and withdrawal differences of the domestic category show the largest percent differences, but I could not find an explanation for this in the manuscript. The text mentions that domestic demand has high correlation with USGS and tracks spatial patterns closely, but does not address why the percent difference is notably higher than for other sectors. Please review the section to ensure this observation is clearly described.
+\end{commentbox}
+\response{We thank Reviewer~1 for prompting a close inspection of Figure~4. Investigating this observation uncovered two factors:
+\begin{enumerate}[label=\arabic*), leftmargin=1.6em, topsep=2pt, itemsep=2pt]
+  \item \textbf{Plot-generation bug in the original Figure~4:} Our plotting script had inadvertently plotted the interannual distribution of CONUS-total percent differences (evaluating Domestic prior to applying the $1.12\times$ adjustment) rather than the distribution across HUC6 basins described in the caption. Regenerating Figure~4 across HUC6 annual-mean basins over 2010--2019 shows that Domestic withdrawals actually have the \textit{smallest} basin-by-basin spread ($\mathrm{IQR} = 46\%$, median $-18\%$) of the three sectors, compared with Electricity ($\mathrm{IQR} = 191\%$) and Irrigation ($\mathrm{IQR} = 185\%$).
+  \item \textbf{Substantive Domestic consumption vs.\ withdrawal offset:} For Domestic \textit{consumption}, Tethys exceeds USGS Public Supply across most basins (median symmetric difference $-64\%$, $\mathrm{IQR} = 75\%$) because GCAM-USA applies a higher municipal consumptive-loss fraction than the consumptive-use fraction estimated in the USGS Public Supply reanalysis, compounded by self-supplied domestic use included in Tethys.
+\end{enumerate}
+In the revised manuscript, we regenerated Figure~4 across HUC6 basins to match its caption and added a dedicated paragraph in \textit{CONUS annual totals} explaining both the basin spread and the Domestic consumption offset.}
+
+\movedtomajor{Remark 23 is}{\hyperref[r1:rem23]{Remark~23}}
+
+\begin{commentbox}[label={r1:rem24}]{Reviewer 1 --- Remark 24 (Minor) [P9, Figure 5]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 9, Figure 5 caption):} Highlighted \hlquote{Figure 5.} in \hlquote{Figure 5. Percent difference in annual-average HUC6 water use, Tethys minus USGS, for Domestic, Electricity, and Irrigation sectors.}
+\end{annotcontext}
+A few suggested edits for Figure 5.
+\begin{enumerate}[label=\arabic*., leftmargin=1.6em, topsep=3pt, itemsep=2pt]
+  \item I think for a percent difference graph, you will want to remove the volumetric unit suffix included by the scale bar, if you are keeping \%.
+  \item The graphic denotes USGS minus Tethys, but your caption contradicts the direction. Please check which it is so that readers can correctly interpret.
+  \item After the title, I suggest you add an interpretive note for the users such as ``Colors show USGS $-$ Tethys; blue means Tethys $>$ USGS, pink means USGS $>$ Tethys.''
+\end{enumerate}
+\end{commentbox}
+\response{Thank you for catching all three items. Figure~5 plots symmetric percent difference in the direction $\text{USGS} - \text{Tethys}$. In the revised manuscript, we removed the stray \texttt{(km\^{}3)} volumetric suffix from the Figure~5 colorbar label, corrected the caption to ``USGS minus Tethys'' with the explicit formula, and added the interpretive color note (``Colors show USGS minus Tethys: dark blue and green shades indicate Tethys $>$ USGS, and yellow and pink shades indicate USGS $>$ Tethys.'').}
+
+\begin{commentbox}[label={r1:rem25}]{Reviewer 1 --- Remark 25 (Minor) [P11 L255]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 11, Line 255):} Highlighted \hlquote{MGD} in \hlquote{Users may convert from the native unit ($\text{km}^3\;\text{yr}^{-1}$) to MGD by multiplying by $264{,}172.05124/365$, so $1\;\text{km}^3\;\text{yr}^{-1} \approx 723.76\;\text{MGD}$.}
+\end{annotcontext}
+Please define the abbreviation ``MGD'' as Million gallons per day upon first use.
+\end{commentbox}
+\response{Done. ``million gallons per day (MGD)'' is spelled out at first use in \textit{Usage Notes} in the revised manuscript.}
+
+\begin{commentbox}[label={r1:rem26}]{Reviewer 1 --- Remark 26 (Minor) [P11 L265]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 11, Line 265):} Highlighted \hlquote{sub-state} in \hlquote{Combined with finer proxy data (CERF plants at \textasciitilde 1~km, Demeter LULC at $1/8^{\circ}$, and SSP-compliant population at $1/8^{\circ}$), the $1/8^{\circ}$ resolution captures sub-state demand variation and is directly relevant to river routing, reservoir management, and local planning applications.}
+\end{annotcontext}
+P11L265. This is just a suggestion. This is the first use of the term ``sub-state,'' and while understandable, it may be less precise than a hydrologic descriptor---especially since your discussion connects directly to HUC-6 resolution and hydrologic applications. You might consider clarifying the term or using HUC-level language instead. In particular, the following sentence could be better grounded in hydrologic terminology: ``Combined with finer proxy data\dots captures \textbf{finer HUC-level demand variation} and is directly relevant to river routing, reservoir management, and local planning applications.''
+\end{commentbox}
+\response{Adopted. When condensing and merging these points into \textit{Background \& Summary} (per Editor Comment~E4) in the revised manuscript, we replaced ``sub-state demand variation'' with ``finer HUC-level demand variation''.}
+
+\begin{commentbox}[label={r1:rem27}]{Reviewer 1 --- Remark 27 (Minor) [P12 L269]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 12, Line 269):} Highlighted \hlquote{municipal} in \hlquote{This dataset uses GCAM-USA, which resolves U.S.\ electricity generation, manufacturing, and municipal demand at the state level and crop irrigation demand at state/basin intersections.}
+\end{annotcontext}
+P12L269. The term ``municipal'' appears again in this section, which is inconsistent with the earlier use of ``domestic'' or ``public supply.'' To avoid confusion, especially given the terminology differences across the data products referenced, please align the terminology with the choice made earlier in the manuscript and use it consistently throughout.
+\end{commentbox}
+\response{Done. We aligned this passage in \textit{Background \& Summary} of the revised manuscript to ``municipal (\texttt{Domestic}) demands'', matching the unified convention used across \textit{Methods}, \textit{Data Records}, and Table~4.}
+
+\begin{commentbox}[label={r1:rem28}]{Reviewer 1 --- Remark 28 (Minor) [P13 L279]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 13, Line 279):} Highlighted \hlquote{Prior work} in \hlquote{\textbf{SSP-consistent population.} Prior work used a static base-year population map to distribute municipal, manufacturing, and mining demand across all years, including future projections.}
+\end{annotcontext}
+P13L279. It's unclear which prior work is being referenced here. If this is meant to refer to the Tethys study, please briefly clarify so readers understand the specific work being cited.
+\end{commentbox}
+\response{Done. In the merged advances paragraph in \textit{Background \& Summary} of the revised manuscript, every comparison explicitly cites Khan et al.\ (2023) so the reference to the prior global Tethys product is unambiguous.}
+
+\begin{commentbox}[label={r1:rem29}]{Reviewer 1 --- Remark 29 (Minor) [P13 L311, Author Contributions]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 13, Line 311):} Highlighted \hlquote{C.B. Coordinated} in \hlquote{C.B. Coordinated the downscaling runs, conducted the HUC-scale comparison against USGS data, and drafted this version of the manuscript based on an earlier draft by I.T.\ H.N.\ Developed and maintained the Tethys model\dots}
+\end{annotcontext}
+You may want to verify the formatting of the Author Contributions Statement. It appears the initials may be a placeholder intended to auto-populate with full author names. Please confirm whether the journal requires full names rather than initials. Also, note that the verb following the name or initials should be lowercased unless a colon is used after the name.
+\end{commentbox}
+\response{We checked the \textit{Scientific Data} / Nature Portfolio formatting guidelines, which specify using author initials in the \textit{Author contributions statement}, and we lowercased the verb immediately following each author's initials throughout the section in the revised manuscript (``C.B.\ coordinated\dots'', ``H.N.\ developed\dots'', etc.).}
+
+\begin{commentbox}[label={r1:rem30}]{Reviewer 1 --- Remark 30 (Minor) [P14 L342, Reference 10]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 14, Line 342, Reference 10):} Highlighted \hlquote{U.s.} in \hlquote{10.\ Zhao, M.\ et al.\ U.s.\ water system responses to future global human--earth system change.\ Prepr.\ (Version 1) 10.21203/rs.3.rs-9182467/v1 (2026).}
+\end{annotcontext}
+P14L342 Citation 10. Capitalize the letter ``s'' in U.S.
+\end{commentbox}
+\response{Fixed in our bibliography (bracing \texttt{\{U.S.\}} and \texttt{\{Earth\}}, along with proper nouns across all other BibTeX entries) and verified in the revised manuscript.}
+
+\begin{commentbox}[label={r1:rem31}]{Reviewer 1 --- Remark 31 (Minor) [P15 L379, Reference 29]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 15, Line 379, Reference 29):} Highlighted \hlquote{20251.} in \hlquote{29.\ Roy, S.~B., Ricci, P.~F., Summers, K.~V., Chung, C.-F.\ \& Goldstein, R.~A.\ Evaluation of the sustainability of water withdrawals in the united states, 1995 to 20251.\ \textit{J.\ Am.\ Water Resour.\ Assoc.}\ 41, 1091--1108, 10.1111/j.1752-1688.2005.tb03787.x (2005).}
+\end{annotcontext}
+P15L379 Citation 29. For Roy et al there is a typo (maybe by JAWRA in typeset or transcription). The article simulates via 2025, so you may want to just cite the corrected year. \url{https://onlinelibrary.wiley.com/doi/10.1111/j.1752-1688.2005.tb03787.x}
+\end{commentbox}
+\response{Fixed in the bibliography of the revised manuscript (that trailing ``1'' was a footnote superscript captured in Wiley's Crossref metadata) so the title now reads ``\dots in the United States, 1995 to 2025''.}
+
+\begin{commentbox}[label={r1:rem32}]{Reviewer 1 --- Remark 32 (Minor) [P16 L417, Reference 47]}
+\begin{annotcontext}
+\textbf{PDF Annotation (Page 16, Line 417, Reference 47):} Highlighted \hlquote{Bracken, C.\ Data for "tethys\_integration\_metarepo", 10.57931/3366010.}
+\end{annotcontext}
+Maybe add publication year of 2026 to this reference? I see version 1 was published June 1, 2026. Ref: \url{https://data.msdlive.org/records/bm7h0-3vb53}
+\end{commentbox}
+\response{Done. We added the publication year (\texttt{2026}) to both MSD-Live dataset records (\texttt{10.57931/\allowbreak 3366010} and \texttt{10.57931/\allowbreak 3366643}) in the bibliography of the revised manuscript, and also corrected two additional bibliography entries uncovered during our reference audit (fixing the DOI of Huang et al., 2018 to \texttt{10.5194/\allowbreak hess-22-2117-2018} and correcting the Moore et al., 2015 entry to Moore, Coleman, Wigmosta, Skaggs, and Venteris, 2015, \textit{Water Resources Management}, \texttt{10.1007/\allowbreak s11269-015-1112-x}).}
+
+% -----------------------------------------------------------------------------
+\subsection{Reviewer's Miscellaneous Checks}
+
+\begin{generalbox}{Reviewer 1 --- Miscellaneous Checks}
+\begin{enumerate}[label=\arabic*., leftmargin=1.6em, topsep=3pt, itemsep=2pt]
+  \item Verified that most hyperlinks in the manuscript and the citation list were functional.
+  \item Checked all equations for correct formatting and definitions.
+  \item Confirmed via the MSD-Live archive that each scenario directory contains 28 files, formatted as described in Table 3.
+  \item Verified that all referenced GitHub repositories were accessible and well documented.
+\end{enumerate}
+\end{generalbox}
+\response{We thank Reviewer~1 for thoroughly verifying the links, equations, archived MSD-Live scenario directories, and companion GitHub repositories.}
+
+% =============================================================================
+% SECTION 3: REVIEWER 2
+% =============================================================================
+\section{Reviewer 2}
+
+\begin{generalbox}{Reviewer 2 --- Portal Note \& Report Overview}
+\textbf{Portal comment:} Great paper and dataset! Please see my comments in the attached review file. Looking forward to reading the revised version. Cheers!
+
+\medskip
+\textbf{Overview (from attached report):}
+This paper presents a $1/8^{\circ}$ gridded, monthly, multi-sector water-demand dataset for the contiguous United States (CONUS) covering 1980--2100. The Tethys downscaling framework is applied to GCAM-USA output, using a variety of environmental datasets as proxies for spatial and temporal downscaling weights. The resulting dataset includes one historical period (1980--2019) and eight future scenarios spanning different climate, emissions, socioeconomic, technological, and population assumptions for 2020--2100. The dataset covers six major sectors---irrigation, thermoelectric, municipal, livestock, manufacturing, and mining---and provides separate estimates of water withdrawals and consumption, including groundwater--surface-water source attribution. Part of the historical dataset is validated against the USGS 2010--2020 water-use reanalysis at the HUC6 level for the three largest sectors. Overall, the dataset is intended to support hydrologic and integrated energy--water--land modeling, water-scarcity assessments, and power-system resilience studies.
+
+The downscaling framework and resulting dataset have the potential to provide a useful resource for local and regional modeling and decision-making. The study is well motivated, the methodological and data foundations are generally sound, and the manuscript is well structured and well written for the most part. I have several comments regarding the methods, validation, interpretation of the results, and presentation that I believe would strengthen the manuscript.
+\end{generalbox}
+
+% -----------------------------------------------------------------------------
+\subsection{Major Comments (1--10)}
+
+\begin{commentbox}[label={r2:maj1}]{Reviewer 2 --- Major Comment 1: Livestock distribution data}
+A newer version of the Gridded Livestock of the World (GLW) dataset, GLW4, became available from FAO in 2024. The majority of the modeling might have already been underway so totally understandable if the authors weren't aware of the update. Because the livestock distribution data are used in the temporal and/or spatial downscaling, please discuss whether incorporating the newer GLW4 data could improve the representation of livestock distributions over time. In particular, GLW1 (2005), GLW2 (2006), GLW3 (2010, used in this study), and GLW4 (2015 and 2020) could potentially provide multiple reference years for representing temporal changes in livestock distributions. Interpolation between available reference years, or another appropriate approach, could be considered.
+
+A complete rerun of the dataset may not be feasible or necessary; however, I recommend at minimum discussing (near line 238 where the limitation was mentioned) whether newer livestock distribution data could benefit future downscaling projects.
+
+\url{https://help.earthmap.org/customizations-datasets/pilafolur-datasets/livestock/glw-v4}
+\end{commentbox}
+\response{We thank Reviewer~2 for highlighting FAO's GLW4 dataset (2015 and 2020 reference years). As surmised, upstream Tethys input harmonization and the nine scenario runs were completed using GLW~3 (2010) before GLW4 was integrated into Tethys. In Tethys, GLW enters solely as the spatial-downscaling proxy (Eq.~3), whereas multi-year trends in regional livestock water demand come from GCAM-USA. Adopting GLW4 in future downscaling releases can directly update the contemporary spatial baseline from 2010 to 2015/2020, capturing recent geographic shifts such as dairy expansion in the Plains and Mountain West. One practical consideration for combining GLW1 (2005), GLW2 (2006), GLW3 (2010), and GLW4 (2015, 2020) as a multi-epoch time series is that FAO cautions against direct differencing across GLW generations without harmonizing subnational census inputs and random-forest predictor sets, as methodological updates between versions can introduce apparent spatial shifts unrelated to real herd movement. In the revised manuscript, we expanded \textit{Limitations} to discuss GLW4 and multi-epoch livestock harmonization explicitly.}
+
+\begin{commentbox}[label={r2:maj2}]{Reviewer 2 --- Major Comment 2: Sensitivity analysis}
+The manuscript does not appear to include a sensitivity analysis. Given the number of assumptions and external datasets involved in the spatial and temporal downscaling, please clarify whether sensitivity analyses were conducted. If not, please discuss whether uncertainty associated with the downscaling assumptions and input datasets could substantially affect the resulting water-demand estimates and whether a sensitivity analysis would be appropriate.
+\end{commentbox}
+\response{We appreciate this comment. We conducted a parameter sensitivity analysis on the piecewise HDD/CDD regime thresholds in Eq.~(5), perturbing $(H_{\mathrm{thr}}, C_{\mathrm{thr}}) = (650, 450)$ by $\pm 50\%$ across CONUS over 2010--2019 while holding $(p_{\mathrm{heat}}, p_{\mathrm{cool}}, p_{\mathrm{other}})$ fixed at $(0.20, 0.40, 0.40)$. Under the default thresholds from Huang et al.\ (2018), $32\%$ of CONUS cell-years fall into case~1 (both heating and cooling seasons active), $46\%$ into case~2 (heating only), $19\%$ into case~3 (cooling only), and $3\%$ into case~4 (uniform). Halving the thresholds to $(325, 225)$ shifts partition shares toward case~1 ($49\%, 35\%, 16\%, 0\%$), while increasing them by $50\%$ to $(975, 675)$ shifts shares toward case~2 ($20\%, 54\%, 22\%, 5\%$). Despite these large shifts in regime classification, CONUS-mean monthly Electricity weights change by at most $+1.8$ and $-1.1$ percentage points in any month, demonstrating that monthly thermoelectric profiles are insensitive to the threshold choice because cells crossing a threshold have small degree-day totals in the suppressed season.
+
+More broadly across the downscaling chain, uncertainty enters at three distinct scales:
+\begin{enumerate}[label=\arabic*), leftmargin=1.6em, topsep=2pt, itemsep=2pt]
+  \item \textbf{Regional/scenario uncertainty (first-order for multi-decadal totals):} Sampled explicitly by our $2\text{ RCP} \times 2\text{ GCM} \times 2\text{ SSP}$ factorial design (producing a 2100 CONUS withdrawal range of $249.7\text{--}428.4\text{ km}^3\text{ yr}^{-1}$, Figure~8).
+  \item \textbf{Spatial-proxy structural sensitivity (first-order for local grid cells and HUC6--HUC8 basins):} Replacing population with explicit plant siting (CERF/GPPD) or crop-specific irrigated area (Demeter) substantially alters cell-level demand placement, whereas using population for manufacturing and mining or fuel-only MW for thermoelectric cooling introduces the local spatial scatter quantified in Table~4 ($\mathrm{MdAPE} = 25\text{--}82\%$).
+  \item \textbf{Temporal-weight parameter sensitivity (second-order):} Normalized monthly weights ($\sum_m w_m = 1$) conserve annual cell totals identically and show modest sensitivity to threshold choices (as in Eq.~5), though structural omissions such as precipitation in Eq.~(7) or VPD in Eq.~(1) affect regional seasonal amplitude.
+\end{enumerate}
+In the revised manuscript, we added a concise \textit{HDD/CDD threshold sensitivity} subsection and sensitivity figure (Figure~9) in \textit{Technical Validation} summarizing these results and contrasting modest parameter sensitivity against scenario and spatial-proxy uncertainty.}
+
+\begin{commentbox}[label={r2:maj3}]{Reviewer 2 --- Major Comment 3: Spatial scale of validation}
+Please clarify the rationale for selecting HUC6 as the spatial scale for comparison with the USGS data. Is this choice motivated by data availability, methodological considerations, or a particular policy or practical application? It would also be useful to discuss whether validation at a finer spatial scale, such as HUC8 or HUC10, could provide additional information about the performance of the downscaling framework.
+
+The authors may also wish to consider whether historical USGS water-use datasets available at HUC8 or other spatial scales for earlier periods (e.g., 1985, 1990, and 1995) could provide additional opportunities for evaluating the historical dataset beyond the current 2010--2020 validation period, given that the historical data spans 40 years and the current validation covers just the latest 25\%.
+\end{commentbox}
+\response{We thank Reviewer~2 for raising both spatial scale and historical temporal coverage.
+
+\textbf{1.~Rationale for HUC6 and multi-scale performance across HUC2--HUC8:}
+We selected HUC6 ($329$ active accounting units across CONUS, median drainage area $\approx 20{,}000\text{ km}^2$, or $\approx 100\text{--}150$ $1/8^{\circ}$ grid cells per basin) because it resolves sub-state river-basin management units finer than GCAM-USA's 48 CONUS states and 14 water-resource regions while avoiding single-cell discretization artifacts when intersecting HUC polygons with a $1/8^{\circ}$ ($\approx 10\text{--}14\text{ km}$) rectilinear grid. To evaluate how downscaling performance varies with spatial aggregation, we also computed 2010--2019 annual-mean withdrawal correlations across HUC2, HUC4, HUC6, and HUC8:
+\begin{itemize}[leftmargin=1.5em, topsep=2pt, itemsep=2pt]
+  \item \textbf{HUC2 ($n=18$ regions):} $r = 0.98$ (Domestic), $0.92$ (Electricity), $0.94$ (Irrigation).
+  \item \textbf{HUC4 ($n=203 / 168 / 200$ subregions):} $r = 0.96$ (Domestic), $0.75$ (Electricity), $0.88$ (Irrigation).
+  \item \textbf{HUC6 ($n=329 / 227 / 316$ accounting units):} $r = 0.95$ (Domestic), $0.72$ (Electricity), $0.89$ (Irrigation).
+  \item \textbf{HUC8 ($n=1{,}931 / 528 / 1{,}719$ subbasins):} $r = 0.94$ (Domestic), $0.64$ (Electricity), $0.85$ (Irrigation).
+\end{itemize}
+Finer-scale evaluation at HUC8 shows that Domestic ($r=0.94$) and Irrigation ($r=0.85$) retain high spatial agreement down to the subbasin scale because gridded population and Demeter irrigated cropland vary smoothly at $1/8^{\circ}$, whereas Electricity drops more noticeably from HUC6 ($0.72$) to HUC8 ($0.64$) because individual power plants and plant-specific cooling technologies localize to single HUC8 subbasins. At HUC10--HUC12 (typical HUC12 area $\approx 90\text{ km}^2$, smaller than a single $1/8^{\circ}$ cell of $\approx 140\text{ km}^2$), comparison primarily reflects sub-grid polygon splitting rather than Tethys downscaling performance.
+
+\textbf{2.~Earlier USGS compilations (1985, 1990, 1995) and 2010--2019 harmonization:}
+We restricted watershed-scale validation to the January~2025 USGS HUC12 reanalysis, harmonized strictly to 2010--2019 (the 10-year overlap between the Tethys historical period 1980--2019 and all three USGS sectors), for two methodological reasons. First, legacy 1985--1995 USGS 5-year Circulars compiled data primarily by county using heterogeneous state reporting protocols that USGS cautions against combining directly with the harmonized 2010--2020 HUC12 models without reanalysis adjustments (Luukkonen et al., 2025). Second, as noted under Major Comment~7, GCAM-USA's historical calibration years through 2015 directly ingested those legacy USGS 5-year state compilations (Binsted et al., 2022), so evaluating against 1985--1995 compilations would reflect shared calibration inputs rather than an independent watershed-scale benchmark. We added both the multi-scale HUC2--HUC8 correlations and the rationale for excluding legacy county compilations to \textit{Technical Validation} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:maj4}]{Reviewer 2 --- Major Comment 4: Spatial patterns of dominant demand sectors}
+Figure 1 shows that the boundaries between dominant water-demand sectors appear to align very closely with state boundaries in several areas, including Tennessee, Alabama, and South Carolina, and to a lesser extent Pennsylvania, West Virginia, and Virginia. Please clarify whether these patterns arise from the underlying input datasets, assumptions within GCAM-USA, or the Tethys downscaling procedure. In contrast the ``dominant water demand sector'' delineation in the western US appears to be more scattered and intuitively more aligned with where dominant sectors are distributed.
+
+For example, along the Alabama--Mississippi border, the dominant sector appears to change abruptly from domestic to manufacturing despite relatively similar climatic and demographic conditions on either side of the boundary. This raises the question of whether state-specific water-use data, policies, or methodological differences in the underlying datasets could be contributing to these discontinuities.
+
+The authors may wish to examine whether the spatial transition between dominant sectors is expected to be relatively gradual based on the underlying physical and socioeconomic drivers, and whether the observed state-boundary alignment reflects discontinuities inherited from the input data.
+\end{commentbox}
+\response{Reviewer~2 has identified an exact mathematical consequence of combining state-level GCAM-USA inputs with shared spatial proxies in Tethys. In GCAM-USA, municipal (\texttt{Domestic}), \texttt{Manufacturing}, and \texttt{Mining} demands are resolved at the \textbf{U.S.\ state level}, and in Tethys (Eq.~3) all three sectors use the \textbf{same spatial proxy (\texttt{Population})} within each state $S$:
+\[
+D_{\mathrm{Manufacturing},c} = D_{\mathrm{Manufacturing},S}\,\frac{P_c}{\sum_{k \in S} P_k},
+\qquad
+D_{\mathrm{Domestic},c} = D_{\mathrm{Domestic},S}\,\frac{P_c}{\sum_{k \in S} P_k}.
+\]
+Because the normalized cell population weight $P_c / \sum_{k \in S} P_k$ is identical for both sectors, it \textbf{cancels identically} in their cell-by-cell ratio within state $S$:
+\[
+\frac{D_{\mathrm{Manufacturing},c}}{D_{\mathrm{Domestic},c}} = \frac{D_{\mathrm{Manufacturing},S}}{D_{\mathrm{Domestic},S}} \quad \forall\, c \in S.
+\]
+Consequently, in humid eastern grid cells where irrigation (allocated via $1/8^{\circ}$ Demeter crop area), thermoelectric cooling (allocated to power-plant cells), and livestock (allocated via $1/12^{\circ}$ GLW~3 animal density) are smaller than population-allocated demands, whichever of Manufacturing or Municipal has the larger GCAM-USA state-level consumption total wins uniformly across every population-dominated cell in that state. In the historical GCAM-USA record, state-level manufacturing consumption exceeds municipal consumption in Alabama, Tennessee, South Carolina, Pennsylvania, West Virginia, Indiana, Michigan, Wisconsin, and Maine, whereas municipal consumption exceeds manufacturing consumption in neighboring Mississippi, Georgia, North Carolina, Virginia, and New York, producing the sharp transitions along state borders such as Alabama--Mississippi. In the western U.S., by contrast, irrigation and livestock dominate non-urban cells through spatially continuous land-cover and rangeland proxies that cross state borders smoothly.
+
+In reality, manufacturing water use is concentrated at discrete industrial facilities rather than following residential population uniformly across a state. In the revised manuscript, we added this explanation to \textit{Background \& Summary} (alongside state boundary overlays on Figure~1) and noted in \textit{Limitations} that replacing the population proxy for manufacturing and mining with county sectoral GDP or facility permit registries will remove these rural state-border transitions.}
+
+\begin{commentbox}[label={r2:maj5}]{Reviewer 2 --- Major Comment 5: Representation of thermoelectric water demand}
+Lines 104--105: EIA reports plant-level thermoelectric water withdrawal and consumption data, including monthly data for some years. Please clarify whether these data were considered as inputs or for calibration/validation of the thermoelectric component of the dataset.
+
+In addition, published studies indicate that cooling-system type can be an important determinant of thermoelectric water withdrawal and consumption, potentially independent of fuel type. Please clarify whether the downscaling methodology explicitly accounts for cooling technology, particularly distinctions between once-through and recirculating cooling systems. My understanding is that only fuel types were incorporated into the GCAM-USA modeling, which produced the input water use data for this downscaling project. If so, this is an important limitation to include in the appropriate paragraph/section.
+
+Relevant literature includes Peer and Sanders (2016) and Sjostedt et al.\ (2025).
+\begin{itemize}[leftmargin=1.5em, topsep=3pt, itemsep=3pt]
+  \item AM Peer, R., \& T Sanders, K.\ (2016). Characterizing cooling water source and usage patterns across US thermoelectric power plants: a comprehensive assessment of self-reported cooling water data. \textit{Environmental Research Letters}, 11(12), 124030.
+  \item Sjostedt, E., Rushforth, R., Tidwell, V., Harris, M., Mcmanamay, R., \& Marston, L.\ (2025). Impact of Thermoelectric Power Plant Operations and Water Use Reporting Methods on Thermoelectric Power Plant Water Use. \textit{Environmental Science \& Technology}, 59(9), 4482--4492.
+\end{itemize}
+\end{commentbox}
+\response{We thank Reviewer~2 for raising both points and for the Peer and Sanders (2016) and Sjostedt et al.\ (2025) references. We clarified how EIA plant records and cooling technologies enter each stage of the modeling chain:
+\begin{enumerate}[label=\arabic*), leftmargin=1.6em, topsep=2pt, itemsep=2pt]
+  \item \textbf{Role of EIA plant-level data:} Plant-level EIA Form~860/923 water-withdrawal and consumption reports were \textbf{not} ingested directly as inputs or calibration targets inside Tethys. Indirectly, EIA-860 generator capacities and fuel types inform the 2015 Global Power Plant Database v1.3 / IM3 historical capacity proxy, and EIA-923 plant water-use and operational records inform the USGS physics-based thermoelectric reanalysis (Harris et al., 2025; Skinner et al., 2025; Medalie et al., 2025) against which we validate Tethys in \textit{Technical Validation}.
+  \item \textbf{Cooling-system representation in GCAM-USA vs.\ CERF vs.\ Tethys:} Upstream \textbf{GCAM-USA} (\texttt{v5.3\_water\_dispatch}, Binsted et al., 2022) \textit{does} explicitly model cooling-system types (once-through freshwater, recirculating evaporative cooling towers, cooling ponds, dry/hybrid cooling, and seawater cooling) nested within each fuel technology, applying distinct withdrawal and consumption intensities that differ by over an order of magnitude for withdrawals between once-through and recirculating systems. Thus, state-level GCAM-USA thermoelectric withdrawals and consumption in our dataset reflect historical and projected transitions from once-through to recirculating cooling. Likewise, \textbf{CERF} sites future plants with cooling-technology labels. \textbf{However}, in the CERF-to-Tethys and GPPD-to-Tethys spatial-proxy preprocessing step, plant capacities are summed into the seven thermoelectric \textbf{fuel} subsectors (coal, gas, nuclear, biomass, refined liquids, geothermal, and solar thermal) without sub-dividing by cooling technology. Within a given state and fuel type, Eq.~(3) therefore distributes state fuel water demand across grid cells in proportion to installed MW regardless of whether an individual plant uses once-through or recirculating cooling.
+\end{enumerate}
+As Peer and Sanders (2016) and Sjostedt et al.\ (2025) show, plant cooling technology and operations strongly govern facility-level water withdrawals independent of fuel type. Aggregating spatial proxies by fuel MW alone within a state over-allocates withdrawals to recirculating plants and under-allocates withdrawals to once-through plants of the same fuel, explaining much of the HUC6--HUC8 spatial scatter ($r=0.72$ at HUC6, $\mathrm{MdAPE}=82\%$) even when CONUS totals agree within $2\text{--}4\%$. We added these clarifications and citations (Peer and Sanders, 2016; Sjostedt et al., 2025) to \textit{Power-plant siting projections (CERF)}, \textit{HUC6 spatial agreement}, and \textit{Limitations} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:maj6}]{Reviewer 2 --- Major Comment 6: Seasonality of livestock water demand}
+Lines 124--125: Published literature indicates that livestock water demand can exhibit substantial seasonal variability and can depend strongly on air temperature, particularly for livestock maintained outdoors or under non-climate-controlled conditions. For example, Grogan et al.\ (2022), Le Riche et al.\ (2017), and Theurer et al.\ (2024) discuss temperature-dependent and/or seasonal livestock water use.
+
+Livestock water demand in the present study at the monthly scale is derived by simply dividing annual values by 12. While livestock water demand only represents a small fraction of the total water demand, it is important to discuss the potential implications for the resulting monthly projections where livestock demand is a dominant sector for water use, especially considering the intended use of this data for local decision-making and modeling research.
+
+\begin{itemize}[leftmargin=1.5em, topsep=3pt, itemsep=3pt]
+  \item see 2.2.5 and table 2 of Grogan, D.~S., Zuidema, S., Prusevich, A., Wollheim, W.~M., Glidden, S., \& Lammers, R.~B.\ (2022). Water balance model (WBM) v.~1.0.0: a scalable gridded global hydrologic model with water-tracking functionality. \textit{Geoscientific Model Development}, 15(19), 7287--7323.
+  \item Le Riche, E.~L., VanderZaag, A.~C., Burtt, S., Lapen, D.~R., \& Gordon, R.\ (2017). Water use and conservation on a free-stall dairy farm. \textit{Water}, 9(12), 977.
+  \item Theurer, M.~E., Aguilar, J., Clews, R., Fox, J.~T., Gigot, G., Gigot, M., \dots\ \& Waggoner, J.~W.\ (2024). Perspective and Commentary: Effects of conversion of farmland to an integrated beef cattle grazing operation and water use in the Southern Plains and Ogallala Aquifer of the USA. \textit{Applied Animal Science}, 40(2), 199--204.
+\end{itemize}
+\end{commentbox}
+\response{We agree with Reviewer~2 and appreciate these references. Although livestock represents $\approx 1\text{--}2\%$ of aggregate CONUS water demand, Figure~1 shows that livestock is the dominant consumptive water-use sector across extensive rangeland and grazing cells in the Great Plains and Mountain West. In those cells, outdoor cattle and dairy operations experience elevated summer drinking and heat-abatement water requirements tied to air temperature, so a uniform $1/12$ monthly split underestimates summer peak demand and slightly overestimates winter demand locally. Together with our revisions for Reviewer~1 Remark~9, we added an explicit discussion of temperature-dependent livestock seasonality and its local implications in livestock-dominant cells to \textit{Temporal downscaling} and \textit{Limitations} in the revised manuscript (citing Grogan et al., 2022 and Le Riche et al., 2017).}
+
+\begin{commentbox}[label={r2:maj7}]{Reviewer 2 --- Major Comment 7: Relationship between GCAM-USA and USGS water-use data}
+GCAM-USA output provides the initial water-use input for the Tethys downscaling. The cited Binsted et al.\ paper on GCAM-USA \texttt{v5.3\_water\_dispatch} states that state-level water withdrawals are derived from USGS data and that the model is initialized for historical periods including 1975, 1990, 2005, 2010, and 2015, with water use represented using coefficients derived from historical data.
+
+The USGS dataset used for validation in this manuscript is a newer water-use reanalysis based on modeling methods and observational/collected water-use information. Please clarify the extent to which the GCAM-USA historical water-use inputs and the USGS validation dataset share common underlying data sources or assumptions. If there is substantial overlap, this could potentially contribute to the relatively high agreement observed at the HUC6 level and should be acknowledged when interpreting the validation results.
+\end{commentbox}
+\response{This is an important distinction, and we clarified in the revised manuscript where upstream calibration heritage overlaps and where the two products are independent:
+\begin{enumerate}[label=\arabic*), leftmargin=1.6em, topsep=2pt, itemsep=2pt]
+  \item \textbf{State- and basin-level historical calibration up to 2015 (partial shared heritage):} In \texttt{GCAM-USA v5.3\_water\_dispatch} (Binsted et al., 2022), historical water-intensity coefficients and regional totals through its 2015 base year draw on legacy USGS 5-year county/state Circular compilations (such as Maupin et al., 2014 for 2010 and Dieter et al., 2018 for 2015), alongside EIA power-plant fuel/generation records and USDA agricultural censuses. Although the January~2025 USGS reanalysis (Medalie et al., 2025) replaces those 5-year compilations with newly developed monthly HUC12 process and statistical models (physics-based condenser models in Harris et al., 2025; satellite-ET-informed crop irrigation models in Medalie et al., 2025; and data-driven public-supply models in Luukkonen et al., 2023), both draw on overlapping foundational state utility, irrigation-district, and EIA reporting through 2015, while post-2015 years in GCAM-USA are simulated dynamically. This shared historical reporting foundation contributes to close national and state magnitude agreement.
+  \item \textbf{Sub-state HUC6 spatial disaggregation and monthly seasonality (independent):} Tethys's spatial allocation from states/basins to $1/8^{\circ}$ grid cells (using Demeter crop area, GPPD/IM3 plant MW, and SEDAC SSP population) and its monthly weather-driven temporal weights (Eqs.~4--7) do \textbf{not} use the 2025 USGS HUC12 demand grids. (USGS HUC12 data enter our workflow solely to anchor the spatial baseline $s^{\mathrm{USGS}}_c$ of the groundwater-to-surface-water source share in Eq.~8, which partitions water sources without altering total sector withdrawals or consumption evaluated in Table~4 and Figures~3--7.)
+\end{enumerate}
+We added a concise paragraph in the \textit{Technical Validation} introduction of the revised manuscript stating this distinction explicitly.}
+
+\begin{commentbox}[label={r2:maj8}]{Reviewer 2 --- Major Comment 8: Groundwater availability during the projection period}
+Line 160: Please clarify how groundwater availability is represented during the projection period. In particular, what groundwater storage dataset or other information is used, and is groundwater availability imposed as a boundary condition or constraint on projected withdrawals?
+
+This is potentially important because the dataset projects groundwater withdrawals across multiple sectors through 2100. In regions with substantial groundwater dependence and documented groundwater depletion, such as the High Plains Aquifer and Lower Colorado River Basin, projected water demand may not necessarily be physically realizable if groundwater availability declines substantially. The authors may wish to discuss this issue as a limitation or as an area for future research or shorten the study period in a way that groundwater storage availability is not a limiting factor.
+
+\begin{itemize}[leftmargin=1.5em, topsep=3pt, itemsep=3pt]
+  \item Steward, D.~R., \& Allen, A.~J.\ (2016). Peak groundwater depletion in the High Plains Aquifer, projections from 1930 to 2110. \textit{Agricultural Water Management}, 170, 36--48.
+  \item Abdelmohsen, K., Famiglietti, J.~S., Ao, Y.~Z., Mohajer, B., \& Chandanpurkar, H.~A.\ (2025). Declining freshwater availability in the Colorado River Basin threatens sustainability of its critical groundwater supplies. \textit{Geophysical Research Letters}, 52(10), e2025GL115593.
+\end{itemize}
+\end{commentbox}
+\response{We thank Reviewer~2 for raising this physical constraint and for the Steward and Allen (2016) and Abdelmohsen et al.\ (2025) references. Groundwater availability enters our modeling chain at the \textbf{GCAM-USA basin scale}, but is \textbf{not} enforced as a hard grid-cell physical storage cap at $1/8^{\circ}$:
+\begin{enumerate}[label=\arabic*), leftmargin=1.6em, topsep=2pt, itemsep=2pt]
+  \item \textbf{Basin-scale hydro-economic groundwater constraints in GCAM-USA:} In each of the 14 CONUS water-resource basins, GCAM-USA pairs renewable runoff with graded nonrenewable groundwater depletion cost-supply curves parameterized from aquifer area, porosity, thickness, depth to water, and extraction costs (Binsted et al., 2022; Niazi et al., 2024, 2025). As cumulative extraction progresses over 2020--2100 in heavily pumped basins, rising marginal extraction costs endogenously raise basin water prices, curtailing unprofitable groundwater expansion and shifting basin source shares $s^{\mathrm{GCAM}}_{c,y}$ toward surface water.
+  \item \textbf{Absence of $1/8^{\circ}$ cell-level aquifer exhaustion limits in Tethys:} When Tethys downscales regional demands to $1/8^{\circ}$ (Eq.~3) and rescales source shares via Eq.~(8), it does not track lateral groundwater flow, cone-of-depression drawdown, or saturated-thickness exhaustion within individual $1/8^{\circ}$ cells. Consequently, in localized sub-regions experiencing acute depletion, such as the southern High Plains Aquifer (Steward and Allen, 2016) or heavily pumped alluvial basins of the Lower Colorado River Basin (Abdelmohsen et al., 2025), projected cell-level groundwater demand late in the century represents \textit{potential water demand conditional on basin-scale economic feedbacks}, which may exceed locally extractable aquifer storage.
+\end{enumerate}
+Because century-scale projections through 2100 are needed by Earth-system, power-sector, and integrated assessment communities (Table~5), we retained the 1980--2100 horizon and added explicit explanations of GCAM-USA's basin groundwater cost curves and local aquifer-storage caveats (citing Steward and Allen, 2016 and Abdelmohsen et al., 2025) across \textit{Groundwater-to-surface-water source-share post-processing}, \textit{Limitations}, and \textit{Usage Notes} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:maj9}]{Reviewer 2 --- Major Comment 9: Interannual variability and validation against USGS}
+Figure 3 suggests that the Tethys dataset reproduces the overall magnitude of USGS water-use estimates reasonably well but exhibits substantially less interannual variability in annual total water use. In contrast, the USGS dataset appears to capture greater year-to-year variability, while Tethys provides higher temporal resolution and finer spatial resolution. This distinction is important because agreement in magnitude does not necessarily indicate agreement in temporal dynamics.
+
+It would also be useful to explain why this discrepancy appears more pronounced for irrigation than for electricity and domestic water use, particularly given the apparent tendency for Tethys to overestimate the latter sectors relative to the USGS estimates. If appropriate, quantitative measures of temporal correspondence, such as correlations or trend agreement, could complement the existing magnitude-based validation metrics.
+\end{commentbox}
+\response{Reviewer~2 highlights an important structural feature of Tethys downscaling. In Tethys, regional demands come from GCAM-USA at 5-year steps (2010, 2015, 2020) and are linearly interpolated to annual values, whereas annual TGW meteorological fluctuations enter Eqs.~(4)--(7) exclusively through \textbf{normalized monthly weights} ($\sum_{m=1}^{12} w_m = 1$) that partition each year's demand across the 12 months without altering the annual total. Across the harmonized 2010--2019 comparison window in the revised manuscript, this design explains the cross-sector contrast in Figure~3:
+\begin{itemize}[leftmargin=1.5em, topsep=2pt, itemsep=2pt]
+  \item \textbf{Electricity (CONUS interannual $r = 0.99$ over 2010--2019):} Interannual variance in CONUS thermoelectric withdrawals is governed by a structural multi-year decline from coal retirements and cooling-system transitions rather than single-year weather anomalies, which 5-year GCAM-USA steps capture closely (driving $r = 0.94$ for three-sector total withdrawals).
+  \item \textbf{Domestic (CONUS interannual $r = 0.06$ over 2010--2019):} Both Tethys and USGS follow flat-to-gradually-rising national trajectories over 2010--2019 with small interannual variance around the trend (and a vertical offset reflecting municipal vs.\ public-supply scope differences).
+  \item \textbf{Irrigation (CONUS interannual $r = -0.59$ over 2010--2019):} Observed annual irrigation withdrawals respond strongly to year-to-year precipitation and drought anomalies (surging during the 2012 CONUS drought and dropping during wet years such as 2019). Because GCAM-USA solves equilibrium crop water demand at 5-year steps linearly interpolated between 2010, 2015, and 2020, Tethys reproduces the decadal mean ($\mathrm{MBE} = -3.7\%$ nationally, $-4\%$ across HUC6 basins) and seasonal phase (Figure~7) while smoothing single-year drought spikes in annual totals.
+\end{itemize}
+We reported these CONUS interannual correlations and the normalized-monthly-weight explanation directly in \textit{CONUS annual totals} and \textit{Limitations} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:maj10}]{Reviewer 2 --- Major Comment 10: Discussion of the projection period}
+Lines 225--232: The discussion of the 2020--2100 projection period appears relatively brief compared with the extensive description of the methodology used to generate the projections. I recommend expanding the discussion of the projected results, including the major differences among the eight scenarios, the sectors or regions contributing most strongly to projected changes, and the implications and limitations of the scenario projections.
+\end{commentbox}
+\response{We agree and expanded \textit{Inter-scenario consistency} in the revised manuscript with quantitative comparisons across the historical baseline and all eight future scenarios. From 2015 historical CONUS withdrawals of $350.3\text{ km}^3\text{ yr}^{-1}$ across all six sectors ($150.7$ Electricity, $116.2$ Irrigation excluding conveyance losses, $56.7$ Domestic, $19.3$ Manufacturing, $4.9$ Mining, and $2.6\text{ km}^3\text{ yr}^{-1}$ Livestock), 2100 withdrawals evolve along distinct sectoral and regional pathways:
+\begin{enumerate}[label=\arabic*), leftmargin=1.6em, topsep=2pt, itemsep=2pt]
+  \item \textbf{Bifurcation of CONUS total withdrawals by SSP:} By 2100, CONUS total withdrawals decline by $23\text{--}29\%$ to $249.7\text{--}268.1\text{ km}^3\text{ yr}^{-1}$ across the four \textbf{SSP3} scenarios, whereas across the four \textbf{SSP5} scenarios total withdrawals rise by $3\text{--}22\%$ above 2015 to $359.5\text{--}428.4\text{ km}^3\text{ yr}^{-1}$.
+  \item \textbf{Thermoelectric contraction across all futures:} Electricity withdrawals fall steeply in every scenario (to $8.6\text{--}20.8\text{ km}^3\text{ yr}^{-1}$ in 2100 under SSP3 and $19.6\text{--}52.7\text{ km}^3\text{ yr}^{-1}$ under SSP5) as legacy once-through steam plants retire in favor of recirculating cooling and non-thermal renewables, reducing surface-water withdrawal pressure across eastern river basins.
+  \item \textbf{Irrigation expansion and climate-driven spread:} With thermoelectric withdrawals declining, Irrigation becomes the largest withdrawal sector in all eight futures ($178.1\text{--}199.4\text{ km}^3\text{ yr}^{-1}$ under SSP3 and $158.5\text{--}220.6\text{ km}^3\text{ yr}^{-1}$ under SSP5), with radiative forcing (\texttt{rcp45} vs.\ \texttt{rcp85}) and GCM sensitivity (\texttt{cooler} vs.\ \texttt{hotter}) generating up to $62\text{ km}^3\text{ yr}^{-1}$ of late-century spread concentrated in western and Great Plains agricultural basins.
+  \item \textbf{Demographic and industrial divergence in Domestic and Manufacturing:} Under SSP5, 2100 Domestic ($100.7\text{--}121.1\text{ km}^3\text{ yr}^{-1}$) and Manufacturing ($48.5\text{--}53.6\text{ km}^3\text{ yr}^{-1}$) withdrawals roughly double along expanding metropolitan corridors, whereas under SSP3 Domestic declines to $29.4\text{--}40.4\text{ km}^3\text{ yr}^{-1}$ and Manufacturing to $15.9\text{--}18.2\text{ km}^3\text{ yr}^{-1}$.
+\end{enumerate}}
+
+% -----------------------------------------------------------------------------
+\subsection{Minor Comments (1--22)}
+
+\begin{commentbox}[label={r2:min1}]{Reviewer 2 --- Minor Comment 1 [Lines 21--23]}
+Lines 21--23: The motivation could acknowledge that downscaling is necessary in part because water-use information is not consistently available at the spatial and temporal resolution required for local watershed modeling. State-level water-use reporting practices and data availability vary considerably, and some states collect water withdrawals at points of diversion, including for interbasin transfers. The authors may wish to briefly discuss the challenges associated with integrating historical state- and watershed-level datasets and the potential value of such efforts for future improvements in historical spatial resolution.
+\end{commentbox}
+\response{Done. In the second paragraph of \textit{Background \& Summary} in the revised manuscript, we added a sentence noting that historical U.S.\ water-use records are challenging to harmonize directly at watershed scales because state reporting requirements and measurement practices vary widely, compiled totals often follow county or state boundaries rather than hydrologic units, and withdrawals recorded at points of diversion (including interbasin transfers) can differ from locations of use (citing Naseri \& Marston, 2025 and Luukkonen et al., 2025).}
+
+\begin{commentbox}[label={r2:min2}]{Reviewer 2 --- Minor Comment 2 [Line 30]}
+Line 30: ``GCAM-USA'' is used before the acronym is formally introduced. Please introduce the acronym at its first occurrence.
+\end{commentbox}
+\response{Done. ``Global Change Analysis Model with subnational detail for the U.S.\ (GCAM-USA)'' is formally introduced at its first occurrence in \textit{Background \& Summary} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min3}]{Reviewer 2 --- Minor Comment 3 [Line 42]}
+Line 42: This appears to be the only location where 2020 is included in the ``historical period/data,'' whereas other references describe the historical period as 1980--2019. Please clarify the intended historical period and use consistent terminology throughout the manuscript.
+\end{commentbox}
+\response{Fixed. The Tethys historical scenario directory covers 1980--2019 (with future scenarios covering 2020--2100), and we corrected ``(1980-2020)'' on that line to ``(1980--2019)'' in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min4}]{Reviewer 2 --- Minor Comment 4 [Line 55]}
+Line 55: ``Thermodynamic Global Warming (TGW)'' should be defined before the acronym is used. I did not find a definition elsewhere in the manuscript.
+\end{commentbox}
+\response{Done. ``Thermodynamic Global Warming (TGW)'' is spelled out at its first mention in \textit{Methods}, in the Figure~2 caption, and in \textit{Meteorological forcing (TGW)} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min5}]{Reviewer 2 --- Minor Comment 5 [Line 62]}
+Line 62: Please use consistent terminology for the groundwater-to-surface-water attribution. The manuscript appears to use both ``source-share'' and ``split.''
+\end{commentbox}
+\response{Done. We standardized terminology throughout the revised manuscript (including Table~1, \textit{Methods}, \textit{Data Records}, and section headings) on ``groundwater-to-surface-water source share''.}
+
+\begin{commentbox}[label={r2:min6}]{Reviewer 2 --- Minor Comment 6 [Figure 2]}
+Figure 2: Please clarify whether the linear interpolation of 5-year water-demand values to annual values is performed before or between the spatial and temporal downscaling steps.
+\end{commentbox}
+\response{Done. Inspection of the Tethys model execution pipeline (\fname{tethys/model.py}) confirms that spatial downscaling operates first on the 5-year GCAM-USA regional outputs, and linear interpolation from 5-year steps to annual resolution occurs \textbf{between} spatial downscaling and monthly temporal downscaling. We clarified this ordering explicitly in the Figure~2 caption, in \textit{GCAM-USA state/basin-level water demand}, and in \textit{Temporal downscaling} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min7}]{Reviewer 2 --- Minor Comment 7 [Lines 75--76]}
+Lines 75--76: The characterization of SSP3 and SSP5 as simply low- versus high-growth pathways is overly simplified. Please provide a more accurate description of the socioeconomic narratives represented by these SSPs (O'Neill et al., 2017).
+
+O'Neill, B.~C.\ et al.\ (2017). The roads ahead: Narratives for shared socioeconomic pathways describing world futures in the 21st century. \textit{Global Environmental Change}, 42, 169--180. \url{https://doi.org/10.1016/j.gloenvcha.2015.01.004}.
+\end{commentbox}
+\response{Done. In \textit{GCAM-USA state/basin-level water demand} in the revised manuscript, we cited O'Neill et al.\ (2017) and expanded the descriptions of SSP3 (\textit{Regional Rivalry}: resurgent nationalism, regionalized policies, slower economic development and technological change, and declining U.S.\ population under low international migration) and SSP5 (\textit{Fossil-Fueled Development}: rapid globalized economic growth, energy- and resource-intensive lifestyles, rapid technological progress, and substantial U.S.\ population growth driven largely by higher net immigration).}
+
+\begin{commentbox}[label={r2:min8}]{Reviewer 2 --- Minor Comment 8 [Figure 2]}
+Figure 2: Please clarify whether the workflow shown applies to the historical period as well as the future scenarios. In addition, ``FOr each scenario'' appears to contain a typographical error.
+\end{commentbox}
+\response{Done. In the Figure~2 caption of the revised manuscript, we clarified that the workflow applies to both the historical baseline (1980--2019, using ERA5-driven TGW meteorology and 2015 GPPD v1.3 power-plant locations) and the eight future scenarios (2020--2100), and we fixed the ``FOr'' typo.}
+
+\begin{commentbox}[label={r2:min9}]{Reviewer 2 --- Minor Comment 9 [Line 95]}
+Line 95: Please define LULCC (land use and land cover change) before using the abbreviation.
+\end{commentbox}
+\response{Done. ``land-use and land-cover change (LULCC)'' is spelled out at its first occurrence in \textit{Downscaled land-use projections (Demeter)} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min10}]{Reviewer 2 --- Minor Comment 10 [Line 106]}
+Line 106: Please define MW (megawatts) before using the abbreviation, or spell it out if it is not used again subsequently.
+\end{commentbox}
+\response{Done. ``megawatts (MW)'' is defined at its first occurrence in \textit{Power-plant siting projections (CERF)} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min11}]{Reviewer 2 --- Minor Comment 11 [Lines 147--148]}
+Lines 147--148: Please clarify whether the water demand described here includes only domestic water supplied by public water systems or also self-supplied domestic water, such as water obtained from private groundwater wells or nearby surface-water sources (USGS water-use category DO-SS).
+\end{commentbox}
+\response{Done. In \textit{Methods --- Temporal downscaling --- Municipal} in the revised manuscript, we state explicitly that Tethys municipal (\texttt{Domestic}) demand includes \textbf{both} public-supply water use and self-supplied domestic withdrawals (private residential wells or cisterns, USGS category DO-SS), whereas the USGS Public Supply category excludes DO-SS.}
+
+\begin{commentbox}[label={r2:min12}]{Reviewer 2 --- Minor Comment 12 [Figure 3]}
+Figure 3: For improved accessibility, please use different line types (e.g., solid versus dotted) in addition to color to distinguish the series. Also, please check the apparent ``2000--2020'' label and confirm that the intended period is 2010--2020.
+\end{commentbox}
+\response{Done. We harmonized Figure~3 (along with Table~4 and Figures~4--7) strictly to 2010--2019 --- the 10-year overlap between the Tethys historical period (1980--2019) and all three USGS reanalysis sectors --- and regenerated Figure~3 with distinct line styles (black solid line for Tethys and orange dashed line for USGS) in addition to colorblind-safe colors.}
+
+\begin{commentbox}[label={r2:min13}]{Reviewer 2 --- Minor Comment 13 [Figures 4 and 5]}
+Figures 4 and 5: Please include the 2010--2020 time period in the figures or captions so that each figure can be interpreted independently.
+\end{commentbox}
+\response{Done. Both the Figure~4 and Figure~5 captions in the revised manuscript explicitly state the harmonized 2010--2019 comparison period so each figure can be interpreted independently.}
+
+\begin{commentbox}[label={r2:min14}]{Reviewer 2 --- Minor Comment 14 [Figure 4]}
+Figure 4: Please clarify how ``Percent difference'' is calculated (i.e., whether it represents $(\text{Tethys} - \text{USGS})/\text{USGS}$ or the reverse).
+\end{commentbox}
+\response{Done. Both Figure~4 and Figure~5 use the symmetric percent difference formula $100 \times (\text{USGS} - \text{Tethys}) / [(\text{USGS} + \text{Tethys})/2]$, and we stated this formula explicitly in both captions and on the y-axis / colorbar labels in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min15}]{Reviewer 2 --- Minor Comment 15 [Figure 6]}
+Figure 6: The caption states that ``The points are colored by basin area in km3.'' If these points represent basin area, I believe the intended unit is $\text{km}^2$ rather than $\text{km}^3$. Please verify.
+\end{commentbox}
+\response{Verified and fixed. Basin drainage area is in $\text{km}^2$, and we corrected ``km$^3$'' to ``km$^2$'' in the Figure~6 caption of the revised manuscript.}
+
+\begin{commentbox}[label={r2:min16}]{Reviewer 2 --- Minor Comment 16 [Lines 239--240]}
+Lines 239--240: The discussion could potentially be strengthened by incorporating an economic activity indicator such as GDP. County-level or industry-specific economic data may provide useful information for future improvements to the downscaling framework.
+\end{commentbox}
+\response{Done. In \textit{Limitations} in the revised manuscript, we noted that incorporating county sectoral gross domestic product (GDP) or facility permit registries offers a direct path to refine manufacturing and mining spatial allocation in future releases.}
+
+\begin{commentbox}[label={r2:min17}]{Reviewer 2 --- Minor Comment 17 [Withdrawal-to-consumption conversion]}
+Please clarify how water withdrawal is converted to water consumption. Specifically, is the withdrawal-to-consumption conversion performed by GCAM-USA before the Tethys downscaling, or is it performed within the framework described in this study?
+\end{commentbox}
+\response{Done. Water withdrawals and water consumption are computed separately by \textbf{GCAM-USA prior to Tethys downscaling} using sector-, fuel-, and technology-specific withdrawal and consumption coefficients (Calvin et al., 2019; Binsted et al., 2022). Tethys then executes separate downscaling runs for withdrawals and consumption using identical spatial proxies and monthly temporal weights, without performing any internal withdrawal-to-consumption conversion. We added this clarification directly to the opening paragraph of \textit{Methods} in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min18}]{Reviewer 2 --- Minor Comment 18 [Line 252]}
+Line 252: Please use ``the 21st century'' rather than ``21st century.''
+\end{commentbox}
+\response{Fixed. \textit{Usage Notes} in the revised manuscript now reads ``through the end of the 21st century''.}
+
+\begin{commentbox}[label={r2:min19}]{Reviewer 2 --- Minor Comment 19 [Figure 8]}
+Figure 8: Please extend the dashed SSP5 line in the legend so that its pattern is readily distinguishable, or identify the line style explicitly in the caption. I also recommend revising ``Each panel uses an independent y-axis'' to ``Note that each panel has an independent y-axis scale.''
+\end{commentbox}
+\response{Done. We regenerated Figure~8 with a widened SSP legend sample so the dashed SSP5 pattern shows multiple clear dashes, identified all colors, line styles, and line widths explicitly in the Figure~8 caption, and adopted ``Note that each panel has an independent $y$-axis scale'' in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min20}]{Reviewer 2 --- Minor Comment 20 [Line 289]}
+Line 289: The statement that groundwater/surface-water representation is ``a novel contribution of this study with no prior work'' appears too broad. Water-source delineation has previously been performed for U.S.\ water-consumption datasets, although at a substantially coarser spatial scale, for a single year, and using a less detailed methodology. Please revise this statement to acknowledge relevant prior work.
+
+See, for example, table 1 in:\\
+Marston, L., Ao, Y., Konar, M., Mekonnen, M.~M., \& Hoekstra, A.~Y.\ (2018). High-resolution water footprints of production of the United States. \textit{Water Resources Research}, 54(3), 2288--2316.
+\end{commentbox}
+\response{Agreed, and thank you for the Marston et al.\ (2018) reference. In \textit{Background \& Summary} of the revised manuscript, we removed the phrase ``with no prior work'', cited Marston et al.\ (2018), Dieter et al.\ (2018), and Medalie et al.\ (2025) for prior historical U.S.\ water-source delineations, and clarified that our contribution extends dynamic, multi-scenario $1/8^{\circ}$ groundwater-to-surface-water source shares through 2100 to the Tethys downscaling product (which lacked source attribution in Khan et al., 2023).}
+
+\begin{commentbox}[label={r2:min21}]{Reviewer 2 --- Minor Comment 21 [Data center and AI electricity applications]}
+The electricity-related water-consumption component may also have applications to emerging research on data centers and AI-related electricity demand, as well as to assessments of state and local water-management policies. The authors may wish to mention these potential applications if appropriate.
+\end{commentbox}
+\response{Done. We added emerging electricity-load applications (specifically regional cooling-water assessments around hyperscale data centers and artificial-intelligence compute expansion, as well as evaluations of state and local water-management policies) to both the opening paragraph of \textit{Usage Notes} and Table~5 (\textit{Decision-Support}) in the revised manuscript.}
+
+\begin{commentbox}[label={r2:min22}]{Reviewer 2 --- Minor Comment 22 [Suggestions for figures]}
+Suggestions for figures:
+\begin{enumerate}[label=\alph*), leftmargin=1.8em, topsep=3pt, itemsep=2pt]
+  \item Please use consistent font types within each figure and increase the font sizes of titles and legends where necessary to improve legibility.
+  \item Please use superscript notation for units in the figures (e.g., $\text{km}^3$ rather than \texttt{km\^{}3}) for consistency with standard scientific typesetting.
+  \item Some figures appear to include a title within the figure in addition to a title or description in the caption, whereas others do not. Please consider removing these redundant in-figure titles or applying a consistent approach across all figures.
+\end{enumerate}
+\end{commentbox}
+\response{Done. We regenerated the full figure suite (Figures~1 and 3--9) in the revised manuscript with a uniform sans-serif font family, enlarged axis, strip, and legend typography, proper superscript unit formatting ($\text{km}^3\text{ yr}^{-1}$, $\text{km}^3\text{ month}^{-1}$, and $\text{km}^2$), and no redundant top-of-figure titles.}
+
+\end{document}

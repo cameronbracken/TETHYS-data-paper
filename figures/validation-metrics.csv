@@ -1,4 +1,5 @@
-sector,demand_type,n_huc6,n_obs,pearson_r,spearman_rho,nse,kge,kge_alpha,kge_beta,kge_r,mbe_pct,nrmse_pct,medape_pct
-Domestic,withdrawals,333,3996,0.95,0.97,0.86,0.76,1.12,1.21,0.95,21.0,68.0,37.0
-Electricity,withdrawals,333,4329,0.73,0.78,0.39,0.71,1.1,1.04,0.73,4.0,171.0,86.0
-Irrigation,withdrawals,333,6993,0.88,0.8,0.77,0.86,0.94,0.98,0.88,-2.0,130.0,79.0
+sector,demand_type,years,usgs_scale,n_huc6,pearson_r,spearman_rho,nse,kge,kge_alpha,kge_beta,kge_r,mbe_pct,mae_km3_yr,rmse_km3_yr,nrmse_pct,mdape_pct,mdapd_sym_pct
+Domestic (1.12x USGS Public Supply),withdrawals,2010-2019,1.12,329,0.95,0.98,0.9,0.92,1.0,1.07,0.95,7,0.04,0.09,55,25,24
+Domestic (unscaled USGS Public Supply),withdrawals,2010-2019,1.0,329,0.95,0.98,0.87,0.77,1.11,1.2,0.95,20,0.04,0.1,65,36,30
+Electricity,withdrawals,2010-2019,1.0,227,0.72,0.77,0.38,0.7,1.1,0.98,0.72,-2,0.44,0.84,133,82,96
+Irrigation,withdrawals,2010-2019,1.0,316,0.89,0.8,0.79,0.87,0.94,0.96,0.89,-4,0.21,0.53,115,76,87

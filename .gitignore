@@ -8,7 +8,11 @@
 *.log
 *.out
 *.synctex.gz
+*.toc
+*.xdv
+.DS_Store
 
 # main doc files we dont want in the repo
 diff_*.tex
 *.pdf
+revision/comments/
