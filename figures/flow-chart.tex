@@ -1,7 +1,19 @@
 \documentclass[tikz,border=2mm]{standalone}
+\usepackage{iftex}
+\ifluatex
+  \usepackage{fontspec}
+  \IfFontExistsTF{Helvetica}{%
+    \setsansfont{Helvetica}%
+  }{%
+    \setsansfont{TeX Gyre Heros}%
+  }
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage{helvet}
+\fi
+\usepackage{textcomp}
 \usepackage{tikz}
 \usetikzlibrary{positioning,calc}
-%\usepackage{times}
 
 % ------------------------------------------------------------------
 % Named colors
@@ -154,7 +166,7 @@
     below=0.62cm of gcam
 ] (spatial) {%
     \textbf{Spatial Downscaling}\\[2pt]
-    Regional to 1/8$^{\circ}$ degree
+    Regional to 1/8\textdegree\ degree
 };
 
 \node[

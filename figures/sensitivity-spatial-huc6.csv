@@ -1,0 +1,14 @@
+label,sector,category,n_huc6,huc6_r,huc6_q25_pct,huc6_mdapd_pct,huc6_q75_pct,conus_vol_shifted_huc6_pct,conus_vol_shifted_cell_pct
+Domestic: static 2010 vs. 2015 SSP pop.,Domestic,Epoch update,342,0.999,1.0,2.6,5.9,1.4,6.3
+Irrigation: static 2005 vs. 2015 Demeter,Irrigation,Epoch update,298,0.995,4.0,12.2,28.4,4.3,10.0
+Irrigation: pooled vs. 11-crop Demeter,Irrigation,Subsector pooling,288,0.992,4.4,20.0,61.9,6.0,11.3
+Domestic: USGS county municipal vs. pop.,Domestic,Alternative proxy,342,0.901,10.3,21.7,53.6,14.4,51.1
+Livestock: USGS county livestock vs. GLW3,Livestock,Alternative proxy,333,0.703,16.9,33.6,61.2,27.0,34.5
+Livestock: cattle-only vs. 5-species GLW3,Livestock,Subsector pooling,334,0.522,43.2,55.7,59.9,33.2,38.6
+Electricity: pooled MW vs. 7-fuel plants,Electricity,Subsector pooling,307,0.892,29.0,63.6,130.4,22.9,42.1
+Irrigation: USGS county irrig. vs. Demeter,Irrigation,Alternative proxy,326,0.968,20.4,66.5,153.6,13.2,41.1
+Mining: USGS county mining vs. state pop.,Mining,Alternative proxy,337,0.178,32.0,71.4,127.6,51.6,78.6
+Manufacturing: USGS indust. vs. state pop.,Manufacturing,Alternative proxy,336,0.54,42.4,81.8,136.1,40.2,77.5
+Electricity: cooling-informed vs. plant MW,Electricity,Alternative proxy,309,0.848,33.8,90.0,160.5,27.2,90.7
+Electricity: state pop. (v1) vs. plant MW,Electricity,Alternative proxy,335,0.703,58.8,119.8,182.3,38.8,94.6
+GW source (Eq. 8): raw GCAM vs. USGS,Source share,Source anchoring,338,0.815,72.8,196.3,200.0,36.2,38.2
