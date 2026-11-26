@@ -40,6 +40,8 @@ jobs:
             texlive-latex-recommended \
             texlive-latex-extra \
             texlive-fonts-recommended \
+            texlive-plain-generic \
+            texlive-science \
             texlive-pictures \
             texlive-bibtex-extra \
             lmodern \
