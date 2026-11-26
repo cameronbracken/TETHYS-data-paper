@@ -87,19 +87,20 @@
 
 \node[
     dashedbox,
-    minimum width=2.82cm,
-    minimum height=1.40cm,
+    minimum width=3.20cm,
+    minimum height=1.55cm,
+    inner xsep=4pt,
     align=center
 ] (scen) {%
-    \textbf{8 Scenarios}\\[2pt]
-    2 SSPs (SSP3, SSP5)\\
-    2 RCPs (4.5, 8.5)\\
-    2 GCMs (cooler, hotter)
+    \textbf{8 Future Scenarios}\\[2pt]
+    2 Forcings (4.5, 8.5~W/m$^2$)\\
+    2 GCMs (cooler, hotter)\\
+    2 SSPs (SSP3, SSP5)
 };
 
 \node[
     model,
-    right=1.31cm of scen
+    right=1.18cm of scen
 ] (gcam) {%
     \textbf{GCAM-USA}\\[2pt]
     Global, long-term,\\[-1pt]
@@ -120,16 +121,17 @@
 
 \node[
     data,
+    minimum width=3.20cm,
     below=0.58cm of scen
 ] (tgw) {%
     \textbf{TGW Simulations}\\[2pt]
     Historical and\\[-1pt]
-    Future Climate
+    Future Meteorology
 };
 
 \node[
     dashedbox,
-    minimum width=2.82cm,
+    minimum width=3.20cm,
     minimum height=2.72cm,
     below=0.62cm of tgw
 ] (monthly) {};
@@ -139,7 +141,7 @@
     font=\sffamily\scriptsize\bfseries,
     anchor=north
 ] (monthlytitle) at ([yshift=-0.15cm]monthly.north) {%
-    Monthly Climate\\Variables
+    Monthly Meteorological\\Variables
 };
 
 \node[
